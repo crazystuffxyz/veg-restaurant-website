@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/yourusername/veg-restaurant-website.git"
   },
-  "authors": "Shayaan Hooda, Kunal Shetwal, Aidan Reed, & Pranav Sachdeva",
+  "authors": "Shayaan Hooda, Kunal Shetwal, Aidan Reed, James Huang & Pranav Sachdeva",
   "license": "MIT",
   "engines": {
     "node": ">=14.0.0",
