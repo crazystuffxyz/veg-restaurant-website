@@ -1,12 +1,10 @@
 {
   "name": "veg-restaurant-website",
   "version": "1.0.0",
-  "description": "A vegetarian restaurant website built with Vue 3, Vuetify, Pinia, and Vue Router.",
-  "main": "src/main.js",
+  "description": "A vegetarian restaurant website built with Node.js, Express, and various CSS libraries, featuring a reservation system with Nodemailer.",
+  "main": "server.js",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -19,19 +17,12 @@
     "npm": ">=6.0.0"
   },
   "dependencies": {
-    "@mdi/font": "^7.4.47",
-    "animate.css": "^4.1.1",
-    "axios": "^0.27.2",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
     "moment": "^2.29.1",
-    "pinia": "^2.0.0",
-    "vue": "^3.2.0",
-    "vue-meta": "^2.4.0",
-    "vue-router": "^4.0.0",
-    "vuetify": "^3.0.0"
+    "nodemailer": "^6.7.2"
   },
-  "devDependencies": {
-    "@vue/cli-service": "^5.0.0"
-  },
+  "devDependencies": {},
   "browserslist": [
     "> 1%",
     "last 2 versions",
