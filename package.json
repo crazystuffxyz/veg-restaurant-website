@@ -19,12 +19,13 @@
     "npm": ">=6.0.0"
   },
   "dependencies": {
-    "axios": "^0.27.2",
+    "@mdi/font": "^7.4.47",
     "animate.css": "^4.1.1",
+    "axios": "^0.27.2",
     "moment": "^2.29.1",
     "pinia": "^2.0.0",
     "vue": "^3.2.0",
-    "@vueuse/head": "^0.8.2",
+    "vue-meta": "^2.4.0",
     "vue-router": "^4.0.0",
     "vuetify": "^3.0.0"
   },
