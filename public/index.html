@@ -1,12 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Green Bites - A Vegetarian Oasis</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-  </head>
-  <body>
-    <div id="app"></div>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Green Bites - Home</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+    <a class="navbar-brand" href="index.html">Green Bites</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="menu.html">Menu</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="reservations.html">Reservations</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="jumbotron jumbotron-fluid text-center" style="background: url('assets/images/hero.jpg') center center/cover; color: #fff;">
+    <div class="container">
+      <h1 class="display-4 animate__animated animate__fadeInDown">Welcome to Green Bites</h1>
+      <p class="lead animate__animated animate__fadeInUp">Experience the art of vegan cuisine in a sustainable, eco-friendly setting!</p>
+      <a href="reservations.html" class="btn btn-primary btn-lg animate__animated animate__pulse">Reserve Now</a>
+    </div>
+  </header>
+  <footer>
+    <div class="container">
+      <p>&copy; 2023 Green Bites. All Rights Reserved.</p>
+    </div>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 </html>
