@@ -82,7 +82,7 @@ app.post('/reserve', async (req, res) => {
       <h2 style="color: #1f2937; font-size: 24px; font-weight: bold; margin-bottom: 16px;">Verify Your Reservation</h2>
       <p style="margin-bottom: 16px;">Dear ${reservation.name},</p>
       <p style="margin-bottom: 16px;">
-        Thank you for your reservation for ${reservation.numberOfPeople} people on ${reservation.date} at ${reservation.time}.
+        Thank you for your reservation for party of ${reservation.numberOfPeople} on ${reservation.date} at ${reservation.time}.
       </p>
       <p style="margin-bottom: 16px;">
         Please verify your reservation within 5 minutes by clicking the button below:
