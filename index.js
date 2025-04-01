@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const moment = require('moment');
 const path = require('path');
-const fs = require('fs')l
+const fs = require('fs');
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
