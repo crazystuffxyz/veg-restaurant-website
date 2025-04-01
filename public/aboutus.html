@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Story - Green Bites | Passion for Plant-Based</title>
+    <meta name="description" content="Learn about the journey of Green Bites, our commitment to sustainability, local sourcing, and crafting innovative vegetarian cuisine in Fairfax, VA.">
+    <link rel="icon" href="/Assets/Images/Favicon/favicon.ico" sizes="any">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+       tailwind.config = { /* ... Same tailwind config as index.html ... */
+         theme: { extend: { /* ... Same extensions as index.html ... */ }}
+       };
+    </style>
+</head>
+<body class="bg-neutral-darkest text-neutral-light font-sans antialiased selection:bg-primary selection:text-white">
+
+    <!-- Navigation (Include the same nav component) -->
+    <nav x-data="{ open: false, scrolled: true }" <!-- Start scrolled true -->
+         class="fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-out"
+         :class="{ 'bg-neutral-darkest shadow-lg': scrolled || open, 'bg-transparent': !scrolled && !open }">
+         <!-- Paste the exact <nav> HTML from index.html here -->
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0"> <a href="index.html" class="transition-opacity duration-300 hover:opacity-80"><img class="h-14 lg:h-16 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Logo"></a> </div>
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">HOME</a>
+                    <a href="menu.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">MENU</a>
+                    <a href="aboutus.html" class="font-medium tracking-wide text-primary hover:text-primary-light transition-colors duration-300">OUR STORY</a> <!-- Active -->
+                    <a href="reservations.html" class="ml-4 inline-flex items-center px-5 py-2 border border-transparent text-base font-semibold rounded-full shadow-sm text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">RESERVE</a>
+                </div>
+                 <!-- Mobile Menu Button -->
+                 <div class="md:hidden flex items-center">
+                    <a href="reservations.html" class="inline-flex items-center px-4 py-2 mr-2 border border-primary text-sm font-semibold rounded-full text-primary hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">RESERVE</a>
+                     <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" aria-expanded="false"> <span class="sr-only">Open main menu</span> <svg x-show="!open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg> <svg x-show="open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg> </button>
+                </div>
+            </div>
+         </div>
+        <!-- Mobile Menu -->
+        <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="md:hidden absolute top-full inset-x-0 bg-neutral-darkest shadow-lg p-4" id="mobile-menu">
+             <div class="pt-2 pb-3 space-y-3 text-center">
+                 <a href="index.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">HOME</a>
+                <a href="menu.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">MENU</a>
+                 <a href="aboutus.html" class="block py-2 text-lg font-medium text-primary hover:text-primary-light transition-colors duration-300">OUR STORY</a> <!-- Active -->
+             </div>
+         </div>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="relative pt-48 pb-32 bg-neutral-darker overflow-hidden">
+         <!-- Decorative gradient background -->
+         <div class="absolute inset-0 -z-10" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(17, 24, 39, 0) 40%), radial-gradient(circle at top left, rgba(245, 158, 11, 0.1) , transparent 50%);"></div>
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+             <h1 class="font-serif text-5xl sm:text-6xl lg:text-7xl text-white font-bold leading-tight animate-fadeInDown">
+                Rooted in <span class="text-primary-light">Passion</span>,<br> Grown with <span class="text-secondary">Purpose</span>.
+             </h1>
+             <p class="mt-6 text-lg sm:text-xl text-neutral-light/80 max-w-2xl mx-auto animate-fadeInUp [animation-delay:300ms]" style="opacity:0;">
+                Discover the heart behind Green Bites – our journey, our values, and our unwavering dedication to exceptional plant-based dining.
+             </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+     <main class="py-16 md:py-24 bg-neutral-darkest">
+         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 prose prose-lg prose-invert prose-headings:font-serif prose-headings:text-secondary prose-a:text-primary hover:prose-a:text-primary-light prose-strong:text-primary-light leading-relaxed">
+             <!-- Add compelling content about the restaurant's story here -->
+             <section class="mb-12 animate-fadeInUp [animation-delay:500ms]" style="opacity:0;">
+                 <h2>Our Beginning</h2>
+                <p>Green Bites sprouted in April 2025 from a shared dream: to create a haven where delicious food and conscious living intertwine. We saw a need in Fairfax for a truly modern vegetarian experience – one that celebrated flavor, freshness, and the vibrant potential of plant-based ingredients, without compromising on style or atmosphere.</p>
+                <p>Driven by a deep respect for our planet and a love for inventive cooking, we embarked on a journey to redefine vegetarian dining. It wasn't just about removing meat; it was about elevating vegetables, grains, and legumes to culinary centerpieces.</p>
+            </section>
+
+             <section class="mb-12 animate-fadeInUp [animation-delay:700ms]" style="opacity:0;">
+                 <figure class="float-right ml-6 mb-4 max-w-sm">
+                     <img src="/Assets/Images/Restaurant/exterior-1.webp" alt="Exterior of Green Bites Restaurant" class="rounded-xl shadow-lg">
+                    <figcaption class="text-center text-sm italic text-neutral-light/70 mt-2">Our welcoming space on Main Street</figcaption>
+                 </figure>
+                <h2>Our Philosophy: Fresh, Local, Sustainable</h2>
+                 <p>At the core of Green Bites lies a commitment to <strong >sustainability</strong>. We believe that exceptional food starts with exceptional ingredients. That's why we forge strong partnerships with <strong >local farmers</strong> and suppliers who share our dedication to organic practices and responsible agriculture. You'll taste the difference in every bite – the unparalleled freshness of seasonal produce picked at its peak.</p>
+                <p>Our menu is a living reflection of the seasons, constantly evolving to showcase the best bounty our region has to offer. We strive to minimize waste, compost diligently, and make environmentally conscious choices in every aspect of our operation, from energy consumption to packaging.</p>
+            </section>
+
+            <section class="animate-fadeInUp [animation-delay:900ms]" style="opacity:0;">
+                <h2>More Than Just Food</h2>
+                <p>We aimed to create more than just a restaurant; we wanted to build a <strong >community hub</strong>. A place where friends gather, conversations flow, and everyone feels welcome. Our space is designed to be modern, comfortable, and filled with natural light and greenery – an oasis where you can relax, recharge, and enjoy food that nourishes both body and soul.</p>
+                 <p>Thank you for being part of the Green Bites story. We're thrilled to share our passion with you and invite you to join us for a meal soon. Explore our <a href="menu.html">menu</a> or <a href="reservations.html">make a reservation</a> to experience it for yourself!</p>
+                </section>
+             <!-- You could add team photos, details about founders, etc. -->
+
+         </div>
+     </main>
+
+
+    <!-- Footer (Include the same footer component) -->
+    <footer class="bg-neutral-darker border-t border-neutral-dark pt-16 pb-12">
+        <!-- Paste the exact <footer> HTML from index.html here -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12"> <!-- ... Footer Content ... --> </div>
+             <div class="border-t border-neutral-dark pt-8 flex flex-col md:flex-row justify-between items-center text-sm"> <!-- ... Bottom Bar ... --> </div>
+        </div>
+     </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
