@@ -1,47 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Green Bites - Home</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-success">
-    <a class="navbar-brand" href="index.html">Green Bites</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="index.html">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="menu.html">Menu</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="reservations.html">Reservations</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Green Bites - Home</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @keyframes fadeInDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-fadeInDown {
+        animation: fadeInDown 1s ease-out both;
+      }
+      @keyframes pulseGlow {
+        0%, 100% {
+          box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+        }
+        50% {
+          box-shadow: 0 0 16px rgba(16, 185, 129, 1);
+        }
+      }
+      .animate-pulseGlow {
+        animation: pulseGlow 2s infinite;
+      }
+      @keyframes spin-slow {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .animate-spin-slow {
+        animation: spin-slow 30s linear infinite;
+      }
+      .font-jost {
+        font-family: 'Jost', sans-serif;
+      }
+      .font-cormorant {
+        font-family: 'Cormorant Garamond', serif;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-900 text-white font-jost">
+    <!-- Navigation -->
+    <nav class="absolute top-0 left-0 right-0 z-20 px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-4">
+        <a href="index.html">
+          <img
+            src="/Assets/Images/Logo/GreenBites_Logo.png"
+            alt="Green Bites"
+            class="h-12 w-auto object-contain"
+          />
+        </a>
+        <div class="hidden md:flex space-x-6">
+          <a
+            href="index.html"
+            class="text-sm tracking-wide hover:text-green-400 transition-colors duration-300"
+            >Home</a
+          >
+          <a
+            href="menu.html"
+            class="text-sm tracking-wide hover:text-green-400 transition-colors duration-300"
+            >Menu</a
+          >
+          <a
+            href="reservations.html"
+            class="text-sm tracking-wide hover:text-green-400 transition-colors duration-300"
+            >Reservations</a
+          >
+        </div>
+      </div>
+      <div class="md:hidden">
+        <button class="focus:outline-none">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
 
-  <header class="jumbotron jumbotron-fluid text-center" style="background: url('assets/images/hero.jpg') center center/cover; color: #fff;">
-    <div class="container">
-      <h1 class="display-4 animate__animated animate__fadeInDown">Welcome to Green Bites</h1>
-      <p class="lead animate__animated animate__fadeInUp">Experience the art of vegan cuisine in a sustainable, eco-friendly setting!</p>
-      <a href="reservations.html" class="btn btn-primary btn-lg animate__animated animate__pulse">Reserve Now</a>
-    </div>
-  </header>
-  <footer>
-    <div class="container">
-      <p>&copy; 2023 Green Bites. All Rights Reserved.</p>
-    </div>
-  </footer>
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+    <!-- Hero Section -->
+    <header class="relative h-screen flex items-center justify-center overflow-hidden">
+      <!-- Background Image with Overlay -->
+      <div class="absolute inset-0">
+        <picture>
+          <source media="(max-width: 640px)" srcset="/assets/images/hero-small.webp" type="image/webp" />
+          <img
+            src="/assets/images/hero.jpg"
+            alt="Green Bites Restaurant"
+            class="w-full h-full object-cover"
+          />
+        </picture>
+        <div class="absolute inset-0 bg-black opacity-60"></div>
+      </div>
+      <!-- Centered Content -->
+      <div class="relative z-10 text-center px-4">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-cormorant mb-4 animate-fadeInDown">
+          Welcome to Green Bites
+        </h1>
+        <p class="text-lg sm:text-xl md:text-2xl mb-8 animate-fadeInDown delay-200">
+          Experience the art of vegan cuisine in a sustainable, eco-friendly setting.
+        </p>
+        <a
+          href="reservations.html"
+          class="px-8 py-4 bg-green-600 hover:bg-green-500 transition-colors duration-300 rounded-full text-lg font-semibold animate-pulseGlow"
+          >Reserve Now</a
+        >
+      </div>
+      <!-- Decorative Animated Element -->
+      <div class="absolute bottom-10 right-10 opacity-50">
+        <svg class="w-24 h-24 text-green-400 animate-spin-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10" stroke-width="2" class="opacity-20"></circle>
+          <path d="M12 2a10 10 0 00-10 10" stroke-width="2" stroke-linecap="round"></path>
+        </svg>
+      </div>
+    </header>
+
+    <!-- Footer -->
+    <footer class="py-6 bg-gray-800 text-center">
+      <p class="text-sm">&copy; 2023 Green Bites. All Rights Reserved.</p>
+    </footer>
+  </body>
 </html>
