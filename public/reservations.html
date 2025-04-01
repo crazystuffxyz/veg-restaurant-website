@@ -19,14 +19,60 @@
      <!-- Custom Styles & Tailwind Config -->
     <link rel="stylesheet" href="/css/style.css">
     <style>
-      tailwind.config = { /* ... Same tailwind config as index.html ... */
-         theme: {
-             extend: { /* ... Same extensions as index.html ... */
-                 animation: { /* Add form specific? */
-                     fadeInForm: 'fadeInUp 1s ease-out forwards 0.5s'
-                 }
-             }
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Jost', 'Helvetica', 'Arial', 'sans-serif'],
+              serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+            },
+            colors: {
+              primary: {
+                  light: '#6ee7b7', // Lighter Green
+                  DEFAULT: '#10b981', // Main Green
+                  dark: '#059669' // Darker Green
+              },
+              secondary: {
+                  light: '#fef3c7', // Light Yellow
+                  DEFAULT: '#fcd34d', // Main Yellow
+                  dark: '#f59e0b' // Darker Yellow/Gold
+              },
+              neutral: {
+                light: '#d1d5db', // Light Gray (text)
+                DEFAULT: '#6b7280', // Medium Gray
+                dark: '#374151', // Dark Gray (cards)
+                darker: '#1f2937', // Darker Gray (bg section)
+                darkest: '#111827' // Darkest Gray (body bg)
+              }
+            },
+            animation: {
+                fadeIn: 'fadeIn 1s ease-out forwards',
+                fadeInDown: 'fadeInDown 1.2s ease-out forwards',
+                fadeInUp: 'fadeInUp 1s ease-out forwards',
+                fadeInForm: 'fadeInUp 1s ease-out forwards 0.5s',
+                pulseGlow: 'pulseGlow 2.5s infinite ease-in-out',
+                spinSlow: 'spin 45s linear infinite',
+                slideInLeft: 'slideInLeft 1s ease-out forwards',
+                slideInRight: 'slideInRight 1s ease-out forwards',
+            },
+            keyframes: {
+                fadeIn: { '0%': { opacity: 0 }, '100%': { opacity: 1 } },
+                fadeInDown: { '0%': { opacity: 0, transform: 'translateY(-30px)' }, '100%': { opacity: 1, transform: 'translateY(0)' } },
+                fadeInUp: { '0%': { opacity: 0, transform: 'translateY(30px)' }, '100%': { opacity: 1, transform: 'translateY(0)' } },
+                pulseGlow: {
+                    '0%, 100%': { boxShadow: '0 0 12px rgba(16, 185, 129, 0.4)' },
+                    '50%': { boxShadow: '0 0 24px rgba(16, 185, 129, 0.8)' },
+                },
+                 slideInLeft: { '0%': { opacity: 0, transform: 'translateX(-50px)' }, '100%': { opacity: 1, transform: 'translateX(0)' } },
+                slideInRight: { '0%': { opacity: 0, transform: 'translateX(50px)' }, '100%': { opacity: 1, transform: 'translateX(0)' } },
+            },
+             backgroundImage: {
+               'hero-pattern': "url('/Assets/Images/Hero/hero-bg.webp')", // Define your pattern
+               'menu-texture': "radial-gradient(circle, rgba(31,41,55,0.9) 0%, rgba(17,24,39,0.95) 80%), url('/path/to/your/subtle/texture.svg')", // Example texture
+            }
+          }
         }
+      }
      };
 
       /* Custom Styles for FullCalendar to match theme */
