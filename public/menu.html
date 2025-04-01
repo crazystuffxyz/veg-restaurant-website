@@ -6,92 +6,106 @@
     <title>Our Menu - Green Bites | Delicious Vegetarian Dishes</title>
     <meta name="description" content="Explore the diverse and flavorful vegetarian menu at Green Bites. From fresh salads and hearty mains to creative appetizers, find your new favorite plant-based dish.">
     <link rel="icon" href="/Assets/Images/Favicon/favicon.ico" sizes="any">
+
+    <!-- Tailwind Configuration Script (moved before main Tailwind script) -->
+    <script>
+      tailwind.config = {
+        darkMode: 'class', // Enable dark mode support
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Jost', 'Helvetica', 'Arial', 'sans-serif'], // Added additional fallbacks
+              serif: ['Cormorant Garamond', 'Georgia', 'serif'],   // Added additional fallbacks
+            },
+            colors: {
+              primary: {
+                light: '#6ee7b7', // Lighter Green
+                DEFAULT: '#10b981', // Main Green
+                dark: '#059669' // Darker Green
+              },
+              secondary: {
+                light: '#fef3c7', // Light Yellow
+                DEFAULT: '#fcd34d', // Main Yellow
+                dark: '#f59e0b' // Darker Yellow/Gold
+              },
+              neutral: {
+                light: '#d1d5db', // Light Gray (text)
+                DEFAULT: '#6b7280', // Medium Gray
+                dark: '#374151', // Dark Gray (cards)
+                darker: '#1f2937', // Darker Gray (bg section)
+                darkest: '#111827' // Darkest Gray (body bg)
+              }
+            },
+            animation: {
+              fadeIn: 'fadeIn 1s ease-out forwards',
+              fadeInDown: 'fadeInDown 1.2s ease-out forwards',
+              fadeInUp: 'fadeInUp 1s ease-out forwards',
+              pulseGlow: 'pulseGlow 2.5s infinite ease-in-out',
+              spinSlow: 'spin 45s linear infinite',
+              slideInLeft: 'slideInLeft 1s ease-out forwards',
+              slideInRight: 'slideInRight 1s ease-out forwards',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: 0 },
+                '100%': { opacity: 1 },
+              },
+              fadeInDown: {
+                '0%': { opacity: 0, transform: 'translateY(-30px)' },
+                '100%': { opacity: 1, transform: 'translateY(0)' },
+              },
+              fadeInUp: {
+                '0%': { opacity: 0, transform: 'translateY(30px)' },
+                '100%': { opacity: 1, transform: 'translateY(0)' },
+              },
+              pulseGlow: {
+                '0%, 100%': { boxShadow: '0 0 12px rgba(16, 185, 129, 0.4)' },
+                '50%': { boxShadow: '0 0 24px rgba(16, 185, 129, 0.8)' },
+              },
+              slideInLeft: {
+                '0%': { opacity: 0, transform: 'translateX(-50px)' },
+                '100%': { opacity: 1, transform: 'translateX(0)' },
+              },
+              slideInRight: {
+                '0%': { opacity: 0, transform: 'translateX(50px)' },
+                '100%': { opacity: 1, transform: 'translateX(0)' },
+              } // Removed the extraneous period here
+            },
+            backgroundImage: {
+              // Adjust the image path as necessary
+              'menu-header-bg': "linear-gradient(rgba(17, 24, 39, 0.85), rgba(17, 24, 39, 0.85)), url('/Assets/Images/Restaurant/ambiance-1.webp')",
+              'section-bg': "rgba(31, 41, 55, 0.5)", // Semi-transparent bg for sections
+            }
+          }
+        }
+      };
+    </script>
+
+    <!-- Main Tailwind Script -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <!-- Alpine JS -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Custom CSS (External) -->
     <link rel="stylesheet" href="/css/style.css">
-    <style>
+
+    <!-- Custom CSS / Tailwind Directives (Added type="text/tailwindcss") -->
+    <style type="text/tailwindcss">
         /* Reusing styles from index.html */
-              tailwind.config = {
-  darkMode: 'class', // Enable dark mode support
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Jost', 'Helvetica', 'Arial', 'sans-serif'], // Added additional fallbacks
-        serif: ['Cormorant Garamond', 'Georgia', 'serif'],   // Added additional fallbacks
-      },
-      colors: {
-        primary: {
-          light: '#6ee7b7', // Lighter Green
-          DEFAULT: '#10b981', // Main Green
-          dark: '#059669' // Darker Green
-        },
-        secondary: {
-          light: '#fef3c7', // Light Yellow
-          DEFAULT: '#fcd34d', // Main Yellow
-          dark: '#f59e0b' // Darker Yellow/Gold
-        },
-        neutral: {
-          light: '#d1d5db', // Light Gray (text)
-          DEFAULT: '#6b7280', // Medium Gray
-          dark: '#374151', // Dark Gray (cards)
-          darker: '#1f2937', // Darker Gray (bg section)
-          darkest: '#111827' // Darkest Gray (body bg)
+        /* Custom class for menu item descriptions */
+        .menu-item-description {
+            @apply text-neutral-light/80 text-sm leading-relaxed mt-1;
         }
-      },
-      animation: {
-        fadeIn: 'fadeIn 1s ease-out forwards',
-        fadeInDown: 'fadeInDown 1.2s ease-out forwards',
-        fadeInUp: 'fadeInUp 1s ease-out forwards',
-        pulseGlow: 'pulseGlow 2.5s infinite ease-in-out',
-        spinSlow: 'spin 45s linear infinite',
-        slideInLeft: 'slideInLeft 1s ease-out forwards',
-        slideInRight: 'slideInRight 1s ease-out forwards',
-      },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: 0 },
-          '100%': { opacity: 1 },
-        },
-        fadeInDown: {
-          '0%': { opacity: 0, transform: 'translateY(-30px)' },
-          '100%': { opacity: 1, transform: 'translateY(0)' },
-        },
-        fadeInUp: {
-          '0%': { opacity: 0, transform: 'translateY(30px)' },
-          '100%': { opacity: 1, transform: 'translateY(0)' },
-        },
-        pulseGlow: {
-          '0%, 100%': { boxShadow: '0 0 12px rgba(16, 185, 129, 0.4)' },
-          '50%': { boxShadow: '0 0 24px rgba(16, 185, 129, 0.8)' },
-        },
-        slideInLeft: {
-          '0%': { opacity: 0, transform: 'translateX(-50px)' },
-          '100%': { opacity: 1, transform: 'translateX(0)' },
-        },
-        slideInRight: {
-          '0%': { opacity: 0, transform: 'translateX(50px)' },
-          '100%': { opacity: 1, transform: 'translateX(0)' },
-        }.
-      },
-      backgroundImage: {
-        // Adjust the image path as necessary
-        'menu-header-bg': "linear-gradient(rgba(17, 24, 39, 0.85), rgba(17, 24, 39, 0.85)), url('/Assets/Images/Restaurant/ambiance-1.webp')",
-        'section-bg': "rgba(31, 41, 55, 0.5)", // Semi-transparent bg for sections
-      }
-    }
-  }
-};
-     /* Custom class for menu item descriptions */
-     .menu-item-description {
-         @apply text-neutral-light/80 text-sm leading-relaxed mt-1;
-     }
-     /* Subtle border hover effect for menu items */
-     .menu-item-card:hover {
-         @apply border-primary transition-colors duration-300;
-     }
+        /* Subtle border hover effect for menu items */
+        .menu-item-card:hover {
+            @apply border-primary transition-colors duration-300;
+        }
     </style>
 </head>
 <body class="bg-neutral-darkest text-neutral-light font-sans antialiased selection:bg-primary selection:text-white">
@@ -368,11 +382,24 @@
 
     <!-- Footer (Include the same footer component as index.html) -->
     <footer class="bg-neutral-darker border-t border-neutral-dark pt-16 pb-12">
-        <!-- Paste the exact <footer> HTML from index.html here -->
+        <!-- Placeholder for Footer Content -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12"> <!-- ... Footer Content ... --> </div>
-            <div class="border-t border-neutral-dark pt-8 flex flex-col md:flex-row justify-between items-center text-sm"> <!-- ... Bottom Bar ... --> </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12 text-center md:text-left">
+                 <div><h5 class="text-white font-semibold mb-3">Green Bites</h5><p class="text-sm text-neutral-light/70">Deliciously Plant-Based.</p></div>
+                 <div><h5 class="text-white font-semibold mb-3">Quick Links</h5><ul class="text-sm text-neutral-light/70 space-y-1"><li class="hover:text-primary"><a href="menu.html">Menu</a></li><li class="hover:text-primary"><a href="reservations.html">Reserve</a></li></ul></div>
+                 <div><h5 class="text-white font-semibold mb-3">Contact</h5><p class="text-sm text-neutral-light/70">123 Veggie Lane<br>Flavor Town, FT 54321<br>(555) 123-4567</p></div>
+                 <div><h5 class="text-white font-semibold mb-3">Hours</h5><p class="text-sm text-neutral-light/70">Mon-Fri: 11am - 9pm<br>Sat-Sun: 10am - 10pm</p></div>
+            </div>
+            <div class="border-t border-neutral-dark pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-neutral-light/60">
+                <p>© 2024 Green Bites. All Rights Reserved.</p>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <!-- Add Social Icons Links Here -->
+                    <a href="#" class="hover:text-primary">Facebook</a>
+                    <a href="#" class="hover:text-primary">Instagram</a>
+                </div>
+            </div>
          </div>
+         <!-- End Placeholder -->
     </footer>
 
      <script src="/js/main.js"></script> <!-- Include if you add interactions like scroll reveal -->
