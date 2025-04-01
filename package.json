@@ -21,11 +21,5 @@
     "express": "^4.17.1",
     "moment": "^2.29.1",
     "nodemailer": "^6.7.2"
-  },
-  "devDependencies": {},
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+  }
 }
