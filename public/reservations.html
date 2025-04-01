@@ -8,7 +8,65 @@
     <!-- Favicons -->
     <link rel="icon" href="/Assets/Images/Favicon/favicon.ico" sizes="any">
 
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS Configuration (Must come BEFORE the CDN script) -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Jost', 'Helvetica', 'Arial', 'sans-serif'],
+              serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+            },
+            colors: {
+              primary: {
+                  light: '#6ee7b7', // Lighter Green
+                  DEFAULT: '#10b981', // Main Green
+                  dark: '#059669' // Darker Green
+              },
+              secondary: {
+                  light: '#fef3c7', // Light Yellow
+                  DEFAULT: '#fcd34d', // Main Yellow
+                  dark: '#f59e0b' // Darker Yellow/Gold
+              },
+              neutral: {
+                light: '#d1d5db', // Light Gray (text)
+                DEFAULT: '#6b7280', // Medium Gray
+                dark: '#374151', // Dark Gray (cards)
+                darker: '#1f2937', // Darker Gray (bg section)
+                darkest: '#111827' // Darkest Gray (body bg)
+              }
+            },
+            animation: {
+                fadeIn: 'fadeIn 1s ease-out forwards',
+                fadeInDown: 'fadeInDown 1.2s ease-out forwards',
+                fadeInUp: 'fadeInUp 1s ease-out forwards',
+                fadeInForm: 'fadeInUp 1s ease-out forwards 0.5s', // Note: fadeInForm uses fadeInUp keyframes
+                pulseGlow: 'pulseGlow 2.5s infinite ease-in-out',
+                spinSlow: 'spin 45s linear infinite',
+                slideInLeft: 'slideInLeft 1s ease-out forwards',
+                slideInRight: 'slideInRight 1s ease-out forwards',
+            },
+            keyframes: {
+                fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                fadeInDown: { '0%': { opacity: '0', transform: 'translateY(-30px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                fadeInUp: { '0%': { opacity: '0', transform: 'translateY(30px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                pulseGlow: {
+                    '0%, 100%': { boxShadow: '0 0 12px rgba(16, 185, 129, 0.4)' }, /* #10b981 with alpha */
+                    '50%': { boxShadow: '0 0 24px rgba(16, 185, 129, 0.8)' }, /* #10b981 with alpha */
+                },
+                 slideInLeft: { '0%': { opacity: '0', transform: 'translateX(-50px)' }, '100%': { opacity: '1', transform: 'translateX(0)' } },
+                slideInRight: { '0%': { opacity: '0', transform: 'translateX(50px)' }, '100%': { opacity: '1', transform: 'translateX(0)' } },
+            },
+             backgroundImage: {
+               'hero-pattern': "url('/Assets/Images/Hero/hero-bg.webp')", // Ensure path is correct
+               'menu-texture': "radial-gradient(circle, rgba(31,41,55,0.9) 0%, rgba(17,24,39,0.95) 80%), url('/path/to/your/subtle/texture.svg')", // Ensure path is correct
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- FullCalendar CSS (v3.10.2) -->
@@ -23,56 +81,63 @@
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-     <!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="/css/style.css">
+     <!-- Custom Stylesheet (Optional if relying solely on Tailwind + inline styles) -->
+    <link rel="stylesheet" href="/css/style.css"> <!-- Ensure this path is correct -->
 
-    <!-- Base and Component Styles (Keep these standard CSS examples if not using a Tailwind build process) -->
+    <!-- Base and Component Styles (Inline styles for overrides and components not easily done with pure CDN Tailwind) -->
     <style>
-      body {
-          background-color: #111827; /* neutral-darkest */
-          color: #d1d5db; /* neutral-light */
-          font-family: 'Jost', sans-serif;
-      }
+      /* Base styles set via Tailwind utility classes on `body` */
       .form-input {
           margin-top: 0.25rem; display: block; width: 100%; border-radius: 0.5rem;
-          background-color: rgba(55, 65, 81, 0.5); border: 1px solid #374151;
-          padding: 0.75rem 1rem; font-size: 1rem; color: #d1d5db;
+          background-color: rgba(55, 65, 81, 0.5); /* neutral-dark bg with transparency */
+          border: 1px solid #374151; /* neutral-dark border */
+          padding: 0.75rem 1rem; font-size: 1rem; color: #d1d5db; /* neutral-light text */
           transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
           box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
       }
       /* Style specifically for date/time inputs to show picker indicator */
       input[type="date"].form-input, input[type="time"].form-input {
-          /* color-scheme: dark;  /* Helps with dark mode styling in some browsers */
+          /* color-scheme: dark; /* Uncomment if needed for better picker styling in dark mode */
       }
-      .form-input::placeholder { color: #6b7280; opacity: 1; }
-      .form-input:focus { outline: none; border-color: #10b981; box-shadow: 0 0 0 1px #10b981; }
-      .form-label { display: block; font-size: 0.875rem; font-weight: 500; color: rgba(209, 213, 219, 0.8); margin-bottom: 0.25rem; }
-      select.form-input option:disabled { color: #6b7280; background-color: rgba(31, 41, 55, 0.5); } /* Style disabled options */
-      select.form-input option { background-color: #374151; color: #d1d5db; } /* Ensure options are styled */
+      .form-input::placeholder { color: #6b7280; opacity: 1; } /* neutral-DEFAULT */
+      .form-input:focus {
+          outline: none;
+          border-color: #10b981; /* primary-DEFAULT */
+          box-shadow: 0 0 0 1px #10b981; /* primary-DEFAULT */
+      }
+      .form-label {
+          display: block; font-size: 0.875rem; font-weight: 500;
+          color: rgba(209, 213, 219, 0.8); /* neutral-light with slight transparency */
+          margin-bottom: 0.25rem;
+      }
+      /* Ensure select dropdown options are styled for dark mode */
+      select.form-input option:disabled { color: #6b7280; background-color: rgba(31, 41, 55, 0.5); } /* neutral-DEFAULT, darker bg */
+      select.form-input option { background-color: #374151; color: #d1d5db; } /* neutral-dark bg, neutral-light text */
 
       /* --- FullCalendar Overrides --- */
-      .fc { background-color: #1f2937; border-radius: 12px; border: 1px solid #374151; color: #d1d5db; padding: 5px; }
-      .fc th { background-color: #374151; color: #f9fafb; border-color: #4b5563; padding: 12px 0; font-weight: 500; font-size: 0.9rem; }
-      .fc .fc-button { background-color: #10b981; color: #ffffff; border: none; box-shadow: none; text-transform: uppercase; font-weight: 600; padding: 8px 16px !important; cursor: pointer; }
-      .fc .fc-button:hover { background-color: #059669; }
-      .fc .fc-button:disabled { background-color: #6b7280; opacity: 0.7; cursor: default; }
+      /* Using Tailwind color variables where possible for consistency */
+      .fc { background-color: #1f2937; border-radius: 12px; border: 1px solid #374151; color: #d1d5db; padding: 5px; } /* neutral-darker, neutral-dark, neutral-light */
+      .fc th { background-color: #374151; color: #f9fafb; border-color: #4b5563; padding: 12px 0; font-weight: 500; font-size: 0.9rem; } /* neutral-dark, almost white, darker gray */
+      .fc .fc-button { background-color: #10b981; color: #ffffff; border: none; box-shadow: none; text-transform: uppercase; font-weight: 600; padding: 8px 16px !important; cursor: pointer; transition: background-color 0.2s ease-in-out; } /* primary-DEFAULT */
+      .fc .fc-button:hover { background-color: #059669; } /* primary-dark */
+      .fc .fc-button:disabled { background-color: #6b7280; opacity: 0.7; cursor: default; } /* neutral-DEFAULT */
       .fc .fc-toolbar h2 { color: #ffffff; font-size: 1.75rem; font-family: 'Cormorant Garamond', serif; }
-      .fc-day { border-color: #4b5563; }
+      .fc-day { border-color: #4b5563; } /* darker gray */
       /* Optional: Styling for days identified as 'full' by JS (requires adding class in dayRender) */
       .fc-day.day-fully-booked { background-color: rgba(239, 68, 68, 0.1); /* Example: slight red tint */ }
       .fc-day.day-fully-booked:hover { background-color: rgba(239, 68, 68, 0.2); }
       /* ---- */
-      .fc-day-top { color: #9ca3af; }
-      .fc-day.fc-today { background-color: rgba(16, 185, 129, 0.1); }
-      .fc-day-number { color: #e5e7eb; }
-      .fc-day.fc-other-month .fc-day-number { color: #6b7280; opacity: 0.6; }
-      .fc-event { background-color: #f59e0b; border-color: #f59e0b; color: #111827; padding: 2px 5px; border-radius: 4px; font-size: 0.8rem; }
+      .fc-day-top { color: #9ca3af; } /* lighter gray */
+      .fc-day.fc-today { background-color: rgba(16, 185, 129, 0.1); } /* primary-DEFAULT with low opacity */
+      .fc-day-number { color: #e5e7eb; } /* very light gray */
+      .fc-day.fc-other-month .fc-day-number { color: #6b7280; opacity: 0.6; } /* neutral-DEFAULT */
+      .fc-event { background-color: #f59e0b; border-color: #f59e0b; color: #111827; padding: 2px 5px; border-radius: 4px; font-size: 0.8rem; } /* secondary-dark, neutral-darkest */
 
       /* Helper for loading indicators */
       .spinner {
           border: 3px solid rgba(255, 255, 255, 0.3);
           border-radius: 50%;
-          border-top-color: #10b981; /* Primary color */
+          border-top-color: #10b981; /* primary-DEFAULT */
           width: 16px; height: 16px;
           animation: spin 1s linear infinite;
       }
@@ -82,54 +147,83 @@
 <body class="bg-neutral-darkest text-neutral-light font-sans antialiased selection:bg-primary selection:text-white">
 
     <!-- Navigation -->
-     <nav x-data="{ open: false, scrolled: true }" <!-- Ensure main.js handles scroll updates -->
+     <nav x-data="{ open: false, scrolled: false }" <!-- Changed initial scrolled to false for clarity, x-init handles the real check -->
          x-init="() => { scrolled = window.scrollY > 10; window.addEventListener('scroll', () => { scrolled = window.scrollY > 10 }) }"
          class="fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-out"
          :class="{ 'bg-neutral-darkest shadow-lg': scrolled || open, 'bg-transparent': !scrolled && !open }">
-         <!-- Navigation Content (Ensure pasted correctly) -->
          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
              <div class="flex justify-between items-center h-20">
-                 <!-- Logo --> <div class="flex-shrink-0"> <a href="index.html" class="transition-opacity duration-300 hover:opacity-80"><img class="h-14 lg:h-16 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Logo"></a> </div>
-                 <!-- Desktop Menu --> <div class="hidden md:flex items-center space-x-8"> <a href="index.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">HOME</a> <a href="menu.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">MENU</a> <a href="aboutus.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a> <a href="reservations.html" class="ml-4 inline-flex items-center px-5 py-2 border border-primary text-base font-semibold rounded-full shadow-sm text-primary bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary"> RESERVE </a> </div>
-                 <!-- Mobile Menu Button --> <div class="md:hidden flex items-center"> <a href="reservations.html" class="inline-flex items-center px-4 py-2 mr-2 border border-primary text-sm font-semibold rounded-full text-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary">RESERVE</a> <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" :aria-expanded="open"> <span class="sr-only">Open main menu</span> <svg x-show="!open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg> <svg x-show="open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg> </button> </div>
+                 <!-- Logo -->
+                 <div class="flex-shrink-0">
+                     <a href="index.html" class="transition-opacity duration-300 hover:opacity-80">
+                         <img class="h-14 lg:h-16 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Logo"> <!-- Ensure path is correct -->
+                     </a>
+                 </div>
+                 <!-- Desktop Menu -->
+                 <div class="hidden md:flex items-center space-x-8">
+                     <a href="index.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">HOME</a>
+                     <a href="menu.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">MENU</a>
+                     <a href="aboutus.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
+                     <a href="reservations.html" class="ml-4 inline-flex items-center px-5 py-2 border border-primary text-base font-semibold rounded-full shadow-sm text-primary bg-transparent hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">
+                         RESERVE
+                     </a>
+                 </div>
+                 <!-- Mobile Menu Button -->
+                 <div class="md:hidden flex items-center">
+                     <a href="reservations.html" class="inline-flex items-center px-4 py-2 mr-2 border border-primary text-sm font-semibold rounded-full text-primary hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">RESERVE</a>
+                     <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" :aria-expanded="open.toString()"> <!-- Use .toString() for aria-expanded -->
+                         <span class="sr-only">Open main menu</span>
+                         <svg x-show="!open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                         <svg x-show="open" style="display: none;" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg> <!-- Added style="display: none;" for better initial state with Alpine -->
+                     </button>
+                 </div>
              </div>
          </div>
-         <!-- Mobile Menu --> <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="md:hidden absolute top-full inset-x-0 bg-neutral-darkest shadow-lg p-4" id="mobile-menu"> <div class="pt-2 pb-3 space-y-3 text-center"> <a href="index.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">HOME</a> <a href="menu.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">MENU</a> <a href="aboutus.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR STORY</a> </div> </div>
+         <!-- Mobile Menu -->
+         <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" style="display: none;" class="md:hidden absolute top-full inset-x-0 bg-neutral-darkest shadow-lg p-4" id="mobile-menu"> <!-- Added style="display: none;" -->
+             <div class="pt-2 pb-3 space-y-3 text-center">
+                 <a href="index.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">HOME</a>
+                 <a href="menu.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">MENU</a>
+                 <a href="aboutus.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
+             </div>
+         </div>
      </nav>
 
     <!-- Main Content Area -->
-    <div class="container mx-auto max-w-7xl pt-28 md:pt-36 pb-16 px-4 sm:px-6 lg:px-8">
+    <main class="container mx-auto max-w-7xl pt-28 md:pt-36 pb-16 px-4 sm:px-6 lg:px-8">
         <!-- Header Text -->
-        <div class="text-center mb-12"> <!-- Removed animation class - add via JS if needed -->
+        <div class="text-center mb-12">
              <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-white leading-tight">Book Your <span class="text-primary-light">Experience</span></h1>
              <p class="mt-4 text-lg text-neutral-light/80 max-w-xl mx-auto">
-                 Select your preferred date, time, and party size below. Availability updated in real-time. <!-- Updated text -->
+                 Select your preferred date, time, and party size below. Availability updated in real-time.
             </p>
          </div>
 
          <div class="flex flex-col lg:flex-row gap-10 lg:gap-12 items-start">
 
             <!-- Reservation Form Section -->
-             <div class="w-full lg:w-5/12 xl:w-4/12">
+             <section aria-labelledby="reservation-form-heading" class="w-full lg:w-5/12 xl:w-4/12">
                  <div class="bg-neutral-darker p-6 sm:p-8 rounded-2xl shadow-2xl border border-neutral-dark">
-                    <h2 class="text-2xl font-semibold text-white mb-6 text-center font-serif">Reservation Details</h2>
-                     <!-- Form handles submission via JS -->
-                     <form id="reservationForm" class="space-y-5">
+                    <h2 id="reservation-form-heading" class="text-2xl font-semibold text-white mb-6 text-center font-serif">Reservation Details</h2>
+                     <!-- Form submission handled by /js/reservations.js -->
+                     <form id="reservationForm" class="space-y-5" novalidate> <!-- Added novalidate as JS will handle validation -->
                          <!-- Message Area (for errors/success after submit or pre-submit warnings) -->
-                         <div id="reservationMessage" class="mb-5 text-sm min-h-[1.2em] font-medium text-center"></div>
+                         <div id="reservationMessage" role="alert" aria-live="polite" class="mb-5 text-sm min-h-[1.2em] font-medium text-center"></div> <!-- Added accessibility attributes -->
 
                          <div>
                             <label for="name" class="form-label">Full Name:</label>
-                            <input type="text" id="name" name="name" required class="form-input" placeholder="e.g., Jane Doe">
+                            <input type="text" id="name" name="name" required class="form-input" placeholder="e.g., Jane Doe" aria-describedby="name-error">
+                            <div id="name-error" class="text-red-400 text-xs mt-1 h-4"></div> <!-- Placeholder for JS validation errors -->
                          </div>
                          <div>
                              <label for="email" class="form-label">Email Address:</label>
-                             <input type="email" id="email" name="email" required class="form-input" placeholder="you@example.com">
+                             <input type="email" id="email" name="email" required class="form-input" placeholder="you@example.com" aria-describedby="email-error">
+                             <div id="email-error" class="text-red-400 text-xs mt-1 h-4"></div>
                          </div>
                          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                             <div>
                                  <label for="numberOfPeople" class="form-label">Party Size:</label>
-                                 <select id="numberOfPeople" name="numberOfPeople" required class="form-input appearance-none">
+                                 <select id="numberOfPeople" name="numberOfPeople" required class="form-input appearance-none" aria-describedby="people-error"> <!-- Removed appearance-none if custom arrow is not implemented -->
                                      <option value="" disabled selected>Select guests</option>
                                      <option value="1">1 Person</option>
                                      <option value="2">2 People</option>
@@ -140,49 +234,33 @@
                                      <option value="7">7 People</option>
                                      <option value="8">8 People</option>
                                 </select>
-                                 <p class="text-xs text-neutral-light/60 mt-1">For parties > 8, please call.</p> <!-- Adjusted text color -->
+                                 <div id="people-error" class="text-red-400 text-xs mt-1 h-4"></div>
+                                 <p class="text-xs text-neutral-light/60 mt-1">For parties > 8, please call.</p>
                             </div>
                             <div>
                                  <label for="date" class="form-label">Date:</label>
-                                 <!-- min attribute set by JS -->
-                                <input type="date" id="date" name="date" required class="form-input">
+                                 <!-- min attribute should be set by JS to prevent past dates -->
+                                <input type="date" id="date" name="date" required class="form-input" aria-describedby="date-error">
+                                <div id="date-error" class="text-red-400 text-xs mt-1 h-4"></div>
                             </div>
                          </div>
 
                         <div>
-                            <!-- Add label and loading indicator container -->
                             <div class="flex justify-between items-center mb-1">
-                                <label for="time" class="form-label !mb-0">Available Times:</label> <!-- Added !mb-0 -->
-                                <!-- *** ADDED Loading Indicator Placeholder *** -->
+                                <label for="time" class="form-label !mb-0">Available Times:</label>
                                 <div id="time-loader" class="hidden items-center gap-2"> <!-- Initially hidden -->
                                     <div class="spinner"></div>
                                     <span class="text-xs text-neutral-light/70">Checking...</span>
                                 </div>
                             </div>
-                            <!-- *** JS will update these options based on availability *** -->
-                            <select id="time" name="time" required class="form-input appearance-none">
-                                 <option value="" disabled selected>Select date & guests first</option> <!-- Updated placeholder -->
-                                 <!-- Options should match backend AVAILABLE_TIMES -->
-                                <option value="11:00">11:00 AM</option>
-                                <option value="11:30">11:30 AM</option>
-                                <option value="12:00">12:00 PM</option>
-                                <option value="12:30">12:30 PM</option>
-                                <option value="13:00">1:00 PM</option>
-                                <option value="13:30">1:30 PM</option>
-                                <option value="14:00">2:00 PM</option>
-                                <!-- Potential Break -->
-                                <option value="17:00">5:00 PM</option>
-                                <option value="17:30">5:30 PM</option>
-                                <option value="18:00">6:00 PM</option>
-                                <option value="18:30">6:30 PM</option>
-                                <option value="19:00">7:00 PM</option>
-                                <option value="19:30">7:30 PM</option>
-                                <option value="20:00">8:00 PM</option>
-                                <option value="20:30">8:30 PM</option>
-                                <option value="21:00">9:00 PM</option>
+                            <!-- JS populates options based on availability checks -->
+                            <select id="time" name="time" required class="form-input appearance-none" disabled aria-describedby="time-error time-hint"> <!-- Initially disabled -->
+                                 <option value="" disabled selected>Select date & guests first</option>
+                                 <!-- Options populated by JS, example structure below (ensure values match backend expectations) -->
+                                 <!-- <option value="17:00">5:00 PM</option> -->
                             </select>
-                            <!-- *** ADDED Hint Text *** -->
-                             <p id="time-hint" class="text-xs text-neutral-light/60 mt-1">Available times shown for selected date and party size.</p>
+                            <div id="time-error" class="text-red-400 text-xs mt-1 h-4"></div>
+                            <p id="time-hint" class="text-xs text-neutral-light/60 mt-1">Available times shown for selected date and party size.</p>
                          </div>
 
                          <div>
@@ -191,8 +269,8 @@
                         </div>
 
                         <!-- Submit Button -->
-                         <button type="submit" id="submitButton" class="w-full mt-6 bg-primary hover:bg-primary-dark transition-colors duration-300 ease-out text-white font-bold py-3.5 px-4 rounded-lg text-lg shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-neutral-darker flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"> <!-- Enhanced disabled styles -->
-                             <svg id="buttonSpinner" class="animate-spin -ml-1 mr-2 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                         <button type="submit" id="submitButton" class="w-full mt-6 bg-primary hover:bg-primary-dark transition-colors duration-300 ease-out text-white font-bold py-3.5 px-4 rounded-lg text-lg shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-neutral-darker flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                             <svg id="buttonSpinner" aria-hidden="true" class="animate-spin -ml-1 mr-2 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                              </svg>
@@ -203,48 +281,86 @@
                         Please note: Submitting sends a request. Confirmation requires email verification.
                     </p>
                  </div>
-             </div>
+             </section>
 
             <!-- Calendar Section -->
-             <div class="w-full lg:w-7/12 xl:w-8/12">
+             <aside aria-labelledby="calendar-heading" class="w-full lg:w-7/12 xl:w-8/12">
                  <div id='calendarWrapper' class="bg-neutral-darker p-4 sm:p-6 rounded-2xl shadow-2xl border border-neutral-dark">
-                    <!-- FullCalendar initialized here by JS -->
+                    <h2 id="calendar-heading" class="sr-only">Availability Calendar</h2> <!-- Screen reader heading -->
+                    <!-- FullCalendar initialized here by /js/reservations.js -->
                     <div id='calendar'></div>
                     <p class="text-center text-sm text-neutral-light/70 mt-4">
-                         Select a date on the calendar or use the form. Availability is based on selected party size. <!-- Updated text -->
+                         Select a date on the calendar or use the form. Availability is based on selected party size.
                     </p>
                 </div>
-                <div class="mt-6 text-center text-neutral-light/80 text-sm">
+                <div class="mt-6 text-center text-neutral-light/80 text-sm space-y-1"> <!-- Added space-y-1 -->
                     <p><strong class="text-white">Hours:</strong> Mon-Sun 11:00 AM - 10:00 PM</p>
                     <p>Reservations highly recommended. Walk-ins welcome subject to availability.</p>
                 </div>
-             </div>
+             </aside>
 
         </div>
 
-        <!-- Hidden Reservation Status Table -->
-        <!-- <div id="reservationList" ... > ... </div> -->
+        <!-- Hidden Reservation Status Table (Example - if needed by JS) -->
+        <!-- <div id="reservationList" class="hidden mt-10"> ... Table structure ... </div> -->
 
-    </div>
+    </main>
 
     <!-- Footer -->
-    <footer class="bg-neutral-darker border-t border-neutral-dark pt-16 pb-12">
-         <!-- Ensure footer content is pasted here -->
+    <footer class="bg-neutral-darker border-t border-neutral-dark pt-16 pb-12 mt-16"> <!-- Added margin-top -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12"> <!-- Footer Content Placeholder --> Footer Links/Info </div>
-             <div class="border-t border-neutral-dark pt-8 flex flex-col md:flex-row justify-between items-center text-sm"> <!-- Bottom Bar Placeholder --> © Green Bites | Address etc. </div>
+            <!-- Replace Placeholder with Actual Footer Content -->
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12 text-center md:text-left">
+                <div>
+                    <h5 class="font-semibold text-white uppercase tracking-wider mb-4 font-serif">Green Bites</h5>
+                    <p class="text-neutral-light/80">Experience the best vegetarian cuisine in Fairfax, VA. Fresh ingredients, delightful flavors.</p>
+                </div>
+                <div>
+                    <h5 class="font-semibold text-white uppercase tracking-wider mb-4 font-serif">Quick Links</h5>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-neutral-light/80 hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="menu.html" class="text-neutral-light/80 hover:text-primary transition-colors">Menu</a></li>
+                        <li><a href="aboutus.html" class="text-neutral-light/80 hover:text-primary transition-colors">Our Story</a></li>
+                        <li><a href="reservations.html" class="text-neutral-light/80 hover:text-primary transition-colors">Reservations</a></li>
+                    </ul>
+                </div>
+                 <div>
+                    <h5 class="font-semibold text-white uppercase tracking-wider mb-4 font-serif">Hours</h5>
+                    <ul class="space-y-1 text-neutral-light/80">
+                       <li>Mon - Sun: 11:00 AM - 10:00 PM</li>
+                       <li>(Kitchen closes 9:30 PM)</li>
+                    </ul>
+                </div>
+                 <div>
+                    <h5 class="font-semibold text-white uppercase tracking-wider mb-4 font-serif">Contact</h5>
+                     <address class="not-italic text-neutral-light/80 space-y-1">
+                        <p>123 Green Way, Fairfax, VA 22030</p>
+                        <p><a href="tel:+" class="hover:text-primary transition-colors">(703) 555-1234</a></p>
+                        <p><a href="mailto:" class="hover:text-primary transition-colors">info@greenbites.example.com</a></p>
+                    </address>
+                </div>
+            </div>
+             <div class="border-t border-neutral-dark pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-neutral-light/60">
+                 <p>© <script>document.write(new Date().getFullYear())</script> Green Bites. All Rights Reserved.</p>
+                 <!-- Add social media links if desired -->
+                 <div class="flex space-x-4 mt-4 md:mt-0">
+                     <a href="#" class="hover:text-white transition-colors">Facebook</a>
+                     <a href="#" class="hover:text-white transition-colors">Instagram</a>
+                     <a href="#" class="hover:text-white transition-colors">Yelp</a>
+                 </div>
+             </div>
          </div>
      </footer>
 
     <!-- Scripts: Load Libraries FIRST -->
     <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script> <!-- Ensure v3 is intended -->
 
     <!-- Load Your Custom Scripts LAST -->
      <!-- reservations.js initializes calendar, handles form logic & availability checks -->
-    <script src="/js/reservations.js"></script>
+    <script src="/js/reservations.js"></script> <!-- Ensure path is correct -->
     <!-- main.js handles shared logic like nav scroll -->
-    <script src="/js/main.js"></script> <!-- Load main.js, ensure nav scroll code is here or in reservations.js -->
+    <script src="/js/main.js"></script> <!-- Ensure path is correct and contains nav scroll logic -->
 </body>
 </html>
