@@ -105,4 +105,4 @@ app.post('/reserve', async (req, res) => {
   }
 });
 
-module.exports = app;
+app.listen(8080);
