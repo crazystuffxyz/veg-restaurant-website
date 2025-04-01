@@ -5,175 +5,122 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reserve Your Table - Green Bites</title>
     <meta name="description" content="Book your table at Green Bites easily online. Select your date, time, and party size for an exceptional vegetarian dining experience in Fairfax, VA.">
-    <!-- Consider adding more favicon variations (PNG, apple-touch-icon) -->
+    <!-- Favicons -->
     <link rel="icon" href="/Assets/Images/Favicon/favicon.ico" sizes="any">
 
-    <!-- Tailwind CSS via CDN -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!--
-    NOTE: To use custom Tailwind configurations (fonts, colors, animations),
-    you MUST use a build process (install Tailwind via npm, configure tailwind.config.js, run build).
-    The inline <style> approach with `tailwind.config = {...}` and `@apply` is INCORRECT for the CDN script and has been removed.
-    Define custom base styles and component styles (like for FullCalendar, .form-input) in your /css/style.css file
-    and ensure it's processed correctly if using @apply, or write standard CSS.
-    -->
 
-    <!-- FullCalendar CSS (v3.10.2 - Consider updating to v5/v6) -->
+    <!-- FullCalendar CSS (v3.10.2) -->
     <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
     <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.print.min.css' rel='stylesheet' media='print' />
 
      <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Ensure your build process configures Tailwind to use these fonts if needed -->
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-     <!-- Custom Stylesheet - Define non-Tailwind utility styles, component styles, and potentially FullCalendar overrides here -->
+     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="/css/style.css">
 
-    <!-- Removed problematic inline <style> block -->
+    <!-- Base and Component Styles (Keep these standard CSS examples if not using a Tailwind build process) -->
     <style>
-      /* Example: Define FullCalendar overrides or other base styles here IF NOT using a build process */
-      /* If using a build process, put these in style.css */
-      /* THESE ARE EXAMPLES - ADJUST TO MATCH YOUR ORIGINAL INTENT WITHOUT @apply */
       body {
           background-color: #111827; /* neutral-darkest */
           color: #d1d5db; /* neutral-light */
-          font-family: 'Jost', sans-serif; /* Matching Tailwind config */
+          font-family: 'Jost', sans-serif;
       }
-      /* Example: Simple input styling without @apply */
       .form-input {
-          margin-top: 0.25rem;
-          display: block;
-          width: 100%;
-          border-radius: 0.5rem; /* rounded-lg */
-          background-color: rgba(55, 65, 81, 0.5); /* bg-neutral-dark/50 */
-          border: 1px solid #374151; /* border-neutral-dark */
-          padding: 0.75rem 1rem; /* px-4 py-3 */
-          font-size: 1rem; /* text-base */
-          color: #d1d5db; /* text-neutral-light */
+          margin-top: 0.25rem; display: block; width: 100%; border-radius: 0.5rem;
+          background-color: rgba(55, 65, 81, 0.5); border: 1px solid #374151;
+          padding: 0.75rem 1rem; font-size: 1rem; color: #d1d5db;
           transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-          box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); /* shadow-sm */
+          box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
       }
-      .form-input::placeholder {
-          color: #6b7280; /* placeholder-neutral-dark equivalent */
-          opacity: 1;
+      /* Style specifically for date/time inputs to show picker indicator */
+      input[type="date"].form-input, input[type="time"].form-input {
+          /* color-scheme: dark;  /* Helps with dark mode styling in some browsers */
       }
-       .form-input:focus {
-          outline: none;
-          border-color: #10b981; /* focus:border-primary */
-          box-shadow: 0 0 0 1px #10b981; /* focus:ring-1 focus:ring-primary */
-      }
-       .form-label {
-           display: block;
-           font-size: 0.875rem; /* text-sm */
-           font-weight: 500; /* font-medium */
-           color: rgba(209, 213, 219, 0.8); /* text-neutral-light/80 */
-           margin-bottom: 0.25rem; /* mb-1 */
-      }
-       /* Add your FullCalendar CSS overrides here. Remove !important if possible */
-       .fc { background-color: #1f2937; border-radius: 12px; border: 1px solid #374151; color: #d1d5db; padding: 5px; } /* Added padding */
-       .fc th { background-color: #374151; color: #f9fafb; border-color: #4b5563; padding: 12px 0; font-weight: 500; font-size: 0.9rem;}
-       .fc .fc-button { background-color: #10b981; color: #ffffff; border: none; box-shadow: none; text-transform: uppercase; font-weight: 600; padding: 8px 16px !important; /* Use !important carefully */ }
-       .fc .fc-button:hover { background-color: #059669; }
-       .fc .fc-button:disabled { background-color: #6b7280; opacity: 0.7; }
-       .fc .fc-toolbar h2 { color: #ffffff; font-size: 1.75rem; font-family: 'Cormorant Garamond', serif; }
-       .fc-day { border-color: #4b5563; }
-       /* Use interaction hooks if possible instead of hover */
-       /* .fc-day:hover { background-color: #374151; } */
-       .fc-day-top { color: #9ca3af; }
-       .fc-day.fc-today { background-color: rgba(16, 185, 129, 0.1); }
-       .fc-day-number { color: #e5e7eb; }
-       .fc-day.fc-other-month .fc-day-number { color: #6b7280; opacity: 0.6; }
-       .fc-event { background-color: #f59e0b; border-color: #f59e0b; color: #111827; padding: 2px 5px; border-radius: 4px; font-size: 0.8rem;}
+      .form-input::placeholder { color: #6b7280; opacity: 1; }
+      .form-input:focus { outline: none; border-color: #10b981; box-shadow: 0 0 0 1px #10b981; }
+      .form-label { display: block; font-size: 0.875rem; font-weight: 500; color: rgba(209, 213, 219, 0.8); margin-bottom: 0.25rem; }
+      select.form-input option:disabled { color: #6b7280; background-color: rgba(31, 41, 55, 0.5); } /* Style disabled options */
+      select.form-input option { background-color: #374151; color: #d1d5db; } /* Ensure options are styled */
 
+      /* --- FullCalendar Overrides --- */
+      .fc { background-color: #1f2937; border-radius: 12px; border: 1px solid #374151; color: #d1d5db; padding: 5px; }
+      .fc th { background-color: #374151; color: #f9fafb; border-color: #4b5563; padding: 12px 0; font-weight: 500; font-size: 0.9rem; }
+      .fc .fc-button { background-color: #10b981; color: #ffffff; border: none; box-shadow: none; text-transform: uppercase; font-weight: 600; padding: 8px 16px !important; cursor: pointer; }
+      .fc .fc-button:hover { background-color: #059669; }
+      .fc .fc-button:disabled { background-color: #6b7280; opacity: 0.7; cursor: default; }
+      .fc .fc-toolbar h2 { color: #ffffff; font-size: 1.75rem; font-family: 'Cormorant Garamond', serif; }
+      .fc-day { border-color: #4b5563; }
+      /* Optional: Styling for days identified as 'full' by JS (requires adding class in dayRender) */
+      .fc-day.day-fully-booked { background-color: rgba(239, 68, 68, 0.1); /* Example: slight red tint */ }
+      .fc-day.day-fully-booked:hover { background-color: rgba(239, 68, 68, 0.2); }
+      /* ---- */
+      .fc-day-top { color: #9ca3af; }
+      .fc-day.fc-today { background-color: rgba(16, 185, 129, 0.1); }
+      .fc-day-number { color: #e5e7eb; }
+      .fc-day.fc-other-month .fc-day-number { color: #6b7280; opacity: 0.6; }
+      .fc-event { background-color: #f59e0b; border-color: #f59e0b; color: #111827; padding: 2px 5px; border-radius: 4px; font-size: 0.8rem; }
+
+      /* Helper for loading indicators */
+      .spinner {
+          border: 3px solid rgba(255, 255, 255, 0.3);
+          border-radius: 50%;
+          border-top-color: #10b981; /* Primary color */
+          width: 16px; height: 16px;
+          animation: spin 1s linear infinite;
+      }
+       @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="bg-neutral-darkest text-neutral-light font-sans antialiased selection:bg-primary selection:text-white">
 
-    <!-- Navigation (Include the same nav component as index.html) -->
-     <!--
-        NOTE on Scroll Behavior:
-        The `scrolled` state needs to be updated by JavaScript (e.g., in main.js).
-        Add an event listener for the 'scroll' event on the window and update
-        `this.scrolled` based on `window.scrollY`. Initialize scrolled to `window.scrollY > threshold`.
-        Example JS snippet for Alpine component:
-        `init() { this.scrolled = window.scrollY > 10; window.addEventListener('scroll', () => { this.scrolled = window.scrollY > 10 }) }`
-        and add `x-init="init()"` to the nav tag.
-    -->
-     <nav x-data="{ open: false, scrolled: true }" <!-- Initial state might need JS adjustment -->
+    <!-- Navigation -->
+     <nav x-data="{ open: false, scrolled: true }" <!-- Ensure main.js handles scroll updates -->
+         x-init="() => { scrolled = window.scrollY > 10; window.addEventListener('scroll', () => { scrolled = window.scrollY > 10 }) }"
          class="fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-out"
          :class="{ 'bg-neutral-darkest shadow-lg': scrolled || open, 'bg-transparent': !scrolled && !open }">
-        <!-- Paste the exact <nav> HTML from index.html here -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <!-- Logo -->
-                 <div class="flex-shrink-0"> <a href="index.html" class="transition-opacity duration-300 hover:opacity-80"><img class="h-14 lg:h-16 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Logo"></a> </div>
-                <!-- Desktop Menu -->
-                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="index.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">HOME</a>
-                    <a href="menu.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">MENU</a>
-                    <a href="aboutus.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
-                    <a href="reservations.html" class="ml-4 inline-flex items-center px-5 py-2 border border-primary text-base font-semibold rounded-full shadow-sm text-primary bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary">
-                        RESERVE <!-- Active state styling -->
-                    </a>
-                 </div>
-                <!-- Mobile Menu Button -->
-                 <div class="md:hidden flex items-center">
-                    <a href="reservations.html" class="inline-flex items-center px-4 py-2 mr-2 border border-primary text-sm font-semibold rounded-full text-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary">RESERVE</a> <!-- Active mobile styling -->
-                    <!-- FIX: Bind aria-expanded to Alpine's 'open' state -->
-                    <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" :aria-expanded="open">
-                         <span class="sr-only">Open main menu</span>
-                        <svg x-show="!open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-                        <svg x-show="open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                     </button>
-                 </div>
+         <!-- Navigation Content (Ensure pasted correctly) -->
+         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+             <div class="flex justify-between items-center h-20">
+                 <!-- Logo --> <div class="flex-shrink-0"> <a href="index.html" class="transition-opacity duration-300 hover:opacity-80"><img class="h-14 lg:h-16 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Logo"></a> </div>
+                 <!-- Desktop Menu --> <div class="hidden md:flex items-center space-x-8"> <a href="index.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">HOME</a> <a href="menu.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">MENU</a> <a href="aboutus.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a> <a href="reservations.html" class="ml-4 inline-flex items-center px-5 py-2 border border-primary text-base font-semibold rounded-full shadow-sm text-primary bg-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary"> RESERVE </a> </div>
+                 <!-- Mobile Menu Button --> <div class="md:hidden flex items-center"> <a href="reservations.html" class="inline-flex items-center px-4 py-2 mr-2 border border-primary text-sm font-semibold rounded-full text-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary">RESERVE</a> <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" :aria-expanded="open"> <span class="sr-only">Open main menu</span> <svg x-show="!open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg> <svg x-show="open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg> </button> </div>
              </div>
          </div>
-         <!-- Mobile Menu -->
-        <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="md:hidden absolute top-full inset-x-0 bg-neutral-darkest shadow-lg p-4" id="mobile-menu">
-             <div class="pt-2 pb-3 space-y-3 text-center">
-                <a href="index.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">HOME</a>
-                <a href="menu.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">MENU</a>
-                 <a href="aboutus.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
-            </div>
-        </div>
-    </nav>
+         <!-- Mobile Menu --> <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="md:hidden absolute top-full inset-x-0 bg-neutral-darkest shadow-lg p-4" id="mobile-menu"> <div class="pt-2 pb-3 space-y-3 text-center"> <a href="index.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">HOME</a> <a href="menu.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">MENU</a> <a href="aboutus.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR STORY</a> </div> </div>
+     </nav>
 
     <!-- Main Content Area -->
     <div class="container mx-auto max-w-7xl pt-28 md:pt-36 pb-16 px-4 sm:px-6 lg:px-8">
-        <!-- Apply animations directly with Tailwind classes - ensure they are defined if custom -->
-        <!-- If using default Tailwind, these may need adjustment or ensure config includes them -->
-        <div class="text-center mb-12 animate-fadeInDown">
+        <!-- Header Text -->
+        <div class="text-center mb-12"> <!-- Removed animation class - add via JS if needed -->
              <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-white leading-tight">Book Your <span class="text-primary-light">Experience</span></h1>
              <p class="mt-4 text-lg text-neutral-light/80 max-w-xl mx-auto">
-                 Select your preferred date and time below. We recommend booking in advance, especially for weekends.
+                 Select your preferred date, time, and party size below. Availability updated in real-time. <!-- Updated text -->
             </p>
          </div>
 
          <div class="flex flex-col lg:flex-row gap-10 lg:gap-12 items-start">
 
             <!-- Reservation Form Section -->
-             <!--
-                NOTE on Animations: The `animate-fadeInForm` class relies on the custom Tailwind config which isn't loaded via CDN.
-                Either define these animations in /css/style.css or use default Tailwind animations.
-                The inline style="opacity:0;" is likely part of the intended animation start state. CSS or JS should handle the transition to opacity:1.
-                Let's remove the custom animation class for now assuming it won't work, but keep the structure. Add JS for a fade-in if needed.
-             -->
              <div class="w-full lg:w-5/12 xl:w-4/12">
-                 <div class="bg-neutral-darker p-6 sm:p-8 rounded-2xl shadow-2xl border border-neutral-dark" > <!-- Removed custom animation class -->
+                 <div class="bg-neutral-darker p-6 sm:p-8 rounded-2xl shadow-2xl border border-neutral-dark">
                     <h2 class="text-2xl font-semibold text-white mb-6 text-center font-serif">Reservation Details</h2>
-                     <!-- Form submission, messages, spinner visibility MUST be handled by /js/reservations.js -->
+                     <!-- Form handles submission via JS -->
                      <form id="reservationForm" class="space-y-5">
-                         <div id="reservationMessage" class="mb-5 text-sm min-h-[1.2em]"><!-- Messages will appear here. Added min-height to prevent layout shift. --></div>
+                         <!-- Message Area (for errors/success after submit or pre-submit warnings) -->
+                         <div id="reservationMessage" class="mb-5 text-sm min-h-[1.2em] font-medium text-center"></div>
 
                          <div>
                             <label for="name" class="form-label">Full Name:</label>
-                            <!-- Use the .form-input class defined in <style> or style.css -->
-                             <input type="text" id="name" name="name" required class="form-input" placeholder="e.g., Jane Doe">
+                            <input type="text" id="name" name="name" required class="form-input" placeholder="e.g., Jane Doe">
                          </div>
                          <div>
                              <label for="email" class="form-label">Email Address:</label>
@@ -182,40 +129,48 @@
                          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                             <div>
                                  <label for="numberOfPeople" class="form-label">Party Size:</label>
-                                <!-- Added appearance-none Tailwind class, rely on CSS for arrow -->
-                                <select id="numberOfPeople" name="numberOfPeople" required class="form-input appearance-none">
+                                 <select id="numberOfPeople" name="numberOfPeople" required class="form-input appearance-none">
                                      <option value="" disabled selected>Select guests</option>
                                      <option value="1">1 Person</option>
                                      <option value="2">2 People</option>
                                      <option value="3">3 People</option>
-                                    <option value="4">4 People</option>
-                                    <option value="5">5 People</option>
-                                    <option value="6">6 People</option>
-                                    <option value="7">7 People</option>
-                                    <option value="8">8 People</option>
+                                     <option value="4">4 People</option>
+                                     <option value="5">5 People</option>
+                                     <option value="6">6 People</option>
+                                     <option value="7">7 People</option>
+                                     <option value="8">8 People</option>
                                 </select>
-                                 <p class="text-xs text-neutral-dark mt-1">For parties > 8, please call.</p>
+                                 <p class="text-xs text-neutral-light/60 mt-1">For parties > 8, please call.</p> <!-- Adjusted text color -->
                             </div>
                             <div>
                                  <label for="date" class="form-label">Date:</label>
-                                <!-- NOTE: `min` attribute should be set by /js/reservations.js on page load -->
-                                <!-- Added standard Tailwind date input styling classes -->
-                                <input type="date" id="date" name="date" required class="form-input" min="">
+                                 <!-- min attribute set by JS -->
+                                <input type="date" id="date" name="date" required class="form-input">
                             </div>
                          </div>
 
                         <div>
-                            <label for="time" class="form-label">Time:</label>
-                            <!-- Added appearance-none Tailwind class, rely on CSS for arrow -->
+                            <!-- Add label and loading indicator container -->
+                            <div class="flex justify-between items-center mb-1">
+                                <label for="time" class="form-label !mb-0">Available Times:</label> <!-- Added !mb-0 -->
+                                <!-- *** ADDED Loading Indicator Placeholder *** -->
+                                <div id="time-loader" class="hidden items-center gap-2"> <!-- Initially hidden -->
+                                    <div class="spinner"></div>
+                                    <span class="text-xs text-neutral-light/70">Checking...</span>
+                                </div>
+                            </div>
+                            <!-- *** JS will update these options based on availability *** -->
                             <select id="time" name="time" required class="form-input appearance-none">
-                                 <option value="" disabled selected>Select a time</option>
-                                 <option value="11:00">11:00 AM</option>
+                                 <option value="" disabled selected>Select date & guests first</option> <!-- Updated placeholder -->
+                                 <!-- Options should match backend AVAILABLE_TIMES -->
+                                <option value="11:00">11:00 AM</option>
                                 <option value="11:30">11:30 AM</option>
                                 <option value="12:00">12:00 PM</option>
                                 <option value="12:30">12:30 PM</option>
                                 <option value="13:00">1:00 PM</option>
                                 <option value="13:30">1:30 PM</option>
                                 <option value="14:00">2:00 PM</option>
+                                <!-- Potential Break -->
                                 <option value="17:00">5:00 PM</option>
                                 <option value="17:30">5:30 PM</option>
                                 <option value="18:00">6:00 PM</option>
@@ -224,17 +179,19 @@
                                 <option value="19:30">7:30 PM</option>
                                 <option value="20:00">8:00 PM</option>
                                 <option value="20:30">8:30 PM</option>
-                                 <option value="21:00">9:00 PM</option>
+                                <option value="21:00">9:00 PM</option>
                             </select>
+                            <!-- *** ADDED Hint Text *** -->
+                             <p id="time-hint" class="text-xs text-neutral-light/60 mt-1">Available times shown for selected date and party size.</p>
                          </div>
 
                          <div>
                              <label for="specialRequests" class="form-label">Special Requests (Optional):</label>
-                             <!-- Added standard Tailwind textarea styling -->
                             <textarea id="specialRequests" name="specialRequests" rows="3" class="form-input" placeholder="e.g., High chair needed, birthday celebration"></textarea>
                         </div>
 
-                         <button type="submit" id="submitButton" class="w-full mt-6 bg-primary hover:bg-primary-dark transition-all duration-300 ease-out text-white font-bold py-3.5 px-4 rounded-lg text-lg shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-neutral-darker flex items-center justify-center gap-2 disabled:opacity-70"> <!-- Added disabled style -->
+                        <!-- Submit Button -->
+                         <button type="submit" id="submitButton" class="w-full mt-6 bg-primary hover:bg-primary-dark transition-colors duration-300 ease-out text-white font-bold py-3.5 px-4 rounded-lg text-lg shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-neutral-darker flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"> <!-- Enhanced disabled styles -->
                              <svg id="buttonSpinner" class="animate-spin -ml-1 mr-2 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -243,56 +200,51 @@
                          </button>
                      </form>
                     <p class="text-xs text-center text-neutral-light/60 mt-6">
-                        Please note: Submitting this form sends a request. Your reservation is only confirmed after email verification.
+                        Please note: Submitting sends a request. Confirmation requires email verification.
                     </p>
                  </div>
              </div>
 
             <!-- Calendar Section -->
-             <!-- NOTE: Relies on /js/reservations.js to initialize FullCalendar into #calendar -->
-             <!-- Removed custom animation class, handle with JS or standard CSS if needed -->
              <div class="w-full lg:w-7/12 xl:w-8/12">
-                 <div id='calendarWrapper' class="bg-neutral-darker p-4 sm:p-6 rounded-2xl shadow-2xl border border-neutral-dark"> <!-- Removed animation -->
+                 <div id='calendarWrapper' class="bg-neutral-darker p-4 sm:p-6 rounded-2xl shadow-2xl border border-neutral-dark">
+                    <!-- FullCalendar initialized here by JS -->
                     <div id='calendar'></div>
                     <p class="text-center text-sm text-neutral-light/70 mt-4">
-                         Select a date above to easily populate the form. Calendar shows general availability indications (actual times subject to capacity).
+                         Select a date on the calendar or use the form. Availability is based on selected party size. <!-- Updated text -->
                     </p>
                 </div>
-                 <!-- Removed animation class, handle with JS or CSS if needed -->
-                <div class="mt-6 text-center text-neutral-light/80 text-sm"> <!-- Removed animation -->
+                <div class="mt-6 text-center text-neutral-light/80 text-sm">
                     <p><strong class="text-white">Hours:</strong> Mon-Sun 11:00 AM - 10:00 PM</p>
-                    <p>Reservations recommended. Walk-ins welcome based on availability.</p>
+                    <p>Reservations highly recommended. Walk-ins welcome subject to availability.</p>
                 </div>
              </div>
 
         </div>
 
-        <!-- Reservation Status Table (Commented Out - No changes needed here) -->
-         <!--
-        <div id="reservationList" ... > ... </div>
-        -->
+        <!-- Hidden Reservation Status Table -->
+        <!-- <div id="reservationList" ... > ... </div> -->
 
     </div>
 
-    <!-- Footer (Include the same footer component as index.html) -->
+    <!-- Footer -->
     <footer class="bg-neutral-darker border-t border-neutral-dark pt-16 pb-12">
-         <!-- Paste the exact <footer> HTML from index.html here -->
+         <!-- Ensure footer content is pasted here -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Ensure footer content is pasted here -->
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12"> Footer Content Goes Here </div>
-             <div class="border-t border-neutral-dark pt-8 flex flex-col md:flex-row justify-between items-center text-sm"> Footer Bottom Bar Goes Here </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12"> <!-- Footer Content Placeholder --> Footer Links/Info </div>
+             <div class="border-t border-neutral-dark pt-8 flex flex-col md:flex-row justify-between items-center text-sm"> <!-- Bottom Bar Placeholder --> © Green Bites | Address etc. </div>
          </div>
      </footer>
 
-    <!-- Scripts: jQuery & Moment.js needed for FullCalendar v3 -->
+    <!-- Scripts: Load Libraries FIRST -->
     <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
 
-    <!-- Custom JS Files -->
-     <!-- reservations.js should initialize FullCalendar, handle form interactions, set min date, etc. -->
+    <!-- Load Your Custom Scripts LAST -->
+     <!-- reservations.js initializes calendar, handles form logic & availability checks -->
     <script src="/js/reservations.js"></script>
-    <!-- main.js should handle shared functionality like the nav scroll behavior -->
-    <script src="/js/main.js"></script>
+    <!-- main.js handles shared logic like nav scroll -->
+    <script src="/js/main.js"></script> <!-- Load main.js, ensure nav scroll code is here or in reservations.js -->
 </body>
 </html>
