@@ -8,15 +8,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-const routes = [
-  { route: '/mastery', file: './static/loader.html' },
-  { route: '/apps', file: './static/apps.html' },
-  { route: '/gms', file: './static/gms.html' },
-  { route: '/lessons', file: './static/agloader.html' },
-  { route: '/info', file: './static/info.html' },
-  { route: '/mycourses', file: './static/loading.html' }
-];
-const staticDir = path.join(__dirname, 'static');
+const staticDir = path.join(__dirname, 'public');
 
 app.get('*', (req, res) => {
   let filePath = path.join(staticDir, req.path);
