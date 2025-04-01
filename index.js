@@ -64,24 +64,44 @@ app.post('/reserve', async (req, res) => {
   try {
     const reservationRequest = req.body;
     const reservation = await processReservation(reservationRequest);
-    const verificationLink = `http://localhost:8080/verify?resId=${reservation.id}&token=${reservation.verificationToken}`;
+    const verificationLink = `http://${req.get("host")}/verify?resId=${reservation.id}&token=${reservation.verificationToken}`;
     
     // Send a verification email
     const mailOptions = {
       from: '"Green Bites Reservations" <your_outlook_email@outlook.com>',
       to: reservation.email,
       subject: 'Reservation Verification',
-      html: `
-        <h2>Verify Your Reservation</h2>
-        <p>Dear ${reservation.name},</p>
-        <p>Thank you for your reservation for ${reservation.numberOfPeople} people on ${reservation.date} at ${reservation.time}.</p>
-        <p>Please verify your reservation within 5 minutes by clicking the link below:</p>
-        <p><a href="${verificationLink}">Verify Reservation</a></p>
-        <p>If you do not verify within 5 minutes, your reservation will be cancelled.</p>
-        <br>
-        <p>Regards,</p>
-        <p>Green Bites Team</p>
-      `
+      html: `<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Verify Your Reservation</title>
+  </head>
+  <body style="background-color: #f3f4f6; padding: 24px; font-family: Arial, sans-serif;">
+    <div style="max-width: 600px; margin: auto; background-color: #ffffff; padding: 32px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+      <h2 style="color: #1f2937; font-size: 24px; font-weight: bold; margin-bottom: 16px;">Verify Your Reservation</h2>
+      <p style="margin-bottom: 16px;">Dear ${reservation.name},</p>
+      <p style="margin-bottom: 16px;">
+        Thank you for your reservation for ${reservation.numberOfPeople} people on ${reservation.date} at ${reservation.time}.
+      </p>
+      <p style="margin-bottom: 16px;">
+        Please verify your reservation within 5 minutes by clicking the button below:
+      </p>
+      <div style="text-align: center; margin: 24px 0;">
+        <a href="${verificationLink}" 
+           style="background-color: #22c55e; color: #ffffff; padding: 12px 24px; text-decoration: none; font-size: 16px; border-radius: 6px; display: inline-block; font-weight: bold;">
+          Verify Reservation
+        </a>
+      </div>
+      <p style="margin-bottom: 16px;">If you do not verify within 5 minutes, your reservation will be cancelled.</p>
+      <p>Regards,</p>
+      <p>Green Bites Team</p>
+      <div style="margin-top: 32px; text-align: center; color: #6b7280; font-size: 14px;">
+        &copy; 2025 Green Bites. All rights reserved.
+      </div>
+    </div>
+  </body>
+</html>`
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
