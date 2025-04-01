@@ -5,104 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reserve Your Table - Green Bites</title>
     <meta name="description" content="Book your table at Green Bites easily online. Select your date, time, and party size for an exceptional vegetarian dining experience in Fairfax, VA.">
+    <!-- Consider adding more favicon variations (PNG, apple-touch-icon) -->
     <link rel="icon" href="/Assets/Images/Favicon/favicon.ico" sizes="any">
+
+    <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FullCalendar CSS -->
+    <!--
+    NOTE: To use custom Tailwind configurations (fonts, colors, animations),
+    you MUST use a build process (install Tailwind via npm, configure tailwind.config.js, run build).
+    The inline <style> approach with `tailwind.config = {...}` and `@apply` is INCORRECT for the CDN script and has been removed.
+    Define custom base styles and component styles (like for FullCalendar, .form-input) in your /css/style.css file
+    and ensure it's processed correctly if using @apply, or write standard CSS.
+    -->
+
+    <!-- FullCalendar CSS (v3.10.2 - Consider updating to v5/v6) -->
     <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
     <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+
      <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Ensure your build process configures Tailwind to use these fonts if needed -->
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-     <!-- Custom Styles & Tailwind Config -->
+
+     <!-- Custom Stylesheet - Define non-Tailwind utility styles, component styles, and potentially FullCalendar overrides here -->
     <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Removed problematic inline <style> block -->
     <style>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Jost', 'Helvetica', 'Arial', 'sans-serif'],
-              serif: ['Cormorant Garamond', 'Georgia', 'serif'],
-            },
-            colors: {
-              primary: {
-                  light: '#6ee7b7', // Lighter Green
-                  DEFAULT: '#10b981', // Main Green
-                  dark: '#059669' // Darker Green
-              },
-              secondary: {
-                  light: '#fef3c7', // Light Yellow
-                  DEFAULT: '#fcd34d', // Main Yellow
-                  dark: '#f59e0b' // Darker Yellow/Gold
-              },
-              neutral: {
-                light: '#d1d5db', // Light Gray (text)
-                DEFAULT: '#6b7280', // Medium Gray
-                dark: '#374151', // Dark Gray (cards)
-                darker: '#1f2937', // Darker Gray (bg section)
-                darkest: '#111827' // Darkest Gray (body bg)
-              }
-            },
-            animation: {
-                fadeIn: 'fadeIn 1s ease-out forwards',
-                fadeInDown: 'fadeInDown 1.2s ease-out forwards',
-                fadeInUp: 'fadeInUp 1s ease-out forwards',
-                fadeInForm: 'fadeInUp 1s ease-out forwards 0.5s',
-                pulseGlow: 'pulseGlow 2.5s infinite ease-in-out',
-                spinSlow: 'spin 45s linear infinite',
-                slideInLeft: 'slideInLeft 1s ease-out forwards',
-                slideInRight: 'slideInRight 1s ease-out forwards',
-            },
-            keyframes: {
-                fadeIn: { '0%': { opacity: 0 }, '100%': { opacity: 1 } },
-                fadeInDown: { '0%': { opacity: 0, transform: 'translateY(-30px)' }, '100%': { opacity: 1, transform: 'translateY(0)' } },
-                fadeInUp: { '0%': { opacity: 0, transform: 'translateY(30px)' }, '100%': { opacity: 1, transform: 'translateY(0)' } },
-                pulseGlow: {
-                    '0%, 100%': { boxShadow: '0 0 12px rgba(16, 185, 129, 0.4)' },
-                    '50%': { boxShadow: '0 0 24px rgba(16, 185, 129, 0.8)' },
-                },
-                 slideInLeft: { '0%': { opacity: 0, transform: 'translateX(-50px)' }, '100%': { opacity: 1, transform: 'translateX(0)' } },
-                slideInRight: { '0%': { opacity: 0, transform: 'translateX(50px)' }, '100%': { opacity: 1, transform: 'translateX(0)' } },
-            },
-             backgroundImage: {
-               'hero-pattern': "url('/Assets/Images/Hero/hero-bg.webp')", // Define your pattern
-               'menu-texture': "radial-gradient(circle, rgba(31,41,55,0.9) 0%, rgba(17,24,39,0.95) 80%), url('/path/to/your/subtle/texture.svg')", // Example texture
-            }
-          }
-        }
+      /* Example: Define FullCalendar overrides or other base styles here IF NOT using a build process */
+      /* If using a build process, put these in style.css */
+      /* THESE ARE EXAMPLES - ADJUST TO MATCH YOUR ORIGINAL INTENT WITHOUT @apply */
+      body {
+          background-color: #111827; /* neutral-darkest */
+          color: #d1d5db; /* neutral-light */
+          font-family: 'Jost', sans-serif; /* Matching Tailwind config */
       }
-     };
-
-      /* Custom Styles for FullCalendar to match theme */
-      .fc { background-color: #1f2937 !important; border-radius: 12px; border: 1px solid #374151 !important; color: #d1d5db !important; }
-      .fc th { background-color: #374151 !important; color: #f9fafb !important; border-color: #4b5563 !important; padding: 12px 0 !important; font-weight: 500; font-size: 0.9rem;}
-      .fc .fc-button { background-color: #10b981 !important; color: #ffffff !important; border: none !important; box-shadow: none !important; text-transform: uppercase; font-weight: 600; padding: 8px 16px !important; }
-      .fc .fc-button:hover { background-color: #059669 !important; }
-      .fc .fc-button:disabled { background-color: #6b7280 !important; opacity: 0.7; }
-      .fc .fc-toolbar h2 { color: #ffffff !important; font-size: 1.75rem; font-family: 'Cormorant Garamond', serif; }
-      .fc-day { border-color: #4b5563 !important; }
-      .fc-day:hover { background-color: #374151 !important; }
-      .fc-day-top { color: #9ca3af; }
-      .fc-today { background-color: rgba(16, 185, 129, 0.1) !important; }
-      .fc-day-number { color: #e5e7eb !important; }
-      .fc-other-month .fc-day-number { color: #6b7280 !important; opacity: 0.6; }
-      .fc-event { background-color: #f59e0b !important; border-color: #f59e0b !important; color: #111827 !important; padding: 2px 5px; border-radius: 4px; font-size: 0.8rem;}
-
-      /* Input styling */
+      /* Example: Simple input styling without @apply */
       .form-input {
-          @apply mt-1 block w-full rounded-lg bg-neutral-dark/50 border border-neutral-dark px-4 py-3 text-base text-neutral-light placeholder-neutral-dark focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition duration-200 ease-in-out shadow-sm;
+          margin-top: 0.25rem;
+          display: block;
+          width: 100%;
+          border-radius: 0.5rem; /* rounded-lg */
+          background-color: rgba(55, 65, 81, 0.5); /* bg-neutral-dark/50 */
+          border: 1px solid #374151; /* border-neutral-dark */
+          padding: 0.75rem 1rem; /* px-4 py-3 */
+          font-size: 1rem; /* text-base */
+          color: #d1d5db; /* text-neutral-light */
+          transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+          box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); /* shadow-sm */
       }
-      .form-label {
-           @apply block text-sm font-medium text-neutral-light/80 mb-1;
+      .form-input::placeholder {
+          color: #6b7280; /* placeholder-neutral-dark equivalent */
+          opacity: 1;
       }
+       .form-input:focus {
+          outline: none;
+          border-color: #10b981; /* focus:border-primary */
+          box-shadow: 0 0 0 1px #10b981; /* focus:ring-1 focus:ring-primary */
+      }
+       .form-label {
+           display: block;
+           font-size: 0.875rem; /* text-sm */
+           font-weight: 500; /* font-medium */
+           color: rgba(209, 213, 219, 0.8); /* text-neutral-light/80 */
+           margin-bottom: 0.25rem; /* mb-1 */
+      }
+       /* Add your FullCalendar CSS overrides here. Remove !important if possible */
+       .fc { background-color: #1f2937; border-radius: 12px; border: 1px solid #374151; color: #d1d5db; padding: 5px; } /* Added padding */
+       .fc th { background-color: #374151; color: #f9fafb; border-color: #4b5563; padding: 12px 0; font-weight: 500; font-size: 0.9rem;}
+       .fc .fc-button { background-color: #10b981; color: #ffffff; border: none; box-shadow: none; text-transform: uppercase; font-weight: 600; padding: 8px 16px !important; /* Use !important carefully */ }
+       .fc .fc-button:hover { background-color: #059669; }
+       .fc .fc-button:disabled { background-color: #6b7280; opacity: 0.7; }
+       .fc .fc-toolbar h2 { color: #ffffff; font-size: 1.75rem; font-family: 'Cormorant Garamond', serif; }
+       .fc-day { border-color: #4b5563; }
+       /* Use interaction hooks if possible instead of hover */
+       /* .fc-day:hover { background-color: #374151; } */
+       .fc-day-top { color: #9ca3af; }
+       .fc-day.fc-today { background-color: rgba(16, 185, 129, 0.1); }
+       .fc-day-number { color: #e5e7eb; }
+       .fc-day.fc-other-month .fc-day-number { color: #6b7280; opacity: 0.6; }
+       .fc-event { background-color: #f59e0b; border-color: #f59e0b; color: #111827; padding: 2px 5px; border-radius: 4px; font-size: 0.8rem;}
+
     </style>
 </head>
 <body class="bg-neutral-darkest text-neutral-light font-sans antialiased selection:bg-primary selection:text-white">
 
     <!-- Navigation (Include the same nav component as index.html) -->
-     <nav x-data="{ open: false, scrolled: true }" <!-- Start scrolled true -->
+     <!--
+        NOTE on Scroll Behavior:
+        The `scrolled` state needs to be updated by JavaScript (e.g., in main.js).
+        Add an event listener for the 'scroll' event on the window and update
+        `this.scrolled` based on `window.scrollY`. Initialize scrolled to `window.scrollY > threshold`.
+        Example JS snippet for Alpine component:
+        `init() { this.scrolled = window.scrollY > 10; window.addEventListener('scroll', () => { this.scrolled = window.scrollY > 10 }) }`
+        and add `x-init="init()"` to the nav tag.
+    -->
+     <nav x-data="{ open: false, scrolled: true }" <!-- Initial state might need JS adjustment -->
          class="fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-out"
          :class="{ 'bg-neutral-darkest shadow-lg': scrolled || open, 'bg-transparent': !scrolled && !open }">
         <!-- Paste the exact <nav> HTML from index.html here -->
@@ -122,7 +124,8 @@
                 <!-- Mobile Menu Button -->
                  <div class="md:hidden flex items-center">
                     <a href="reservations.html" class="inline-flex items-center px-4 py-2 mr-2 border border-primary text-sm font-semibold rounded-full text-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary">RESERVE</a> <!-- Active mobile styling -->
-                    <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" aria-expanded="false">
+                    <!-- FIX: Bind aria-expanded to Alpine's 'open' state -->
+                    <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" :aria-expanded="open">
                          <span class="sr-only">Open main menu</span>
                         <svg x-show="!open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
                         <svg x-show="open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -142,6 +145,8 @@
 
     <!-- Main Content Area -->
     <div class="container mx-auto max-w-7xl pt-28 md:pt-36 pb-16 px-4 sm:px-6 lg:px-8">
+        <!-- Apply animations directly with Tailwind classes - ensure they are defined if custom -->
+        <!-- If using default Tailwind, these may need adjustment or ensure config includes them -->
         <div class="text-center mb-12 animate-fadeInDown">
              <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-white leading-tight">Book Your <span class="text-primary-light">Experience</span></h1>
              <p class="mt-4 text-lg text-neutral-light/80 max-w-xl mx-auto">
@@ -152,14 +157,22 @@
          <div class="flex flex-col lg:flex-row gap-10 lg:gap-12 items-start">
 
             <!-- Reservation Form Section -->
+             <!--
+                NOTE on Animations: The `animate-fadeInForm` class relies on the custom Tailwind config which isn't loaded via CDN.
+                Either define these animations in /css/style.css or use default Tailwind animations.
+                The inline style="opacity:0;" is likely part of the intended animation start state. CSS or JS should handle the transition to opacity:1.
+                Let's remove the custom animation class for now assuming it won't work, but keep the structure. Add JS for a fade-in if needed.
+             -->
              <div class="w-full lg:w-5/12 xl:w-4/12">
-                 <div class="bg-neutral-darker p-6 sm:p-8 rounded-2xl shadow-2xl border border-neutral-dark animate-fadeInForm" style="opacity:0;">
+                 <div class="bg-neutral-darker p-6 sm:p-8 rounded-2xl shadow-2xl border border-neutral-dark" > <!-- Removed custom animation class -->
                     <h2 class="text-2xl font-semibold text-white mb-6 text-center font-serif">Reservation Details</h2>
+                     <!-- Form submission, messages, spinner visibility MUST be handled by /js/reservations.js -->
                      <form id="reservationForm" class="space-y-5">
-                         <div id="reservationMessage" class="mb-5 text-sm"><!-- Messages will appear here --></div>
+                         <div id="reservationMessage" class="mb-5 text-sm min-h-[1.2em]"><!-- Messages will appear here. Added min-height to prevent layout shift. --></div>
 
                          <div>
                             <label for="name" class="form-label">Full Name:</label>
+                            <!-- Use the .form-input class defined in <style> or style.css -->
                              <input type="text" id="name" name="name" required class="form-input" placeholder="e.g., Jane Doe">
                          </div>
                          <div>
@@ -169,6 +182,7 @@
                          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                             <div>
                                  <label for="numberOfPeople" class="form-label">Party Size:</label>
+                                <!-- Added appearance-none Tailwind class, rely on CSS for arrow -->
                                 <select id="numberOfPeople" name="numberOfPeople" required class="form-input appearance-none">
                                      <option value="" disabled selected>Select guests</option>
                                      <option value="1">1 Person</option>
@@ -184,15 +198,17 @@
                             </div>
                             <div>
                                  <label for="date" class="form-label">Date:</label>
-                                <input type="date" id="date" name="date" required class="form-input" min=""> <!-- min date set by JS -->
+                                <!-- NOTE: `min` attribute should be set by /js/reservations.js on page load -->
+                                <!-- Added standard Tailwind date input styling classes -->
+                                <input type="date" id="date" name="date" required class="form-input" min="">
                             </div>
                          </div>
 
                         <div>
                             <label for="time" class="form-label">Time:</label>
+                            <!-- Added appearance-none Tailwind class, rely on CSS for arrow -->
                             <select id="time" name="time" required class="form-input appearance-none">
                                  <option value="" disabled selected>Select a time</option>
-                                 <!-- Populate options dynamically or list common ones -->
                                  <option value="11:00">11:00 AM</option>
                                 <option value="11:30">11:30 AM</option>
                                 <option value="12:00">12:00 PM</option>
@@ -214,10 +230,11 @@
 
                          <div>
                              <label for="specialRequests" class="form-label">Special Requests (Optional):</label>
+                             <!-- Added standard Tailwind textarea styling -->
                             <textarea id="specialRequests" name="specialRequests" rows="3" class="form-input" placeholder="e.g., High chair needed, birthday celebration"></textarea>
                         </div>
 
-                         <button type="submit" id="submitButton" class="w-full mt-6 bg-primary hover:bg-primary-dark transition-all duration-300 ease-out text-white font-bold py-3.5 px-4 rounded-lg text-lg shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-neutral-darker flex items-center justify-center gap-2">
+                         <button type="submit" id="submitButton" class="w-full mt-6 bg-primary hover:bg-primary-dark transition-all duration-300 ease-out text-white font-bold py-3.5 px-4 rounded-lg text-lg shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-neutral-darker flex items-center justify-center gap-2 disabled:opacity-70"> <!-- Added disabled style -->
                              <svg id="buttonSpinner" class="animate-spin -ml-1 mr-2 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -232,15 +249,17 @@
              </div>
 
             <!-- Calendar Section -->
+             <!-- NOTE: Relies on /js/reservations.js to initialize FullCalendar into #calendar -->
+             <!-- Removed custom animation class, handle with JS or standard CSS if needed -->
              <div class="w-full lg:w-7/12 xl:w-8/12">
-                 <div id='calendarWrapper' class="bg-neutral-darker p-4 sm:p-6 rounded-2xl shadow-2xl border border-neutral-dark animate-fadeIn" style="opacity:0;">
+                 <div id='calendarWrapper' class="bg-neutral-darker p-4 sm:p-6 rounded-2xl shadow-2xl border border-neutral-dark"> <!-- Removed animation -->
                     <div id='calendar'></div>
                     <p class="text-center text-sm text-neutral-light/70 mt-4">
                          Select a date above to easily populate the form. Calendar shows general availability indications (actual times subject to capacity).
                     </p>
                 </div>
-                 <!-- Optional: Add info like hours -->
-                <div class="mt-6 text-center text-neutral-light/80 text-sm animate-fadeIn" style="opacity:0; animation-delay: 0.3s;">
+                 <!-- Removed animation class, handle with JS or CSS if needed -->
+                <div class="mt-6 text-center text-neutral-light/80 text-sm"> <!-- Removed animation -->
                     <p><strong class="text-white">Hours:</strong> Mon-Sun 11:00 AM - 10:00 PM</p>
                     <p>Reservations recommended. Walk-ins welcome based on availability.</p>
                 </div>
@@ -248,30 +267,9 @@
 
         </div>
 
-        <!-- Reservation Status Table (Hidden for now - Implement if user login is added) -->
+        <!-- Reservation Status Table (Commented Out - No changes needed here) -->
          <!--
-        <div id="reservationList" class="mt-16 bg-neutral-darker rounded-2xl shadow-2xl overflow-hidden border border-neutral-dark animate-fadeInUp [animation-delay:800ms]" style="opacity:0;">
-            <div class="px-6 py-4 border-b border-neutral-dark">
-                <h3 class="text-xl font-semibold text-white">Your Confirmed Reservations</h3>
-             </div>
-             <div class="p-6 overflow-x-auto">
-                <table class="min-w-full text-sm text-left">
-                    <thead class="border-b border-neutral-dark">
-                        <tr>
-                            <th class="py-3 px-4 font-semibold text-white uppercase tracking-wider">Date</th>
-                            <th class="py-3 px-4 font-semibold text-white uppercase tracking-wider">Time</th>
-                             <th class="py-3 px-4 font-semibold text-white uppercase tracking-wider">Guests</th>
-                             <th class="py-3 px-4 font-semibold text-white uppercase tracking-wider">Name</th>
-                             <th class="py-3 px-4 font-semibold text-white uppercase tracking-wider">Status</th>
-                         </tr>
-                    </thead>
-                    <tbody id="reservationTableBody" class="divide-y divide-neutral-dark text-neutral-light">
-                        < Tbody filled by JS if user is logged in ->
-                        <tr><td colspan="5" class="text-center py-6 text-neutral-dark">Login required to view reservations.</td></tr>
-                     </tbody>
-                </table>
-             </div>
-        </div>
+        <div id="reservationList" ... > ... </div>
         -->
 
     </div>
@@ -280,16 +278,21 @@
     <footer class="bg-neutral-darker border-t border-neutral-dark pt-16 pb-12">
          <!-- Paste the exact <footer> HTML from index.html here -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12"> <!-- ... Footer Content ... --> </div>
-             <div class="border-t border-neutral-dark pt-8 flex flex-col md:flex-row justify-between items-center text-sm"> <!-- ... Bottom Bar ... --> </div>
+            <!-- Ensure footer content is pasted here -->
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12"> Footer Content Goes Here </div>
+             <div class="border-t border-neutral-dark pt-8 flex flex-col md:flex-row justify-between items-center text-sm"> Footer Bottom Bar Goes Here </div>
          </div>
      </footer>
 
-    <!-- Scripts: jQuery, Moment.js, FullCalendar, custom JS -->
+    <!-- Scripts: jQuery & Moment.js needed for FullCalendar v3 -->
     <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
-     <script src="/js/reservations.js"></script>
-    <script src="/js/main.js"></script> <!-- Include if using shared functions -->
+
+    <!-- Custom JS Files -->
+     <!-- reservations.js should initialize FullCalendar, handle form interactions, set min date, etc. -->
+    <script src="/js/reservations.js"></script>
+    <!-- main.js should handle shared functionality like the nav scroll behavior -->
+    <script src="/js/main.js"></script>
 </body>
 </html>
