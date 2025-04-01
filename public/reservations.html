@@ -94,6 +94,7 @@
           padding: 0.75rem 1rem; font-size: 1rem; color: #d1d5db; /* neutral-light text */
           transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
           box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+          /* appearance: none; /* Removed for default dropdown arrow */
       }
       /* Style specifically for date/time inputs to show picker indicator */
       input[type="date"].form-input, input[type="time"].form-input {
@@ -132,6 +133,8 @@
       .fc-day-number { color: #e5e7eb; } /* very light gray */
       .fc-day.fc-other-month .fc-day-number { color: #6b7280; opacity: 0.6; } /* neutral-DEFAULT */
       .fc-event { background-color: #f59e0b; border-color: #f59e0b; color: #111827; padding: 2px 5px; border-radius: 4px; font-size: 0.8rem; } /* secondary-dark, neutral-darkest */
+      /* Custom highlight for selected day */
+      .fc-day-selected-highlight { background-color: rgba(16, 185, 129, 0.2) !important; }
 
       /* Helper for loading indicators */
       .spinner {
@@ -223,7 +226,8 @@
                          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                             <div>
                                  <label for="numberOfPeople" class="form-label">Party Size:</label>
-                                 <select id="numberOfPeople" name="numberOfPeople" required class="form-input appearance-none" aria-describedby="people-error"> <!-- Removed appearance-none if custom arrow is not implemented -->
+                                 <!-- Removed appearance-none for default arrow -->
+                                 <select id="numberOfPeople" name="numberOfPeople" required class="form-input" aria-describedby="people-error">
                                      <option value="" disabled selected>Select guests</option>
                                      <option value="1">1 Person</option>
                                      <option value="2">2 People</option>
@@ -254,10 +258,10 @@
                                 </div>
                             </div>
                             <!-- JS populates options based on availability checks -->
-                            <select id="time" name="time" required class="form-input appearance-none" disabled aria-describedby="time-error time-hint"> <!-- Initially disabled -->
+                            <!-- Removed appearance-none for default arrow -->
+                            <select id="time" name="time" required class="form-input" disabled aria-describedby="time-error time-hint"> <!-- Initially disabled -->
                                  <option value="" disabled selected>Select date & guests first</option>
-                                 <!-- Options populated by JS, example structure below (ensure values match backend expectations) -->
-                                 <!-- <option value="17:00">5:00 PM</option> -->
+                                 <!-- Options populated by JS -->
                             </select>
                             <div id="time-error" class="text-red-400 text-xs mt-1 h-4"></div>
                             <p id="time-hint" class="text-xs text-neutral-light/60 mt-1">Available times shown for selected date and party size.</p>
