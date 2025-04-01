@@ -53,10 +53,10 @@ function processReservation(request) {
 
 // Configure transporter to use Outlook SMTP settings  
 let transporter = nodemailer.createTransport({
-  service: 'hotmail',
+  service: 'gmail',
   auth: {
-    user: 'your_outlook_email@outlook.com',  // Replace with your Outlook email
-    pass: 'your_outlook_password'            // Replace with your Outlook password
+    user: 'testpython230@gmail.com',  
+    pass: '200$Lunch'            
   }
 });
 
