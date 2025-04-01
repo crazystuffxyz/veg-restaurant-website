@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Menu - Green Bites | Delicious Vegetarian Dishes</title>
+    <meta name="description" content="Explore the diverse and flavorful vegetarian menu at Green Bites. From fresh salads and hearty mains to creative appetizers, find your new favorite plant-based dish.">
+    <link rel="icon" href="/Assets/Images/Favicon/favicon.ico" sizes="any">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* Reusing styles from index.html */
+      tailwind.config = { /* ... Same tailwind config as index.html ... */
+         theme: {
+          extend: { /* ... Same extensions as index.html ... */
+              backgroundImage: { /* Add menu specific bg if desired */
+                 'menu-header-bg': "linear-gradient(rgba(17, 24, 39, 0.85), rgba(17, 24, 39, 0.85)), url('/Assets/Images/Restaurant/ambiance-1.webp')", // Adjust image path
+                 'section-bg': "rgba(31, 41, 55, 0.5)" // Semi-transparent bg for sections
+              }
+          }
+        }
+     };
+     /* Custom class for menu item descriptions */
+     .menu-item-description {
+         @apply text-neutral-light/80 text-sm leading-relaxed mt-1;
+     }
+     /* Subtle border hover effect for menu items */
+     .menu-item-card:hover {
+         @apply border-primary transition-colors duration-300;
+     }
+    </style>
+</head>
+<body class="bg-neutral-darkest text-neutral-light font-sans antialiased selection:bg-primary selection:text-white">
+
+    <!-- Navigation (Include the same nav component as index.html) -->
+    <nav x-data="{ open: false, scrolled: true }" <!-- Start scrolled true on menu page -->
+         class="fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-out"
+         :class="{ 'bg-neutral-darkest shadow-lg': scrolled || open, 'bg-transparent': !scrolled && !open }">
+        <!-- Paste the exact <nav> HTML from index.html here -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="transition-opacity duration-300 hover:opacity-80">
+                        <img class="h-14 lg:h-16 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Logo">
+                    </a>
+                </div>
+                 <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">HOME</a>
+                    <a href="menu.html" class="font-medium tracking-wide text-primary hover:text-primary-light transition-colors duration-300">MENU</a> <!-- Highlight current page -->
+                    <a href="aboutus.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
+                    <a href="reservations.html" class="ml-4 inline-flex items-center px-5 py-2 border border-transparent text-base font-semibold rounded-full shadow-sm text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">
+                        RESERVE
+                    </a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <a href="reservations.html" class="inline-flex items-center px-4 py-2 mr-2 border border-primary text-sm font-semibold rounded-full text-primary hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">
+                        RESERVE
+                    </a>
+                    <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" aria-expanded="false">
+                         <span class="sr-only">Open main menu</span>
+                        <svg x-show="!open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                        <svg x-show="open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+         <!-- Mobile Menu -->
+        <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="md:hidden absolute top-full inset-x-0 bg-neutral-darkest shadow-lg p-4" id="mobile-menu">
+             <div class="pt-2 pb-3 space-y-3 text-center">
+                <a href="index.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">HOME</a>
+                <a href="menu.html" class="block py-2 text-lg font-medium text-primary hover:text-primary-light transition-colors duration-300">MENU</a> <!-- Highlight -->
+                <a href="aboutus.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Menu Header Section -->
+    <header class="relative pt-40 pb-24 bg-menu-header-bg bg-cover bg-center text-center">
+         <div class="absolute inset-0 bg-gradient-to-t from-neutral-darkest via-neutral-darkest/80 to-neutral-darkest/60"></div> <!-- Darker overlay for contrast -->
+        <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+             <h1 class="font-serif text-5xl sm:text-6xl md:text-7xl font-bold text-white leading-tight tracking-tight animate-fadeInDown">
+                 Our <span class="text-primary-light">Menu</span>
+            </h1>
+             <p class="mt-4 text-lg sm:text-xl text-neutral-light max-w-2xl mx-auto animate-fadeInDown [animation-delay:300ms]">
+                A symphony of flavors celebrating the best of plant-based cuisine. Fresh, seasonal, and crafted with passion.
+             </p>
+         </div>
+    </header>
+
+    <!-- Main Menu Content -->
+    <main class="py-16 md:py-24 bg-neutral-darkest">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- Appetizers Section -->
+            <section class="mb-16 animate-fadeInUp" style="opacity:0;">
+                 <h2 class="font-serif text-3xl sm:text-4xl text-secondary text-center mb-10 border-b-2 border-primary pb-3 inline-block mx-auto px-6">Starters & Shares</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
+                    <!-- Item: Spinach Dip -->
+                    <div class="menu-item-card border-l-4 border-transparent pl-4 py-2">
+                        <h3 class="text-xl font-semibold text-white flex justify-between">
+                            <span>Creamed Spinach & Artichoke Dip</span>
+                            <span class="text-primary-light">$14</span>
+                        </h3>
+                        <p class="menu-item-description">Warm, creamy blend of spinach, artichoke hearts, and vegan parmesan, served with toasted crostini.</p>
+                         <!-- <img src="/Assets/Images/Menu/spinach-dip.webp" alt="Spinach Dip" class="mt-3 rounded-lg h-32 w-full object-cover"> -->
+                    </div>
+                    <!-- Item: Falafel -->
+                     <div class="menu-item-card border-l-4 border-transparent pl-4 py-2">
+                        <h3 class="text-xl font-semibold text-white flex justify-between">
+                            <span>Crispy Falafel Platter</span>
+                             <span class="text-primary-light">$13</span>
+                        </h3>
+                        <p class="menu-item-description">Golden-fried chickpea fritters with creamy hummus, tahini drizzle, and warm pita bread.</p>
+                     </div>
+                     <!-- Item: Avocado Toast -->
+                    <div class="menu-item-card border-l-4 border-transparent pl-4 py-2">
+                        <h3 class="text-xl font-semibold text-white flex justify-between">
+                            <span>Gourmet Avocado Toast</span>
+                            <span class="text-primary-light">$12</span>
+                        </h3>
+                        <p class="menu-item-description">Smashed avocado on toasted sourdough, topped with radish, chili flakes, and microgreens. (Add Tofu Scramble +$4)</p>
+                    </div>
+                     <!-- Add more appetizers -->
+                     <div class="menu-item-card border-l-4 border-transparent pl-4 py-2">
+                        <h3 class="text-xl font-semibold text-white flex justify-between">
+                            <span>Roasted Tomato Bruschetta</span>
+                            <span class="text-primary-light">$11</span>
+                        </h3>
+                        <p class="menu-item-description">Grilled bread topped with garlic-infused roasted cherry tomatoes, fresh basil, and balsamic glaze.</p>
+                    </div>
+
+                </div>
+            </section>
+
+             <!-- Salads Section -->
+             <section class="mb-16 animate-fadeInUp [animation-delay:200ms]" style="opacity:0;">
+                 <h2 class="font-serif text-3xl sm:text-4xl text-secondary text-center mb-10 border-b-2 border-primary pb-3 inline-block mx-auto px-6">Fresh Salads</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
+                    <!-- Item: Quinoa Salad -->
+                     <div class="menu-item-card border-l-4 border-transparent pl-4 py-2">
+                        <h3 class="text-xl font-semibold text-white flex justify-between">
+                            <span>Mediterranean Quinoa Salad</span>
+                            <span class="text-primary-light">$16</span>
+                        </h3>
+                        <p class="menu-item-description">Fluffy quinoa, cucumber, bell peppers, olives, cherry tomatoes, vegan feta, lemon-herb vinaigrette.</p>
+                     </div>
+                    <!-- Item: Kale Caesar -->
+                    <div class="menu-item-card border-l-4 border-transparent pl-4 py-2">
+                         <h3 class="text-xl font-semibold text-white flex justify-between">
+                            <span>Vegan Kale Caesar</span>
+                            <span class="text-primary-light">$15</span>
+                         </h3>
+                         <p class="menu-item-description">Tender kale massaged with creamy cashew-based Caesar dressing, garlic croutons, nutritional yeast 'parmesan'.</p>
+                     </div>
+                    <!-- Item: Beet Salad -->
+                    <div class="menu-item-card border-l-4 border-transparent pl-4 py-2">
+                         <h3 class="text-xl font-semibold text-white flex justify-between">
+                            <span>Roasted Beet & Citrus Salad</span>
+                            <span class="text-primary-light">$17</span>
+                         </h3>
+                        <p class="menu-item-description">Earthy roasted beets, orange segments, toasted pecans, arugula, crumbled vegan goat cheese, balsamic vinaigrette.</p>
+                    </div>
+                    <!-- Item: Mixed Greens -->
+                    <div class="menu-item-card border-l-4 border-transparent pl-4 py-2">
+                         <h3 class="text-xl font-semibold text-white flex justify-between">
+                            <span>Simple Mixed Greens</span>
+                            <span class="text-primary-light">$9</span>
+                         </h3>
+                        <p class="menu-item-description">A mix of fresh, local greens with your choice of house vinaigrette or creamy ranch.</p>
+                    </div>
+                </div>
+             </section>
+
+            <!-- Main Courses Section -->
+            <section class="mb-16 animate-fadeInUp [animation-delay:400ms]" style="opacity:0;">
+                <h2 class="font-serif text-3xl sm:text-4xl text-secondary text-center mb-10 border-b-2 border-primary pb-3 inline-block mx-auto px-6">Hearty Mains</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
+                    <!-- Item: Veggie Burger -->
+                    <div class="menu-item-card border-t border-neutral-dark pt-6">
+                        <h3 class="text-xl lg:text-2xl font-semibold text-white flex justify-between items-start">
+                            <span>Green Bites Signature Burger</span>
+                            <span class="text-lg text-primary-light ml-4 whitespace-nowrap">$18</span>
+                        </h3>
+                        <p class="menu-item-description">House-made black bean & quinoa patty, avocado, sprouts, tomato, red onion, vegan aioli on a toasted brioche bun. Served with choice of side.</p>
+                         <p class="text-xs text-neutral-dark mt-1">(Choice: Sweet Potato Fries, Mixed Greens, Regular Fries)</p>
+                         <!-- <img src="/Assets/Images/Menu/veggie-burger.webp" alt="Veggie Burger" class="mt-3 rounded-lg h-40 w-full object-cover"> -->
+                    </div>
+                    <!-- Item: Portobello Sandwich -->
+                    <div class="menu-item-card border-t border-neutral-dark pt-6">
+                        <h3 class="text-xl lg:text-2xl font-semibold text-white flex justify-between items-start">
+                            <span>Grilled Portobello Sandwich</span>
+                            <span class="text-lg text-primary-light ml-4 whitespace-nowrap">$17</span>
+                        </h3>
+                        <p class="menu-item-description">Balsamic-marinated grilled portobello mushroom cap, roasted red peppers, arugula, pesto aioli on focaccia bread. Served with choice of side.</p>
+                        <p class="text-xs text-neutral-dark mt-1">(Choice: Sweet Potato Fries, Mixed Greens, Regular Fries)</p>
+                    </div>
+                    <!-- Item: Vegan Chili -->
+                     <div class="menu-item-card border-t border-neutral-dark pt-6">
+                        <h3 class="text-xl lg:text-2xl font-semibold text-white flex justify-between items-start">
+                            <span>Hearty Three-Bean Vegan Chili</span>
+                             <span class="text-lg text-primary-light ml-4 whitespace-nowrap">$16</span>
+                        </h3>
+                        <p class="menu-item-description">A comforting bowl of slow-cooked beans, vegetables, and spices, topped with vegan sour cream and green onions. Served with cornbread.</p>
+                     </div>
+                    <!-- Item: Tofu Scramble -->
+                    <div class="menu-item-card border-t border-neutral-dark pt-6">
+                        <h3 class="text-xl lg:text-2xl font-semibold text-white flex justify-between items-start">
+                            <span>Organic Tofu Scramble</span>
+                            <span class="text-lg text-primary-light ml-4 whitespace-nowrap">$17</span>
+                        </h3>
+                         <p class="menu-item-description">Savory turmeric-spiced tofu scramble with sautéed spinach, mushrooms, and onions. Served with home fries and toast.</p>
+                         <p class="text-xs text-neutral-dark mt-1">(Available All Day)</p>
+                    </div>
+                    <!-- Item: Veggie Pizza -->
+                    <div class="menu-item-card border-t border-neutral-dark pt-6">
+                         <h3 class="text-xl lg:text-2xl font-semibold text-white flex justify-between items-start">
+                             <span>Artisan Veggie Pizza (Personal)</span>
+                             <span class="text-lg text-primary-light ml-4 whitespace-nowrap">$19</span>
+                         </h3>
+                         <p class="menu-item-description">Thin crust pizza with marinara, vegan mozzarella, bell peppers, onions, mushrooms, olives, and artichoke hearts.</p>
+                     </div>
+                    <!-- Item: Seasonal Veg -->
+                     <div class="menu-item-card border-t border-neutral-dark pt-6">
+                         <h3 class="text-xl lg:text-2xl font-semibold text-white flex justify-between items-start">
+                             <span>Seasonal Roasted Vegetable Medley</span>
+                             <span class="text-lg text-primary-light ml-4 whitespace-nowrap">$15</span>
+                         </h3>
+                         <p class="menu-item-description">A vibrant mix of locally sourced, oven-roasted seasonal vegetables tossed with herbs and olive oil. Ask your server for today's selection.</p>
+                         <p class="text-xs text-neutral-dark mt-1">(Vegan, Gluten-Free)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Desserts Section -->
+            <section class="mb-16 animate-fadeInUp [animation-delay:600ms]" style="opacity:0;">
+                 <h2 class="font-serif text-3xl sm:text-4xl text-secondary text-center mb-10 border-b-2 border-primary pb-3 inline-block mx-auto px-6">Sweet Endings</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
+                    <!-- Item: Chocolate Mousse -->
+                     <div class="menu-item-card border-l-4 border-transparent pl-4 py-2">
+                        <h3 class="text-xl font-semibold text-white flex justify-between">
+                            <span>Decadent Chocolate Avocado Mousse</span>
+                             <span class="text-primary-light">$10</span>
+                        </h3>
+                        <p class="menu-item-description">Surprisingly rich and creamy dark chocolate mousse made with avocado. Topped with berries.</p>
+                     </div>
+                    <!-- Item: Fruit Crumble -->
+                     <div class="menu-item-card border-l-4 border-transparent pl-4 py-2">
+                         <h3 class="text-xl font-semibold text-white flex justify-between">
+                            <span>Seasonal Fruit Crumble (Vegan)</span>
+                             <span class="text-primary-light">$11</span>
+                         </h3>
+                        <p class="menu-item-description">Warm, bubbling seasonal fruit topped with a crunchy oat and nut crumble. Served with vegan vanilla ice cream.</p>
+                    </div>
+                    <!-- Add more desserts -->
+                    <div class="menu-item-card border-l-4 border-transparent pl-4 py-2">
+                         <h3 class="text-xl font-semibold text-white flex justify-between">
+                            <span>Vegan Cheesecake Slice</span>
+                             <span class="text-primary-light">$12</span>
+                         </h3>
+                        <p class="menu-item-description">Creamy cashew-based cheesecake with a graham cracker crust. Ask for today's flavor!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Drinks Section (Add if desired) -->
+             <section class="animate-fadeInUp [animation-delay:800ms]" style="opacity:0;">
+                 <h2 class="font-serif text-3xl sm:text-4xl text-secondary text-center mb-10 border-b-2 border-primary pb-3 inline-block mx-auto px-6">Beverages</h2>
+                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                     <div>
+                        <h4 class="text-xl font-semibold text-white mb-3">Fresh Juices & Smoothies</h4>
+                        <ul class="text-neutral-light/80 space-y-1">
+                             <li>Green Goddess Smoothie - $9</li>
+                             <li>Berry Blast Smoothie - $9</li>
+                             <li>Fresh Squeezed Orange Juice - $6</li>
+                            <li>Carrot Ginger Elixir - $7</li>
+                        </ul>
+                     </div>
+                      <div>
+                        <h4 class="text-xl font-semibold text-white mb-3">Coffee & Tea</h4>
+                         <ul class="text-neutral-light/80 space-y-1">
+                            <li>Drip Coffee (Local Roast) - $4</li>
+                             <li>Espresso / Americano - $4</li>
+                             <li>Latte / Cappuccino (Oat/Almond Milk) - $5.5</li>
+                            <li>Selection of Herbal Teas - $4</li>
+                        </ul>
+                     </div>
+                     <div>
+                        <h4 class="text-xl font-semibold text-white mb-3">Other</h4>
+                        <ul class="text-neutral-light/80 space-y-1">
+                            <li>Sparkling Water (Pellegrino) - $4</li>
+                             <li>Local Kombucha - $6</li>
+                             <li>House-made Lemonade - $5</li>
+                            <li>Iced Tea (Unsweetened) - $4</li>
+                        </ul>
+                     </div>
+                 </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer (Include the same footer component as index.html) -->
+    <footer class="bg-neutral-darker border-t border-neutral-dark pt-16 pb-12">
+        <!-- Paste the exact <footer> HTML from index.html here -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12"> <!-- ... Footer Content ... --> </div>
+            <div class="border-t border-neutral-dark pt-8 flex flex-col md:flex-row justify-between items-center text-sm"> <!-- ... Bottom Bar ... --> </div>
+         </div>
+    </footer>
+
+     <script src="/js/main.js"></script> <!-- Include if you add interactions like scroll reveal -->
+</body>
+</html>
