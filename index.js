@@ -8,27 +8,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-const staticDir = path.join(__dirname, 'public');
-
-app.get('*', (req, res) => {
-  let filePath = path.join(staticDir, req.path);
-  fs.stat(filePath, (err, stats) => {
-    if (err) {
-      return res.status(404).send('Not Found');
-    }
-    if (stats.isDirectory()) {
-      filePath = path.join(filePath, 'index.html');
-      fs.stat(filePath, (err, stats) => {
-        if (err || !stats.isFile()) {
-          return res.status(404).send('Not Found');
-        }
-        res.sendFile(filePath);
-      });
-    } else {
-      res.sendFile(filePath);
-    }
-  });
-});
+app.use(express.static("public"));
 let reservations = [];
 
 function processReservation(request) {
