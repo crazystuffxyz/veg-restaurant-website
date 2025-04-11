@@ -7,6 +7,7 @@
     <meta name="description" content="Book your table at Green Bites easily online. Select your date, time, and party size for an exceptional vegetarian dining experience in Fairfax, VA.">
     <!-- Favicons -->
     <link rel="icon" href="/Assets/Images/Favicon/favicon.ico" sizes="any">
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Tailwind CSS Configuration (Must come BEFORE the CDN script) -->
     <script>
@@ -67,7 +68,6 @@
     </script>
 
     <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- FullCalendar CSS (v3.10.2) -->
     <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
@@ -150,7 +150,7 @@
 <body class="bg-neutral-darkest text-neutral-light font-sans antialiased selection:bg-primary selection:text-white">
 
     <!-- Navigation -->
-     <nav x-data="{ open: false, scrolled: false }" <!-- Changed initial scrolled to false for clarity, x-init handles the real check -->
+     <nav x-data="{ open: false, scrolled: false }"
          x-init="() => { scrolled = window.scrollY > 10; window.addEventListener('scroll', () => { scrolled = window.scrollY > 10 }) }"
          class="fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-out"
          :class="{ 'bg-neutral-darkest shadow-lg': scrolled || open, 'bg-transparent': !scrolled && !open }">

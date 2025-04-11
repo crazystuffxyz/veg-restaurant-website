@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Tailwind Configuration Script (Place BEFORE the main Tailwind script) -->
     <!-- NOTE: Using inline config with CDN has limitations. A build step is recommended for full features (like plugins). -->
@@ -78,7 +79,6 @@
     </script>
 
     <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Alpine.js (pinned version) -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.10/dist/cdn.min.js"></script>
@@ -94,7 +94,7 @@
     <!-- Navigation -->
     <!-- NOTE: Assumes /js/main.js contains scroll listener to update 'scrolled' -->
     <nav x-data="{ open: false, scrolled: false }"
-         @scroll.window="scrolled = (window.scrollY > 50)" <!-- Example scroll listener logic -->
+         @scroll.window="scrolled = (window.scrollY > 50)"
          class="fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-out"
          :class="{ 'bg-neutral-darkest shadow-lg': scrolled || open, 'bg-transparent': !scrolled && !open }">
          <!-- Ensure this nav section is IDENTICAL to the one in index.html for consistency -->
