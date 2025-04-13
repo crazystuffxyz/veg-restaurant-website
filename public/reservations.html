@@ -164,13 +164,15 @@
                  </div>
                  <!-- Desktop Menu -->
                  <div class="hidden md:flex items-center space-x-8">
-                     <a href="index.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">HOME</a>
-                     <a href="menu.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">MENU</a>
-                     <a href="aboutus.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
-                     <a href="reservations.html" class="ml-4 inline-flex items-center px-5 py-2 border border-primary text-base font-semibold rounded-full shadow-sm text-primary bg-transparent hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">
-                         RESERVE
-                     </a>
-                 </div>
+                    <a href="index.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">HOME</a>
+                    <a href="menu.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">MENU</a>
+                    <a href="aboutus.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
+                    <!-- ADDED Reviews Link -->
+                    <a href="reviews.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
+                    <a href="reservations.html" class="ml-4 inline-flex items-center px-5 py-2 border border-primary text-base font-semibold rounded-full shadow-sm text-primary bg-transparent hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">
+                        RESERVE
+                    </a>
+                </div>
                  <!-- Mobile Menu Button -->
                  <div class="md:hidden flex items-center">
                      <a href="reservations.html" class="inline-flex items-center px-4 py-2 mr-2 border border-primary text-sm font-semibold rounded-full text-primary hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">RESERVE</a>
@@ -184,12 +186,14 @@
          </div>
          <!-- Mobile Menu -->
          <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" style="display: none;" class="md:hidden absolute top-full inset-x-0 bg-neutral-darkest shadow-lg p-4" id="mobile-menu"> <!-- Added style="display: none;" -->
-             <div class="pt-2 pb-3 space-y-3 text-center">
-                 <a href="index.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">HOME</a>
-                 <a href="menu.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">MENU</a>
-                 <a href="aboutus.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
-             </div>
-         </div>
+            <div class="pt-2 pb-3 space-y-3 text-center">
+                <a href="index.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">HOME</a>
+                <a href="menu.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">MENU</a>
+                <a href="aboutus.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
+                <!-- ADDED Reviews Link -->
+                <a href="reviews.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
+            </div>
+        </div>
      </nav>
 
     <!-- Main Content Area -->

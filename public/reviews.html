@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reviews - Green Bites</title>
+    <meta name="description" content="Read what our guests say about Green Bites and leave your own review of our vegetarian dining experience.">
+    <!-- Favicons -->
+    <link rel="icon" href="/Assets/Images/Favicon/favicon.ico" sizes="any">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind CSS Configuration -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Jost', 'Helvetica', 'Arial', 'sans-serif'],
+              serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+            },
+            colors: {
+              primary: {
+                  light: '#6ee7b7', // Lighter Green
+                  DEFAULT: '#10b981', // Main Green
+                  dark: '#059669' // Darker Green
+              },
+              secondary: {
+                  light: '#fef3c7', // Light Yellow
+                  DEFAULT: '#fcd34d', // Main Yellow
+                  dark: '#f59e0b' // Darker Yellow/Gold
+              },
+              neutral: {
+                light: '#d1d5db', // Light Gray (text)
+                DEFAULT: '#6b7280', // Medium Gray
+                dark: '#374151', // Dark Gray (cards)
+                darker: '#1f2937', // Darker Gray (bg section)
+                darkest: '#111827' // Darkest Gray (body bg)
+              }
+            },
+            animation: {
+                fadeIn: 'fadeIn 1s ease-out forwards',
+                fadeInDown: 'fadeInDown 1.2s ease-out forwards',
+                fadeInUp: 'fadeInUp 1s ease-out forwards',
+                pulseGlow: 'pulseGlow 2.5s infinite ease-in-out',
+                spinSlow: 'spin 45s linear infinite',
+                slideInLeft: 'slideInLeft 1s ease-out forwards',
+                slideInRight: 'slideInRight 1s ease-out forwards',
+            },
+            keyframes: {
+                fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                fadeInDown: { '0%': { opacity: '0', transform: 'translateY(-30px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                fadeInUp: { '0%': { opacity: '0', transform: 'translateY(30px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                pulseGlow: {
+                    '0%, 100%': { boxShadow: '0 0 12px rgba(16, 185, 129, 0.4)' },
+                    '50%': { boxShadow: '0 0 24px rgba(16, 185, 129, 0.8)' },
+                },
+                 slideInLeft: { '0%': { opacity: '0', transform: 'translateX(-50px)' }, '100%': { opacity: '1', transform: 'translateX(0)' } },
+                slideInRight: { '0%': { opacity: '0', transform: 'translateX(50px)' }, '100%': { opacity: '1', transform: 'translateX(0)' } },
+            },
+             backgroundImage: {
+               'hero-pattern': "url('/Assets/Images/Hero/hero-bg.webp')",
+               'menu-texture': "radial-gradient(circle, rgba(31,41,55,0.9) 0%, rgba(17,24,39,0.95) 80%), url('/path/to/your/subtle/texture.svg')",
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Base and Component Styles -->
+    <style>
+      .form-input {
+          margin-top: 0.25rem; display: block; width: 100%; border-radius: 0.5rem;
+          background-color: rgba(55, 65, 81, 0.5); /* neutral-dark bg with transparency */
+          border: 1px solid #374151; /* neutral-dark border */
+          padding: 0.75rem 1rem; font-size: 1rem; color: #d1d5db; /* neutral-light text */
+          transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+          box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      }
+      .form-input::placeholder { color: #6b7280; opacity: 1; } /* neutral-DEFAULT */
+      .form-input:focus {
+          outline: none;
+          border-color: #10b981; /* primary-DEFAULT */
+          box-shadow: 0 0 0 1px #10b981; /* primary-DEFAULT */
+      }
+      .form-label {
+          display: block; font-size: 0.875rem; font-weight: 500;
+          color: rgba(209, 213, 219, 0.8); /* neutral-light with slight transparency */
+          margin-bottom: 0.25rem;
+      }
+      /* --- Star Rating Styles --- */
+      .star-rating { display: flex; justify-content: center; /* Center stars */ margin-bottom: 1rem; }
+      .star-rating input[type="radio"] { display: none; } /* Hide actual radio */
+      .star-rating label {
+          font-size: 2.5rem; /* Make stars larger */
+          color: #6b7280; /* neutral-DEFAULT (empty star color) */
+          cursor: pointer;
+          transition: color 0.2s;
+          padding: 0 0.2rem; /* Add slight horizontal padding */
+          line-height: 1; /* Prevent extra space below stars */
+      }
+      /* Style stars on hover/selection */
+      .star-rating input[type="radio"]:checked ~ label, /* Style checked star and subsequent labels */
+      .star-rating label:hover, /* Style hovered label */
+      .star-rating label:hover ~ label { /* Style subsequent labels on hover */
+          color: #fcd34d; /* secondary-DEFAULT (filled star color) */
+      }
+      /* Reverse star filling order (important!) */
+      .star-rating { direction: rtl; }
+      .star-rating label { direction: ltr; } /* Reset direction for the label content */
+
+      /* Style for displayed stars */
+      .display-stars { color: #fcd34d; /* secondary-DEFAULT */ letter-spacing: 2px; }
+      .display-stars .empty-star { color: #6b7280; /* neutral-DEFAULT */}
+
+      /* Helper for loading indicators */
+      .spinner {
+          border: 3px solid rgba(255, 255, 255, 0.3);
+          border-radius: 50%;
+          border-top-color: #10b981; /* primary-DEFAULT */
+          width: 16px; height: 16px;
+          animation: spin 1s linear infinite;
+      }
+       @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="bg-neutral-darkest text-neutral-light font-sans antialiased selection:bg-primary selection:text-white">
+
+    <!-- Navigation (Copied from reservations.html, includes Reviews link) -->
+    <nav x-data="{ open: false, scrolled: false }"
+         x-init="() => { scrolled = window.scrollY > 10; window.addEventListener('scroll', () => { scrolled = window.scrollY > 10 }) }"
+         class="fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-out"
+         :class="{ 'bg-neutral-darkest shadow-lg': scrolled || open, 'bg-transparent': !scrolled && !open }">
+         <!-- ... Nav content ... -->
+         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+             <div class="flex justify-between items-center h-20">
+                 <!-- Logo -->
+                 <div class="flex-shrink-0">
+                     <a href="index.html" class="transition-opacity duration-300 hover:opacity-80">
+                         <img class="h-14 lg:h-16 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Logo">
+                     </a>
+                 </div>
+                 <!-- Desktop Menu -->
+                 <div class="hidden md:flex items-center space-x-8">
+                     <a href="index.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">HOME</a>
+                     <a href="menu.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">MENU</a>
+                     <a href="aboutus.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
+                     <a href="reviews.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
+                     <a href="reservations.html" class="ml-4 inline-flex items-center px-5 py-2 border border-primary text-base font-semibold rounded-full shadow-sm text-primary bg-transparent hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">
+                         RESERVE
+                     </a>
+                 </div>
+                 <!-- Mobile Menu Button -->
+                 <div class="md:hidden flex items-center">
+                     <a href="reservations.html" class="inline-flex items-center px-4 py-2 mr-2 border border-primary text-sm font-semibold rounded-full text-primary hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">RESERVE</a>
+                     <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" :aria-expanded="open.toString()">
+                         <span class="sr-only">Open main menu</span>
+                         <svg x-show="!open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                         <svg x-show="open" style="display: none;" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                     </button>
+                 </div>
+             </div>
+         </div>
+         <!-- Mobile Menu -->
+         <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" style="display: none;" class="md:hidden absolute top-full inset-x-0 bg-neutral-darkest shadow-lg p-4" id="mobile-menu">
+             <div class="pt-2 pb-3 space-y-3 text-center">
+                 <a href="index.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">HOME</a>
+                 <a href="menu.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">MENU</a>
+                 <a href="aboutus.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
+                 <a href="reviews.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
+             </div>
+         </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="container mx-auto max-w-4xl pt-28 md:pt-36 pb-16 px-4 sm:px-6 lg:px-8">
+        <!-- Header Text -->
+        <div class="text-center mb-12">
+             <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-white leading-tight">Guest <span class="text-primary-light">Reviews</span></h1>
+             <p class="mt-4 text-lg text-neutral-light/80 max-w-xl mx-auto">
+                 Hear from our valued guests and share your own Green Bites experience.
+            </p>
+         </div>
+
+         <!-- Review Submission Form -->
+         <section aria-labelledby="review-form-heading" class="mb-16">
+             <div class="bg-neutral-darker p-6 sm:p-8 rounded-2xl shadow-2xl border border-neutral-dark">
+                 <h2 id="review-form-heading" class="text-2xl font-semibold text-white mb-6 text-center font-serif">Leave Your Review</h2>
+                 <form id="reviewForm" class="space-y-5" novalidate>
+                     <!-- Message Area -->
+                     <div id="reviewMessage" role="alert" aria-live="polite" class="mb-5 text-sm min-h-[1.2em] font-medium text-center"></div>
+
+                     <!-- Star Rating -->
+                     <div>
+                         <label class="form-label text-center">Your Rating (Required):</label>
+                         <div class="star-rating" aria-label="Rating">
+                            <input type="radio" id="star5" name="rating" value="5" required><label for="star5" title="5 stars">★</label>
+                            <input type="radio" id="star4" name="rating" value="4" required><label for="star4" title="4 stars">★</label>
+                            <input type="radio" id="star3" name="rating" value="3" required><label for="star3" title="3 stars">★</label>
+                            <input type="radio" id="star2" name="rating" value="2" required><label for="star2" title="2 stars">★</label>
+                            <input type="radio" id="star1" name="rating" value="1" required><label for="star1" title="1 star">★</label>
+                         </div>
+                         <div id="rating-error" class="text-red-400 text-xs text-center -mt-2 h-4"></div>
+                     </div>
+
+                     <div>
+                         <label for="reviewerName" class="form-label">Name (Optional):</label>
+                         <input type="text" id="reviewerName" name="reviewerName" class="form-input" placeholder="e.g., Alex P.">
+                     </div>
+
+                     <div>
+                         <label for="reviewText" class="form-label">Your Review (Optional):</label>
+                         <textarea id="reviewText" name="reviewText" rows="4" class="form-input" placeholder="Tell us about your experience..."></textarea>
+                     </div>
+
+                     <!-- Submit Button -->
+                     <button type="submit" id="submitReviewButton" class="w-full mt-6 bg-primary hover:bg-primary-dark transition-colors duration-300 ease-out text-white font-bold py-3.5 px-4 rounded-lg text-lg shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-neutral-darker flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                         <svg id="reviewButtonSpinner" aria-hidden="true" class="animate-spin -ml-1 mr-2 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                         </svg>
+                         <span id="reviewButtonText">Submit Review</span>
+                     </button>
+                 </form>
+             </div>
+         </section>
+
+         <!-- Display Existing Reviews -->
+          <section aria-labelledby="existing-reviews-heading">
+            <h2 id="existing-reviews-heading" class="text-3xl font-semibold text-white mb-8 text-center font-serif">What Our Guests Say</h2>
+            <div id="reviewsList" class="space-y-6 min-h-[200px]"> <!-- Added min-height -->
+                 <!-- Reviews will be dynamically loaded here by JS -->
+                 <p id="loadingReviews" class="text-center text-neutral-light/70 py-8">Loading reviews...</p>
+                 <!-- Example Structure is removed, JS handles it -->
+            </div>
+
+            <!-- NEW: Pagination Controls -->
+            <div id="paginationControls" class="flex justify-between items-center mt-8 border-t border-neutral-dark pt-6" style="display: none;"> <!-- Initially hidden -->
+                <button id="prevPageButton" class="pagination-button" disabled>
+                    ← Previous
+                </button>
+                <span id="pageInfo" class="text-sm text-neutral-light/80">Page 1 of 1</span>
+                <button id="nextPageButton" class="pagination-button" disabled>
+                    Next →
+                </button>
+            </div>
+            <!-- END: Pagination Controls -->
+
+          </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-neutral-darker border-t border-neutral-dark pt-16 pb-12 mt-16">
+         <!-- ... Footer content ... -->
+         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Footer Content -->
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12 text-center md:text-left">
+                <div>
+                    <h5 class="font-semibold text-white uppercase tracking-wider mb-4 font-serif">Green Bites</h5>
+                    <p class="text-neutral-light/80">Experience the best vegetarian cuisine in Fairfax, VA. Fresh ingredients, delightful flavors.</p>
+                </div>
+                <div>
+                    <h5 class="font-semibold text-white uppercase tracking-wider mb-4 font-serif">Quick Links</h5>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-neutral-light/80 hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="menu.html" class="text-neutral-light/80 hover:text-primary transition-colors">Menu</a></li>
+                        <li><a href="aboutus.html" class="text-neutral-light/80 hover:text-primary transition-colors">Our Story</a></li>
+                        <li><a href="reviews.html" class="text-neutral-light/80 hover:text-primary transition-colors">Reviews</a></li>
+                        <li><a href="reservations.html" class="text-neutral-light/80 hover:text-primary transition-colors">Reservations</a></li>
+                    </ul>
+                </div>
+                 <div>
+                    <h5 class="font-semibold text-white uppercase tracking-wider mb-4 font-serif">Hours</h5>
+                    <ul class="space-y-1 text-neutral-light/80">
+                       <li>Mon - Sun: 11:00 AM - 10:00 PM</li>
+                       <li>(Kitchen closes 9:30 PM)</li>
+                    </ul>
+                </div>
+                 <div>
+                    <h5 class="font-semibold text-white uppercase tracking-wider mb-4 font-serif">Contact</h5>
+                     <address class="not-italic text-neutral-light/80 space-y-1">
+                        <p>123 Green Way, Fairfax, VA 22030</p>
+                        <p><a href="tel:+" class="hover:text-primary transition-colors">(703) 555-1234</a></p>
+                        <p><a href="mailto:" class="hover:text-primary transition-colors">info@greenbites.example.com</a></p>
+                    </address>
+                </div>
+            </div>
+             <div class="border-t border-neutral-dark pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-neutral-light/60">
+                 <p>© <script>document.write(new Date().getFullYear())</script> Green Bites. All Rights Reserved.</p>
+                 <div class="flex space-x-4 mt-4 md:mt-0">
+                     <a href="#" class="hover:text-white transition-colors">Facebook</a>
+                     <a href="#" class="hover:text-white transition-colors">Instagram</a>
+                     <a href="#" class="hover:text-white transition-colors">Yelp</a>
+                 </div>
+             </div>
+         </div>
+     </footer>
+
+    <!-- Scripts: Load Libraries FIRST -->
+    <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
+
+    <!-- Load Your Custom Scripts LAST -->
+    <script src="/js/reviews.js"></script> <!-- Reviews JS -->
+    <script src="/js/main.js"></script> <!-- Shared JS -->
+</body>
+</html>
