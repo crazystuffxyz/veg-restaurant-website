@@ -70,25 +70,114 @@ $(document).ready(function() {
             return;
         }
 
-        reviewsToDisplay.forEach(review => {
-            const formattedDate = review.createdAt ? moment(review.createdAt).format("MMM D, YYYY") : 'Recently';
-            const reviewerName = review.name ? escapeHtml(review.name) : 'Anonymous';
-            const reviewText = review.text ? `<p class="text-neutral-light/80 mb-3">${escapeHtml(review.text)}</p>` : '<p class="text-neutral-light/50 italic mb-3">No comment left.</p>';
+// Assuming escapeHtml is defined elsewhere if needed, but .text() handles escaping.
+// function escapeHtml(unsafe) {
+//     return unsafe
+//          .replace(/&/g, "&")
+//          .replace(/</g, "<")
+//          .replace(/>/g, ">")
+//          .replace(/"/g, """)
+//          .replace(/'/g, "'");
+// }
 
-            const reviewHtml = `
-                <article class="bg-neutral-darker p-6 rounded-lg shadow-lg border border-neutral-dark animate-fadeIn" style="opacity:1;"> <!-- Start visible -->
-                    <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-2 gap-2 sm:gap-4">
-                        <h3 class="text-lg font-semibold text-white order-2 sm:order-1">${reviewerName}</h3>
-                        <div class="order-1 sm:order-2">
-                            ${renderStars(review.stars)}
-                        </div>
-                    </div>
-                    ${reviewText}
-                    <p class="text-xs text-neutral-light/60 text-right">Reviewed: ${formattedDate}</p>
-                </article>
-            `;
-            $reviewsList.append(reviewHtml);
-        });
+// Assuming renderStars is defined elsewhere and returns safe HTML
+// function renderStars(count) { /* ... returns star HTML ... */ }
+
+// Assuming $reviewsList is a jQuery object selecting the container
+// const $reviewsList = $('#reviews-list'); // Example
+
+reviewsToDisplay.forEach(review => {
+    const formattedDate = review.createdAt ? moment(review.createdAt).format("MMM D, YYYY") : 'Recently';
+    // Use .text() later, so no need to escape here if using jQuery's .text() or vanilla .textContent
+    const reviewerName = review.name ? review.name : 'Anonymous';
+
+    // 1. Create the main review element structure (using jQuery for convenience)
+    //    Use placeholders or specific selectors for dynamic content.
+    const reviewElement = $(`
+        <article class="bg-neutral-darker p-6 rounded-lg shadow-lg border border-neutral-dark animate-fadeIn" style="opacity:1;">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-2 gap-2 sm:gap-4">
+                <h3 class="reviewer-name text-lg font-semibold text-white order-2 sm:order-1"></h3>
+                <div class="review-stars order-1 sm:order-2">
+                    ${renderStars(review.stars)}
+                </div>
+            </div>
+            <p class="review-text mb-3"></p> <!-- Placeholder for review text -->
+            <p class="review-date text-xs text-neutral-light/60 text-right"></p>
+        </article>
+    `);
+
+    // 2. Safely populate the dynamic content using .text()
+
+    // Set reviewer name
+    reviewElement.find('.reviewer-name').text(reviewerName);
+
+    // Find the review text paragraph
+    const reviewTextParagraph = reviewElement.find('.review-text');
+
+    // Set review text and apply conditional classes
+    if (review.text) {
+        reviewTextParagraph.text(review.text); // Use .text() for safety (sets innerText/textContent)
+        reviewTextParagraph.removeClass('text-neutral-light/50 italic').addClass('text-neutral-light/80');
+    } else {
+        reviewTextParagraph.text('No comment left.'); // Set placeholder text
+        reviewTextParagraph.removeClass('text-neutral-light/80').addClass('text-neutral-light/50 italic');
+    }
+
+    // Set formatted date
+    reviewElement.find('.review-date').text(`Reviewed: ${formattedDate}`);
+
+    // 3. Append the fully constructed and populated element to the list
+    $reviewsList.append(reviewElement);
+});
+
+// --- Vanilla JS Alternative (if not using jQuery) ---
+/*
+reviewsToDisplay.forEach(review => {
+    const formattedDate = review.createdAt ? moment(review.createdAt).format("MMM D, YYYY") : 'Recently';
+    const reviewerName = review.name ? review.name : 'Anonymous';
+
+    // 1. Create elements using document.createElement
+    const article = document.createElement('article');
+    article.className = 'bg-neutral-darker p-6 rounded-lg shadow-lg border border-neutral-dark animate-fadeIn';
+    article.style.opacity = '1';
+
+    const headerDiv = document.createElement('div');
+    headerDiv.className = 'flex flex-col sm:flex-row justify-between sm:items-center mb-2 gap-2 sm:gap-4';
+
+    const nameH3 = document.createElement('h3');
+    nameH3.className = 'text-lg font-semibold text-white order-2 sm:order-1';
+    nameH3.textContent = reviewerName; // Use textContent for safety
+
+    const starsDiv = document.createElement('div');
+    starsDiv.className = 'order-1 sm:order-2';
+    starsDiv.innerHTML = renderStars(review.stars); // Assuming renderStars returns safe HTML
+
+    headerDiv.appendChild(nameH3);
+    headerDiv.appendChild(starsDiv);
+
+    const textP = document.createElement('p');
+    textP.className = 'mb-3'; // Base class
+    if (review.text) {
+        textP.textContent = review.text; // Use textContent for safety
+        textP.classList.add('text-neutral-light/80');
+    } else {
+        textP.textContent = 'No comment left.';
+        textP.classList.add('text-neutral-light/50', 'italic');
+    }
+
+    const dateP = document.createElement('p');
+    dateP.className = 'text-xs text-neutral-light/60 text-right';
+    dateP.textContent = `Reviewed: ${formattedDate}`; // Use textContent for safety
+
+    article.appendChild(headerDiv);
+    article.appendChild(textP);
+    article.appendChild(dateP);
+
+    // Assuming reviewsList is a DOM element reference
+    // const reviewsList = document.getElementById('reviews-list'); // Example
+    reviewsList.appendChild(article);
+});
+*/
 
         updatePaginationControls();
      }
