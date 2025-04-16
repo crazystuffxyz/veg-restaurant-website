@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Approach - Green Bites | Sustainable & Fresh</title>
+    <meta name="description" content="Discover Green Bites' commitment to farm-to-table sourcing, mindful preparation, and sustainable practices in Fairfax, VA. Learn how we craft your vegetarian meal.">
+    <!-- Favicon Links -->
+    <link rel="icon" href="/Assets/Images/Favicon/favicon.ico" sizes="any">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Configuration Script -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Jost', 'sans-serif'],
+              serif: ['Cormorant Garamond', 'serif'],
+            },
+            colors: {
+              primary: {
+                  light: '#6ee7b7', // Lighter Green
+                  DEFAULT: '#10b981', // Main Green
+                  dark: '#059669' // Darker Green
+              },
+              secondary: {
+                  light: '#fef3c7', // Light Yellow
+                  DEFAULT: '#fcd34d', // Main Yellow
+                  dark: '#f59e0b' // Darker Yellow/Gold
+              },
+              neutral: {
+                light: '#d1d5db', // Light Gray (text)
+                DEFAULT: '#6b7280', // Medium Gray
+                dark: '#374151', // Dark Gray (cards)
+                darker: '#1f2937', // Darker Gray (bg section)
+                darkest: '#111827' // Darkest Gray (body bg)
+              }
+            },
+            animation: {
+                fadeIn: 'fadeIn 1s ease-out forwards',
+                fadeInDown: 'fadeInDown 1.2s ease-out forwards',
+                fadeInUp: 'fadeInUp 1s ease-out forwards',
+                pulseGlow: 'pulseGlow 2.5s infinite ease-in-out',
+                spinSlow: 'spin 45s linear infinite',
+                slideInLeft: 'slideInLeft 1s ease-out forwards',
+                slideInRight: 'slideInRight 1s ease-out forwards',
+            },
+            keyframes: {
+                fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                fadeInDown: { '0%': { opacity: '0', transform: 'translateY(-30px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                fadeInUp: { '0%': { opacity: '0', transform: 'translateY(30px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                pulseGlow: {
+                    '0%, 100%': { boxShadow: '0 0 12px rgba(16, 185, 129, 0.4)' },
+                    '50%': { boxShadow: '0 0 24px rgba(16, 185, 129, 0.8)' },
+                },
+                 slideInLeft: { '0%': { opacity: '0', transform: 'translateX(-50px)' }, '100%': { opacity: '1', transform: 'translateX(0)' } },
+                slideInRight: { '0%': { opacity: '0', transform: 'translateX(50px)' }, '100%': { opacity: '1', transform: 'translateX(0)' } },
+            },
+             backgroundImage: {
+               'hero-pattern': "url('/Assets/Images/Hero/hero-bg.jpg')",
+               'approach-header-bg': "linear-gradient(rgba(17, 24, 39, 0.8), rgba(17, 24, 39, 0.8)), url('/Assets/Images/Restaurant/ingredients-close-up.jpg')", // Example header image
+             }
+          }
+        }
+      };
+    </script>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.10/dist/cdn.min.js"></script>
+
+    <!-- Inline Styles -->
+    <style type="text/tailwindcss">
+        .approach-icon {
+            @apply w-16 h-16 mx-auto mb-4 text-primary;
+        }
+        .approach-card {
+             @apply bg-neutral-darker p-6 rounded-xl shadow-lg border border-neutral-dark transition-shadow hover:shadow-primary/20 hover:shadow-md h-full flex flex-col;
+        }
+        .approach-card p {
+            @apply flex-grow;
+        }
+    </style>
+
+</head>
+<body class="bg-neutral-darkest text-neutral-light font-sans antialiased selection:bg-primary selection:text-white">
+
+    <!-- Navigation -->
+    <nav x-data="{ open: false, scrolled: false }"
+         @scroll.window="scrolled = (window.scrollY > 50)"
+         class="fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-out"
+         :class="{ 'bg-neutral-darkest shadow-lg': scrolled || open, 'bg-transparent': !scrolled && !open }">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0"> <a href="index.html" class="transition-opacity duration-300 hover:opacity-80"><img class="h-14 lg:h-16 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Logo"></a> </div>
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">HOME</a>
+                    <a href="menu.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">MENU</a>
+                    <!-- Active Link -->
+                    <a href="our-approach.html" class="font-medium tracking-wide text-primary border-b-2 border-primary transition-colors duration-300">OUR APPROACH</a>
+                    <a href="aboutus.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
+                    <a href="reviews.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
+                    <a href="reservations.html" class="ml-4 inline-flex items-center px-5 py-2 border border-primary text-base font-semibold rounded-full shadow-sm text-primary bg-transparent hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">
+                        RESERVE
+                    </a>
+                </div>
+                 <!-- Mobile Menu Button -->
+                 <div class="md:hidden flex items-center">
+                    <a href="reservations.html" class="inline-flex items-center px-4 py-2 mr-2 border border-primary text-sm font-semibold rounded-full text-primary hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">RESERVE</a>
+                     <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" :aria-expanded="open.toString()">
+                         <span class="sr-only">Open main menu</span>
+                         <svg x-show="!open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                         <svg x-show="open" x-cloak style="display: none;" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+            </div>
+         </div>
+        <!-- Mobile Menu -->
+        <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" style="display: none;" class="md:hidden absolute top-full inset-x-0 bg-neutral-darkest shadow-lg p-4" id="mobile-menu">
+            <div class="pt-2 pb-3 space-y-3 text-center">
+                <a href="index.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">HOME</a>
+                <a href="menu.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">MENU</a>
+                <!-- Active Link -->
+                <a href="our-approach.html" class="block py-2 text-lg font-medium text-primary transition-colors duration-300">OUR APPROACH</a>
+                <a href="aboutus.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
+                <a href="reviews.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
+            </div>
+        </div>
+    </nav>
+    <!-- End Navigation -->
+
+
+    <!-- Header Section -->
+    <header class="relative pt-48 pb-32 bg-approach-header-bg bg-cover bg-center overflow-hidden">
+        <div class="absolute inset-0 bg-neutral-darkest opacity-60"></div> <!-- Overlay -->
+        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+             <h1 class="font-serif text-5xl sm:text-6xl lg:text-7xl text-white font-bold leading-tight animate-fadeInDown">
+                Our <span class="text-primary-light">Approach</span>
+             </h1>
+             <p class="mt-6 text-lg sm:text-xl text-neutral-light/90 max-w-2xl mx-auto animate-fadeInUp [animation-delay:300ms]">
+                Rooted in Freshness & Responsibility: How We Craft Your Meal.
+             </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+     <main class="py-16 md:py-24 bg-neutral-darkest">
+         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
+
+            <!-- Introduction -->
+            <section class="text-center max-w-3xl mx-auto animate-fadeInUp" style="opacity:0;">
+                <h2 class="font-serif text-3xl md:text-4xl text-secondary mb-4">The Green Bites Difference</h2>
+                <p class="text-lg text-neutral-light/80 leading-relaxed">
+                    At Green Bites, 'fresh' and 'sustainable' aren't just buzzwords – they are the foundation of everything we do. We believe that mindful choices in sourcing, preparation, and our environmental impact create not just better food, but a better dining experience. Discover how our commitment shapes every dish we serve.
+                </p>
+            </section>
+
+            <!-- Section 1: Farm-to-Table -->
+            <section class="grid md:grid-cols-2 gap-12 items-center animate-fadeInUp [animation-delay:200ms]" style="opacity:0;">
+                <div class="order-2 md:order-1">
+                    <span class="inline-block text-primary font-semibold uppercase tracking-widest mb-2">Sourcing</span>
+                    <h3 class="font-serif text-3xl md:text-4xl text-white leading-tight mb-5">From Local Fields to Your Fork</h3>
+                    <div class="space-y-4 text-neutral-light/85 leading-relaxed">
+                        <p>We're passionate about showcasing the incredible bounty of Virginia. We build strong relationships with local farmers and producers who share our dedication to <strong class="text-primary-light">organic and sustainable agriculture</strong>. This means prioritizing seasonal ingredients harvested at their peak flavor and nutritional value.</p>
+                        <p>By sourcing locally, we not only guarantee unparalleled freshness but also support our community's farmers and reduce the carbon footprint associated with long-distance transportation. Our menu evolves with the seasons, ensuring you always taste the best of what our region has to offer.</p>
+                        <p>We proudly partner with growers like <em class="text-secondary">Fairfax Gardens</em> for vibrant greens and <em class="text-secondary">Piedmont Produce</em> for earthy root vegetables. [Replace with specific examples if possible]</p>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2">
+                    <!-- Placeholder Image -->
+                    <img src="/Assets/Images/Restaurant/farm-produce-placeholder.jpg" alt="Fresh vegetables from a local farm" class="rounded-2xl shadow-xl aspect-video object-cover w-full">
+                </div>
+            </section>
+
+             <!-- Section 2: Preparation -->
+            <section class="grid md:grid-cols-2 gap-12 items-center animate-fadeInUp [animation-delay:400ms]" style="opacity:0;">
+                <div class="order-1">
+                    <!-- Placeholder Image -->
+                    <img src="/Assets/Images/Restaurant/kitchen-prep-placeholder.jpg" alt="Chef preparing fresh vegetarian dish" class="rounded-2xl shadow-xl aspect-video object-cover w-full">
+                </div>
+                <div class="order-2">
+                    <span class="inline-block text-primary font-semibold uppercase tracking-widest mb-2">Preparation</span>
+                    <h3 class="font-serif text-3xl md:text-4xl text-white leading-tight mb-5">Crafted with Passion & Purpose</h3>
+                    <div class="space-y-4 text-neutral-light/85 leading-relaxed">
+                        <p>Our kitchen is where the magic happens. We believe in letting the quality of our ingredients shine, which is why we prepare almost everything <strong class="text-primary-light">from scratch, daily</strong>. From our signature sauces and dressings to our house-made veggie burger patties and fresh-baked bread, we avoid shortcuts and processed ingredients.</p>
+                        <p>Our chefs employ techniques that enhance natural flavors – roasting vegetables to deepen their sweetness, quickly sautéing greens to retain their vibrancy, and carefully balancing spices. We focus on <strong class="text-primary-light">whole, unprocessed foods</strong> to create dishes that are as nourishing as they are delicious.</p>
+                         <p>Each meal is made-to-order with attention to detail, ensuring freshness and accommodating dietary needs with care.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Sustainability -->
+            <section class="text-center animate-fadeInUp [animation-delay:600ms]" style="opacity:0;">
+                <span class="inline-block text-primary font-semibold uppercase tracking-widest mb-2">Responsibility</span>
+                <h3 class="font-serif text-3xl md:text-4xl text-white leading-tight mb-10">Treading Lightly on Our Planet</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+                    <!-- Card 1: Waste Reduction -->
+                    <div class="approach-card">
+                        <svg class="approach-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" /></svg> <!-- Trash Can Icon -->
+                        <h4 class="text-xl font-semibold text-white mb-2">Waste Reduction</h4>
+                        <p class="text-neutral-light/80 text-sm leading-relaxed">We actively minimize food waste through careful inventory management and menu planning. All eligible food scraps and organic matter are composted, diverting significant waste from landfills.</p>
+                    </div>
+                    <!-- Card 2: Eco-Packaging -->
+                    <div class="approach-card">
+                         <svg class="approach-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12zM14.25 9a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" /> </svg> <!-- Heart Icon (as placeholder) -->
+                        <h4 class="text-xl font-semibold text-white mb-2">Eco-Friendly Packaging</h4>
+                        <p class="text-neutral-light/80 text-sm leading-relaxed">For both dine-in necessities and carry-out orders, we prioritize materials that are compostable, biodegradable, or made from recycled content, minimizing our reliance on single-use plastics.</p>
+                    </div>
+                    <!-- Card 3: Conscious Operations -->
+                    <div class="approach-card">
+                        <svg class="approach-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg> <!-- Lightning bolt for energy -->
+                        <h4 class="text-xl font-semibold text-white mb-2">Conscious Operations</h4>
+                        <p class="text-neutral-light/80 text-sm leading-relaxed">We strive to conserve resources by using energy-efficient appliances, LED lighting, and implementing water-saving practices throughout the restaurant. We also source fair-trade coffee and other ethical products whenever possible.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Call to Action -->
+            <section class="text-center border-t border-neutral-dark pt-16 animate-fadeInUp [animation-delay:800ms]" style="opacity:0;">
+                <h2 class="font-serif text-3xl text-white mb-6">Taste the Difference Commitment Makes</h2>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                     <a href="menu.html" class="inline-flex justify-center items-center px-8 py-3 bg-primary rounded-full text-base font-semibold text-white shadow-md hover:bg-primary-dark transform hover:scale-105 transition-all duration-300 ease-out">
+                        Explore Our Menu
+                    </a>
+                     <a href="reservations.html" class="inline-flex justify-center items-center px-8 py-3 border border-secondary text-secondary rounded-full text-base font-semibold hover:bg-secondary hover:text-neutral-darkest transition-colors duration-300 ease-out">
+                        Make a Reservation
+                    </a>
+                </div>
+            </section>
+
+         </div>
+     </main>
+
+    <!-- Footer -->
+    <footer class="bg-neutral-darker border-t border-neutral-dark pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12">
+                <!-- Logo & About -->
+                <div class="md:col-span-1 lg:col-span-2">
+                     <a href="index.html" class="inline-block mb-4">
+                        <img class="h-12 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Footer Logo">
+                    </a>
+                    <p class="text-neutral-light/80 text-sm leading-relaxed max-w-sm">
+                        Celebrating plant-based deliciousness with fresh, local ingredients and modern culinary flair. Join us for an unforgettable vegetarian dining experience in Fairfax.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h5 class="text-lg font-semibold text-white tracking-wide mb-4 font-serif">Explore</h5>
+                    <ul class="space-y-3 text-neutral-light/80 text-sm">
+                        <li><a href="index.html" class="hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="menu.html" class="hover:text-primary transition-colors">Menu</a></li>
+                        <li><a href="our-approach.html" class="hover:text-primary transition-colors">Our Approach</a></li>
+                        <li><a href="aboutus.html" class="hover:text-primary transition-colors">Our Story</a></li>
+                        <li><a href="reviews.html" class="hover:text-primary transition-colors">Reviews</a></li>
+                        <li><a href="reservations.html" class="hover:text-primary transition-colors">Reservations</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                 <div>
+                    <h5 class="text-lg font-semibold text-white tracking-wide mb-4 font-serif">Visit Us</h5>
+                     <address class="not-italic text-neutral-light/80 space-y-3 text-sm">
+                         <p>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2 -mt-1 text-primary" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" /></svg>
+                             12345 Main Street<br>
+                             Fairfax, VA 22030
+                         </p>
+                          <p>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2 -mt-1 text-primary" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" /></svg>
+                             <a href="tel:+1234567890" class="hover:text-primary">(123) 456-7890</a>
+                         </p>
+                         <p>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2 -mt-1 text-primary" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" /><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" /></svg>
+                             <a href="mailto:info@greenbites.com" class="hover:text-primary">info@greenbites.com</a>
+                          </p>
+                     </address>
+                </div>
+                <!-- Hours -->
+                 <div>
+                    <h5 class="text-lg font-semibold text-white tracking-wide mb-4 font-serif">Hours</h5>
+                     <ul class="space-y-1 text-neutral-light/80 text-sm">
+                         <li>Mon-Fri: 11am - 10pm</li>
+                         <li>Sat: 10am - 11pm</li>
+                         <li>Sun: 10am - 9pm</li>
+                     </ul>
+                 </div>
+            </div>
+            <!-- Bottom Bar -->
+            <div class="border-t border-neutral-dark pt-8 flex flex-col md:flex-row justify-between items-center text-sm">
+                <p class="text-neutral-light/60 mb-4 md:mb-0">&copy; <script>document.write(new Date().getFullYear())</script> Green Bites. All Rights Reserved.</p>
+                <div class="flex space-x-5">
+                     <!-- Placeholder Social Icons -->
+                     <a href="#" aria-label="Green Bites Facebook page" class="text-neutral-light/60 hover:text-primary transition-colors duration-300">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
+                    </a>
+                     <a href="#" aria-label="Green Bites Instagram page" class="text-neutral-light/60 hover:text-primary transition-colors duration-300">
+                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.024.048-1.378.06-3.808.06s-2.784-.012-3.808-.06c-1.064-.049-1.791.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.048-1.024-.06-1.378-.06-3.808s.012-2.784.06-3.808c.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 12.315 2zm0 1.62c-2.403 0-2.741.01-3.7.057-1.035.048-1.634.21-2.145.414-.64.264-1.104.64-1.578 1.114-.473.473-.849.939-1.114 1.578-.204.512-.366 1.11-.414 2.146-.046.958-.057 1.296-.057 3.7s.011 2.742.057 3.7c.048 1.035.21 1.634.414 2.146.264.64.64 1.104 1.114 1.578.473.473.939.849 1.578 1.114.511.204 1.11.366 2.145.414.959.046 1.297.057 3.7.057s2.742-.011 3.7-.057c1.035-.048 1.634-.21 2.146-.414.64-.264 1.104-.64 1.578-1.114.473-.473.849-.939 1.114-1.578.204-.511.366-1.11.414-2.146.046-.958.057-1.297.057-3.7s-.011-2.742-.057-3.7c-.048-1.035-.21-1.634-.414-2.146-.264-.64-.64-1.104-1.114-1.578-.473-.473-.939-.849-1.578-1.114-.512-.204-1.11-.366-2.146-.414-.958-.046-1.296-.057-3.7-.057zm0 3.442c-2.018 0-3.638 1.62-3.638 3.638s1.62 3.638 3.638 3.638 3.638-1.62 3.638-3.638-1.62-3.638-3.638-3.638zm0 5.678a2.04 2.04 0 110-4.08 2.04 2.04 0 010 4.08zm6.285-6.356a1.245 1.245 0 11-2.49 0 1.245 1.245 0 012.49 0z" clip-rule="evenodd" /></svg>
+                     </a>
+                </div>
+            </div>
+        </div>
+     </footer>
+    <!-- End Footer -->
+
+    <!-- Custom JavaScript -->
+    <script src="/js/main.js"></script>
+    <script>
+        // The animations should be handled by main.js if using the Intersection Observer setup
+    </script>
+</body>
+</html>

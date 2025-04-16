@@ -5,18 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Our Story - Green Bites | Passion for Plant-Based</title>
     <meta name="description" content="Learn about the journey of Green Bites, our commitment to sustainability, local sourcing, and crafting innovative vegetarian cuisine in Fairfax, VA.">
-    <!-- Favicon Links - Consider adding more types like apple-touch-icon -->
+    <!-- Favicon Links -->
     <link rel="icon" href="/Assets/Images/Favicon/favicon.ico" sizes="any">
-    <!-- <link rel="apple-touch-icon" href="/Assets/Images/Favicon/apple-touch-icon.png"> -->
-    <!-- <link rel="icon" type="image/svg+xml" href="/Assets/Images/Favicon/favicon.svg"> -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Tailwind Configuration Script (Place BEFORE the main Tailwind script) -->
-    <!-- NOTE: Using inline config with CDN has limitations. A build step is recommended for full features (like plugins). -->
+    <!-- Tailwind Configuration Script -->
     <script>
       tailwind.config = {
         theme: {
@@ -65,50 +62,40 @@
                 slideInRight: { '0%': { opacity: '0', transform: 'translateX(50px)' }, '100%': { opacity: '1', transform: 'translateX(0)' } },
             },
              backgroundImage: {
-               'hero-pattern': "url('/Assets/Images/Hero/hero-bg.webp')", // Define your pattern
-               // FIXME: Replace placeholder texture path if needed, or remove if unused. Ensure path is correct.
-               'menu-texture': "radial-gradient(circle, rgba(31,41,55,0.9) 0%, rgba(17,24,39,0.95) 80%), url('/Assets/Images/Textures/subtle-texture.svg')",
+               'hero-pattern': "url('/Assets/Images/Hero/hero-bg.jpg')",
+               'menu-texture': "radial-gradient(circle, rgba(31,41,55,0.9) 0%, rgba(17,24,39,0.95) 80%), url('/Assets/Images/Textures/subtle-texture.svg')", // Check path
              }
           }
-        }
-        // Uncomment if using the Typography plugin via CDN extension (requires specific CDN setup)
-        // plugins: [
-        //   require('@tailwindcss/typography'),
-        // ]
+        },
+        // Ensure Typography plugin is correctly integrated if used (CDN or build step)
+        plugins: [
+          require('@tailwindcss/typography'), // Enable prose classes
+        ]
       };
     </script>
 
-    <!-- Tailwind CSS via CDN -->
-
-    <!-- Alpine.js (pinned version) -->
+    <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.10/dist/cdn.min.js"></script>
-
-    <!-- Custom Stylesheet (Ensure '/css/style.css' exists and path is correct) -->
-    <link rel="stylesheet" href="/css/style.css">
-
-    <!-- Removed the inline <style> block that previously held the invalid config -->
 
 </head>
 <body class="bg-neutral-darkest text-neutral-light font-sans antialiased selection:bg-primary selection:text-white">
 
     <!-- Navigation -->
-    <!-- NOTE: Assumes /js/main.js contains scroll listener to update 'scrolled' -->
     <nav x-data="{ open: false, scrolled: false }"
          @scroll.window="scrolled = (window.scrollY > 50)"
          class="fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-out"
          :class="{ 'bg-neutral-darkest shadow-lg': scrolled || open, 'bg-transparent': !scrolled && !open }">
-         <!-- Ensure this nav section is IDENTICAL to the one in index.html for consistency -->
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
-                <!-- FIXME: Verify path '/Assets/Images/Logo/GREEN_BITES_LOGO.png' is correct -->
                 <div class="flex-shrink-0"> <a href="index.html" class="transition-opacity duration-300 hover:opacity-80"><img class="h-14 lg:h-16 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Logo"></a> </div>
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="index.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">HOME</a>
                     <a href="menu.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">MENU</a>
-                    <a href="aboutus.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
-                    <!-- ADDED Reviews Link -->
+                    <a href="our-approach.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR APPROACH</a>
+                    <!-- Active Link -->
+                    <a href="aboutus.html" class="font-medium tracking-wide text-primary border-b-2 border-primary transition-colors duration-300">OUR STORY</a>
                     <a href="reviews.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
                     <a href="reservations.html" class="ml-4 inline-flex items-center px-5 py-2 border border-primary text-base font-semibold rounded-full shadow-sm text-primary bg-transparent hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">
                         RESERVE
@@ -117,23 +104,22 @@
                  <!-- Mobile Menu Button -->
                  <div class="md:hidden flex items-center">
                     <a href="reservations.html" class="inline-flex items-center px-4 py-2 mr-2 border border-primary text-sm font-semibold rounded-full text-primary hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">RESERVE</a>
-                     <!-- Fixed aria-expanded binding -->
                      <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" :aria-expanded="open.toString()">
                          <span class="sr-only">Open main menu</span>
                          <svg x-show="!open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-                         <svg x-show="open" x-cloak class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg> <!-- Added x-cloak to prevent flash -->
+                         <svg x-show="open" x-cloak style="display: none;" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                     </button>
                 </div>
             </div>
          </div>
         <!-- Mobile Menu -->
-        <!-- Added x-cloak to prevent flash of unstyled content -->
-        <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" style="display: none;" class="md:hidden absolute top-full inset-x-0 bg-neutral-darkest shadow-lg p-4" id="mobile-menu"> <!-- Added style="display: none;" -->
+        <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" style="display: none;" class="md:hidden absolute top-full inset-x-0 bg-neutral-darkest shadow-lg p-4" id="mobile-menu">
             <div class="pt-2 pb-3 space-y-3 text-center">
                 <a href="index.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">HOME</a>
                 <a href="menu.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">MENU</a>
-                <a href="aboutus.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
-                <!-- ADDED Reviews Link -->
+                <a href="our-approach.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR APPROACH</a>
+                <!-- Active Link -->
+                <a href="aboutus.html" class="block py-2 text-lg font-medium text-primary transition-colors duration-300">OUR STORY</a>
                 <a href="reviews.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
             </div>
         </div>
@@ -141,10 +127,8 @@
 
     <!-- Header Section -->
     <header class="relative pt-48 pb-32 bg-neutral-darker overflow-hidden">
-         <!-- Decorative gradient background -->
          <div class="absolute inset-0 -z-10" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(17, 24, 39, 0) 40%), radial-gradient(circle at top left, rgba(245, 158, 11, 0.1) , transparent 50%);"></div>
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-             <!-- Animations rely on config above -->
              <h1 class="font-serif text-5xl sm:text-6xl lg:text-7xl text-white font-bold leading-tight animate-fadeInDown">
                 Rooted in <span class="text-primary-light">Passion</span>,<br> Grown with <span class="text-secondary">Purpose</span>.
              </h1>
@@ -156,33 +140,31 @@
 
     <!-- Main Content -->
      <main class="py-16 md:py-24 bg-neutral-darkest">
-         <!-- NOTE: `prose` classes require the @tailwindcss/typography plugin. Ensure it's available via CDN or build step. -->
          <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 prose prose-lg prose-invert prose-headings:font-serif prose-headings:text-secondary prose-a:text-primary hover:prose-a:text-primary-light prose-strong:text-primary-light leading-relaxed">
-             <!-- Add compelling content about the restaurant's story here -->
-             <section class="mb-12 animate-fadeInUp [animation-delay:500ms]">
+
+             <section class="mb-12 animate-fadeInUp [animation-delay:500ms]" style="opacity:0;">
                  <h2>Our Beginning</h2>
                 <p>Green Bites sprouted in April 2025 from a shared dream: to create a haven where delicious food and conscious living intertwine. We saw a need in Fairfax for a truly modern vegetarian experience – one that celebrated flavor, freshness, and the vibrant potential of plant-based ingredients, without compromising on style or atmosphere.</p>
                 <p>Driven by a deep respect for our planet and a love for inventive cooking, we embarked on a journey to redefine vegetarian dining. It wasn't just about removing meat; it was about elevating vegetables, grains, and legumes to culinary centerpieces.</p>
             </section>
 
-             <section class="mb-12 animate-fadeInUp [animation-delay:700ms]">
-                 <figure class="float-right ml-6 mb-4 max-w-xs sm:max-w-sm"> <!-- Adjusted max-width -->
-                     <!-- FIXME: Verify path '/Assets/Images/Restaurant/exterior-1.webp' is correct -->
-                     <img src="/Assets/Images/Restaurant/exterior-1.webp" alt="Exterior of Green Bites Restaurant" class="rounded-xl shadow-lg aspect-[4/3] object-cover"> <!-- Added aspect ratio and object cover -->
+             <section class="mb-12 animate-fadeInUp [animation-delay:700ms]" style="opacity:0;">
+                 <figure class="float-right ml-6 mb-4 max-w-xs sm:max-w-sm">
+                     <img src="/Assets/Images/Restaurant/exterior-1.jpg" alt="Exterior of Green Bites Restaurant" class="rounded-xl shadow-lg aspect-[4/3] object-cover">
                     <figcaption class="text-center text-sm italic text-neutral-light/70 mt-2">Our welcoming space on Main Street</figcaption>
                  </figure>
-                <h2>Our Philosophy: Fresh, Local, Sustainable</h2>
-                 <p>At the core of Green Bites lies a commitment to <strong>sustainability</strong>. We believe that exceptional food starts with exceptional ingredients. That's why we forge strong partnerships with <strong>local farmers</strong> and suppliers who share our dedication to organic practices and responsible agriculture. You'll taste the difference in every bite – the unparalleled freshness of seasonal produce picked at its peak.</p>
-                <p>Our menu is a living reflection of the seasons, constantly evolving to showcase the best bounty our region has to offer. We strive to minimize waste, compost diligently, and make environmentally conscious choices in every aspect of our operation, from energy consumption to packaging.</p>
-                 <div class="clear-both"></div> <!-- Clear float -->
+                 <h2>Our Core Values</h2>
+                 <p>At the heart of Green Bites lies a commitment to <strong>sustainability</strong> and quality. We believe exceptional food starts with exceptional ingredients, sourced responsibly from partners who share our values. Freshness is paramount, and you'll taste it in every dish.</p>
+                 <p>We are dedicated to environmentally conscious choices in our operations, striving to minimize waste and tread lightly on our planet.</p>
+                 <div class="clear-both"></div>
+                 <p>Discover the specifics of our farm-to-table sourcing, preparation methods, and sustainability initiatives on our <a href="our-approach.html">Our Approach</a> page.</p>
             </section>
 
-            <section class="animate-fadeInUp [animation-delay:900ms]">
+            <section class="animate-fadeInUp [animation-delay:900ms]" style="opacity:0;">
                 <h2>More Than Just Food</h2>
                 <p>We aimed to create more than just a restaurant; we wanted to build a <strong>community hub</strong>. A place where friends gather, conversations flow, and everyone feels welcome. Our space is designed to be modern, comfortable, and filled with natural light and greenery – an oasis where you can relax, recharge, and enjoy food that nourishes both body and soul.</p>
                  <p>Thank you for being part of the Green Bites story. We're thrilled to share our passion with you and invite you to join us for a meal soon. Explore our <a href="menu.html">menu</a> or <a href="reservations.html">make a reservation</a> to experience it for yourself!</p>
             </section>
-             <!-- You could add team photos, details about founders, etc. -->
 
          </div>
      </main>
@@ -190,55 +172,44 @@
 
     <!-- Footer -->
     <footer class="bg-neutral-darker border-t border-neutral-dark pt-16 pb-12">
-        <!-- FIXME: PASTE THE ACTUAL FOOTER CONTENT FROM index.html HERE -->
-        <!-- Example Structure (Replace with your actual content) -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
-                <!-- Column 1: Logo/Brand -->
-                 <div class="col-span-2 md:col-span-4 lg:col-span-1">
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12">
+                <!-- Logo & About -->
+                 <div class="md:col-span-1 lg:col-span-2">
                      <a href="index.html">
-                        <!-- FIXME: Verify path '/Assets/Images/Logo/GREEN_BITES_LOGO_footer.png' -->
                          <img class="h-12 w-auto mb-4" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Logo">
                      </a>
                      <p class="text-neutral-light/70 text-sm">Deliciously sustainable plant-based dining.</p>
                  </div>
-                 <!-- Column 2: Quick Links -->
+                 <!-- Quick Links -->
                  <div>
-                     <h4 class="font-semibold text-white tracking-wider uppercase mb-4 text-sm">Explore</h4>
-                     <ul class="space-y-2">
-                         <li><a href="index.html" class="text-neutral-light/80 hover:text-primary text-sm transition-colors">Home</a></li>
-                         <li><a href="menu.html" class="text-neutral-light/80 hover:text-primary text-sm transition-colors">Menu</a></li>
-                         <li><a href="aboutus.html" class="text-neutral-light/80 hover:text-primary text-sm transition-colors">Our Story</a></li>
-                         <li><a href="reservations.html" class="text-neutral-light/80 hover:text-primary text-sm transition-colors">Reservations</a></li>
+                    <h5 class="text-lg font-semibold text-white tracking-wide mb-4 font-serif">Explore</h5>
+                     <ul class="space-y-3 text-neutral-light/80 text-sm">
+                         <li><a href="index.html" class="hover:text-primary transition-colors">Home</a></li>
+                         <li><a href="menu.html" class="hover:text-primary transition-colors">Menu</a></li>
+                         <li><a href="our-approach.html" class="hover:text-primary transition-colors">Our Approach</a></li>
+                         <li><a href="aboutus.html" class="hover:text-primary transition-colors">Our Story</a></li>
+                         <li><a href="reviews.html" class="hover:text-primary transition-colors">Reviews</a></li>
+                         <li><a href="reservations.html" class="hover:text-primary transition-colors">Reservations</a></li>
                      </ul>
                  </div>
-                 <!-- Column 3: Contact -->
+                 <!-- Contact -->
                  <div>
-                     <h4 class="font-semibold text-white tracking-wider uppercase mb-4 text-sm">Contact</h4>
+                    <h5 class="text-lg font-semibold text-white tracking-wide mb-4 font-serif">Contact</h5>
                      <address class="not-italic space-y-2 text-neutral-light/80 text-sm">
-                         <p>123 Main Street<br>Fairfax, VA 22030</p>
-                         <p><a href="tel:555-123-4567" class="hover:text-primary transition-colors">(555) 123-4567</a></p>
+                         <p>12345 Main Street<br>Fairfax, VA 22030</p>
+                         <p><a href="tel:123-456-7890" class="hover:text-primary transition-colors">(123) 456-7890</a></p>
                          <p><a href="mailto:info@greenbites.example.com" class="hover:text-primary transition-colors">info@greenbites.example.com</a></p>
                      </address>
                  </div>
-                 <!-- Column 4: Hours -->
+                 <!-- Hours -->
                  <div>
-                     <h4 class="font-semibold text-white tracking-wider uppercase mb-4 text-sm">Hours</h4>
+                    <h5 class="text-lg font-semibold text-white tracking-wide mb-4 font-serif">Hours</h5>
                      <ul class="space-y-1 text-neutral-light/80 text-sm">
-                         <li>Mon-Fri: 11am - 10pm</li>
+                         <li>Mon-Fri: 11am - 10pm</li> <!-- Example Hours -->
                          <li>Sat: 10am - 11pm</li>
                          <li>Sun: 10am - 9pm</li>
                      </ul>
-                 </div>
-                 <!-- Column 5: Social (Optional) -->
-                 <div>
-                    <h4 class="font-semibold text-white tracking-wider uppercase mb-4 text-sm">Follow Us</h4>
-                     <div class="flex space-x-4">
-                         <!-- FIXME: Add actual social media links -->
-                         <a href="#" class="text-neutral-light/70 hover:text-primary transition-colors"><span class="sr-only">Facebook</span><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">...</svg></a>
-                         <a href="#" class="text-neutral-light/70 hover:text-primary transition-colors"><span class="sr-only">Instagram</span><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">...</svg></a>
-                         <a href="#" class="text-neutral-light/70 hover:text-primary transition-colors"><span class="sr-only">Twitter</span><svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">...</svg></a>
-                     </div>
                  </div>
             </div>
              <div class="border-t border-neutral-dark pt-8 flex flex-col md:flex-row justify-between items-center text-sm">
@@ -251,32 +222,10 @@
         </div>
      </footer>
 
-    <!-- Custom JavaScript (Ensure '/js/main.js' exists and path is correct) -->
-    <!-- Should contain scroll listener logic if not handled inline via Alpine -->
+    <!-- Custom JavaScript -->
     <script src="/js/main.js"></script>
     <script>
-        // Simple script to update copyright year
         document.getElementById('current-year').textContent = new Date().getFullYear();
-
-        // If scroll listener isn't in main.js, you could add basic Alpine component logic here:
-        /*
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('navState', () => ({
-                scrolled: false,
-                init() {
-                    const handleScroll = () => {
-                        this.scrolled = window.scrollY > 50;
-                    };
-                    window.addEventListener('scroll', handleScroll);
-                    // Initial check in case page loads scrolled
-                    handleScroll();
-                    // Cleanup listener on component destruction (though less critical for nav)
-                    // this.$watch('open', () => {}); // Example of cleanup context
-                }
-            }))
-        })
-        // Then in nav: x-data="navState" (remove @scroll.window and initial scrolled value)
-        */
     </script>
 </body>
 </html>

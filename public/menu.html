@@ -8,33 +8,33 @@
     <link rel="icon" href="/Assets/Images/Favicon/favicon.ico" sizes="any">
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Tailwind Configuration Script (moved before main Tailwind script) -->
+    <!-- Tailwind Configuration Script -->
     <script>
       tailwind.config = {
-        darkMode: 'class', // Enable dark mode support
+        darkMode: 'class',
         theme: {
           extend: {
             fontFamily: {
-              sans: ['Jost', 'Helvetica', 'Arial', 'sans-serif'], // Added additional fallbacks
-              serif: ['Cormorant Garamond', 'Georgia', 'serif'],   // Added additional fallbacks
+              sans: ['Jost', 'Helvetica', 'Arial', 'sans-serif'],
+              serif: ['Cormorant Garamond', 'Georgia', 'serif'],
             },
             colors: {
               primary: {
-                light: '#6ee7b7', // Lighter Green
-                DEFAULT: '#10b981', // Main Green
-                dark: '#059669' // Darker Green
+                light: '#6ee7b7',
+                DEFAULT: '#10b981',
+                dark: '#059669'
               },
               secondary: {
-                light: '#fef3c7', // Light Yellow
-                DEFAULT: '#fcd34d', // Main Yellow
-                dark: '#f59e0b' // Darker Yellow/Gold
+                light: '#fef3c7',
+                DEFAULT: '#fcd34d',
+                dark: '#f59e0b'
               },
               neutral: {
-                light: '#d1d5db', // Light Gray (text)
-                DEFAULT: '#6b7280', // Medium Gray
-                dark: '#374151', // Dark Gray (cards)
-                darker: '#1f2937', // Darker Gray (bg section)
-                darkest: '#111827' // Darkest Gray (body bg)
+                light: '#d1d5db',
+                DEFAULT: '#6b7280',
+                dark: '#374151',
+                darker: '#1f2937',
+                darkest: '#111827'
               }
             },
             animation: {
@@ -47,42 +47,21 @@
               slideInRight: 'slideInRight 1s ease-out forwards',
             },
             keyframes: {
-              fadeIn: {
-                '0%': { opacity: 0 },
-                '100%': { opacity: 1 },
-              },
-              fadeInDown: {
-                '0%': { opacity: 0, transform: 'translateY(-30px)' },
-                '100%': { opacity: 1, transform: 'translateY(0)' },
-              },
-              fadeInUp: {
-                '0%': { opacity: 0, transform: 'translateY(30px)' },
-                '100%': { opacity: 1, transform: 'translateY(0)' },
-              },
-              pulseGlow: {
-                '0%, 100%': { boxShadow: '0 0 12px rgba(16, 185, 129, 0.4)' },
-                '50%': { boxShadow: '0 0 24px rgba(16, 185, 129, 0.8)' },
-              },
-              slideInLeft: {
-                '0%': { opacity: 0, transform: 'translateX(-50px)' },
-                '100%': { opacity: 1, transform: 'translateX(0)' },
-              },
-              slideInRight: {
-                '0%': { opacity: 0, transform: 'translateX(50px)' },
-                '100%': { opacity: 1, transform: 'translateX(0)' },
-              } // Removed the extraneous period here
+              fadeIn: { '0%': { opacity: 0 }, '100%': { opacity: 1 }, },
+              fadeInDown: { '0%': { opacity: 0, transform: 'translateY(-30px)' }, '100%': { opacity: 1, transform: 'translateY(0)' }, },
+              fadeInUp: { '0%': { opacity: 0, transform: 'translateY(30px)' }, '100%': { opacity: 1, transform: 'translateY(0)' }, },
+              pulseGlow: { '0%, 100%': { boxShadow: '0 0 12px rgba(16, 185, 129, 0.4)' }, '50%': { boxShadow: '0 0 24px rgba(16, 185, 129, 0.8)' }, },
+              slideInLeft: { '0%': { opacity: 0, transform: 'translateX(-50px)' }, '100%': { opacity: 1, transform: 'translateX(0)' }, },
+              slideInRight: { '0%': { opacity: 0, transform: 'translateX(50px)' }, '100%': { opacity: 1, transform: 'translateX(0)' }, }
             },
             backgroundImage: {
-              // Adjust the image path as necessary
-              'menu-header-bg': "linear-gradient(rgba(17, 24, 39, 0.85), rgba(17, 24, 39, 0.85)), url('/Assets/Images/Restaurant/ambiance-1.webp')",
-              'section-bg': "rgba(31, 41, 55, 0.5)", // Semi-transparent bg for sections
+              'menu-header-bg': "linear-gradient(rgba(17, 24, 39, 0.85), rgba(17, 24, 39, 0.85)), url('/Assets/Images/Restaurant/ambiance-1.jpg')",
+              'section-bg': "rgba(31, 41, 55, 0.5)",
             }
           }
         }
       };
     </script>
-
-    <!-- Main Tailwind Script -->
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -91,18 +70,11 @@
 
     <!-- Alpine JS -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
-    <!-- Custom CSS (External) -->
-    <link rel="stylesheet" href="/css/style.css">
-
-    <!-- Custom CSS / Tailwind Directives (Added type="text/tailwindcss") -->
+    <!-- Custom CSS / Tailwind Directives -->
     <style type="text/tailwindcss">
-        /* Reusing styles from index.html */
-        /* Custom class for menu item descriptions */
         .menu-item-description {
             @apply text-neutral-light/80 text-sm leading-relaxed mt-1;
         }
-        /* Subtle border hover effect for menu items */
         .menu-item-card:hover {
             @apply border-primary transition-colors duration-300;
         }
@@ -110,11 +82,10 @@
 </head>
 <body class="bg-neutral-darkest text-neutral-light font-sans antialiased selection:bg-primary selection:text-white">
 
-    <!-- Navigation (Include the same nav component as index.html) -->
-    <nav x-data="{ open: false, scrolled: true }"
+    <!-- Navigation -->
+    <nav x-data="{ open: false, scrolled: true }" <!-- Default scrolled to true for menu page -->
          class="fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-out"
          :class="{ 'bg-neutral-darkest shadow-lg': scrolled || open, 'bg-transparent': !scrolled && !open }">
-        <!-- Paste the exact <nav> HTML from index.html here -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo -->
@@ -126,9 +97,10 @@
                  <!-- Desktop Menu -->
                  <div class="hidden md:flex items-center space-x-8">
                     <a href="index.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">HOME</a>
-                    <a href="menu.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">MENU</a>
+                    <!-- Active Link -->
+                    <a href="menu.html" class="font-medium tracking-wide text-primary border-b-2 border-primary transition-colors duration-300">MENU</a>
+                    <a href="our-approach.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR APPROACH</a>
                     <a href="aboutus.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
-                    <!-- ADDED Reviews Link -->
                     <a href="reviews.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
                     <a href="reservations.html" class="ml-4 inline-flex items-center px-5 py-2 border border-primary text-base font-semibold rounded-full shadow-sm text-primary bg-transparent hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">
                         RESERVE
@@ -139,21 +111,22 @@
                     <a href="reservations.html" class="inline-flex items-center px-4 py-2 mr-2 border border-primary text-sm font-semibold rounded-full text-primary hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">
                         RESERVE
                     </a>
-                    <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" aria-expanded="false">
+                    <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" :aria-expanded="open.toString()">
                          <span class="sr-only">Open main menu</span>
                         <svg x-show="!open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-                        <svg x-show="open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                        <svg x-show="open" x-cloak style="display: none;" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                     </button>
                 </div>
             </div>
         </div>
          <!-- Mobile Menu -->
-         <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" style="display: none;" class="md:hidden absolute top-full inset-x-0 bg-neutral-darkest shadow-lg p-4" id="mobile-menu"> <!-- Added style="display: none;" -->
+         <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" style="display: none;" class="md:hidden absolute top-full inset-x-0 bg-neutral-darkest shadow-lg p-4" id="mobile-menu">
             <div class="pt-2 pb-3 space-y-3 text-center">
                 <a href="index.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">HOME</a>
-                <a href="menu.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">MENU</a>
+                <!-- Active Link -->
+                <a href="menu.html" class="block py-2 text-lg font-medium text-primary transition-colors duration-300">MENU</a>
+                <a href="our-approach.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR APPROACH</a>
                 <a href="aboutus.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
-                <!-- ADDED Reviews Link -->
                 <a href="reviews.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
             </div>
         </div>
@@ -161,13 +134,13 @@
 
     <!-- Menu Header Section -->
     <header class="relative pt-40 pb-24 bg-menu-header-bg bg-cover bg-center text-center">
-         <div class="absolute inset-0 bg-gradient-to-t from-neutral-darkest via-neutral-darkest/80 to-neutral-darkest/60"></div> <!-- Darker overlay for contrast -->
+         <div class="absolute inset-0 bg-gradient-to-t from-neutral-darkest via-neutral-darkest/80 to-neutral-darkest/60"></div>
         <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
              <h1 class="font-serif text-5xl sm:text-6xl md:text-7xl font-bold text-white leading-tight tracking-tight animate-fadeInDown">
                  Our <span class="text-primary-light">Menu</span>
-            </h1>
-             <p class="mt-4 text-lg sm:text-xl text-neutral-light max-w-2xl mx-auto animate-fadeInDown [animation-delay:300ms]">
-                A symphony of flavors celebrating the best of plant-based cuisine. Fresh, seasonal, and crafted with passion.
+             </h1>
+              <p class="mt-4 text-lg sm:text-xl text-neutral-light max-w-2xl mx-auto animate-fadeInDown [animation-delay:300ms]">
+                 A symphony of flavors celebrating plant-based cuisine. Fresh, seasonal, and crafted with passion. <strong class="text-secondary-light">Ask about today's farm-fresh features!</strong>
              </p>
          </div>
     </header>
@@ -177,7 +150,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             <!-- Appetizers Section -->
-            <section class="mb-16 animate-fadeInUp" style="opacity:0;">
+            <section class="mb-16 animate-fadeInUp" style="opacity:0;"> <!-- JS controls opacity -->
                  <h2 class="font-serif text-3xl sm:text-4xl text-secondary text-center mb-10 border-b-2 border-primary pb-3 inline-block mx-auto px-6">Starters & Shares</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
                     <!-- Item: Spinach Dip -->
@@ -187,7 +160,6 @@
                             <span class="text-primary-light">$14</span>
                         </h3>
                         <p class="menu-item-description">Warm, creamy blend of spinach, artichoke hearts, and vegan parmesan, served with toasted crostini.</p>
-                         <!-- <img src="/Assets/Images/Menu/spinach-dip.webp" alt="Spinach Dip" class="mt-3 rounded-lg h-32 w-full object-cover"> -->
                     </div>
                     <!-- Item: Falafel -->
                      <div class="menu-item-card border-l-4 border-transparent pl-4 py-2">
@@ -205,7 +177,7 @@
                         </h3>
                         <p class="menu-item-description">Smashed avocado on toasted sourdough, topped with radish, chili flakes, and microgreens. (Add Tofu Scramble +$4)</p>
                     </div>
-                     <!-- Add more appetizers -->
+                     <!-- Item: Roasted Tomato Bruschetta -->
                      <div class="menu-item-card border-l-4 border-transparent pl-4 py-2">
                         <h3 class="text-xl font-semibold text-white flex justify-between">
                             <span>Roasted Tomato Bruschetta</span>
@@ -213,7 +185,6 @@
                         </h3>
                         <p class="menu-item-description">Grilled bread topped with garlic-infused roasted cherry tomatoes, fresh basil, and balsamic glaze.</p>
                     </div>
-
                 </div>
             </section>
 
@@ -251,7 +222,7 @@
                             <span>Simple Mixed Greens</span>
                             <span class="text-primary-light">$9</span>
                          </h3>
-                        <p class="menu-item-description">A mix of fresh, local greens with your choice of house vinaigrette or creamy ranch.</p>
+                        <p class="menu-item-description">A mix of fresh, <strong class="text-primary-light">locally sourced</strong> seasonal greens with your choice of house vinaigrette or creamy ranch.</p>
                     </div>
                 </div>
              </section>
@@ -267,8 +238,7 @@
                             <span class="text-lg text-primary-light ml-4 whitespace-nowrap">$18</span>
                         </h3>
                         <p class="menu-item-description">House-made black bean & quinoa patty, avocado, sprouts, tomato, red onion, vegan aioli on a toasted brioche bun. Served with choice of side.</p>
-                         <p class="text-xs text-neutral-dark mt-1">(Choice: Sweet Potato Fries, Mixed Greens, Regular Fries)</p>
-                         <!-- <img src="/Assets/Images/Menu/veggie-burger.webp" alt="Veggie Burger" class="mt-3 rounded-lg h-40 w-full object-cover"> -->
+                         <p class="text-xs text-neutral-light/60 mt-1">(Choice: Sweet Potato Fries, Mixed Greens, Regular Fries)</p>
                     </div>
                     <!-- Item: Portobello Sandwich -->
                     <div class="menu-item-card border-t border-neutral-dark pt-6">
@@ -277,7 +247,7 @@
                             <span class="text-lg text-primary-light ml-4 whitespace-nowrap">$17</span>
                         </h3>
                         <p class="menu-item-description">Balsamic-marinated grilled portobello mushroom cap, roasted red peppers, arugula, pesto aioli on focaccia bread. Served with choice of side.</p>
-                        <p class="text-xs text-neutral-dark mt-1">(Choice: Sweet Potato Fries, Mixed Greens, Regular Fries)</p>
+                        <p class="text-xs text-neutral-light/60 mt-1">(Choice: Sweet Potato Fries, Mixed Greens, Regular Fries)</p>
                     </div>
                     <!-- Item: Vegan Chili -->
                      <div class="menu-item-card border-t border-neutral-dark pt-6">
@@ -294,7 +264,7 @@
                             <span class="text-lg text-primary-light ml-4 whitespace-nowrap">$17</span>
                         </h3>
                          <p class="menu-item-description">Savory turmeric-spiced tofu scramble with sautéed spinach, mushrooms, and onions. Served with home fries and toast.</p>
-                         <p class="text-xs text-neutral-dark mt-1">(Available All Day)</p>
+                         <p class="text-xs text-neutral-light/60 mt-1">(Available All Day)</p>
                     </div>
                     <!-- Item: Veggie Pizza -->
                     <div class="menu-item-card border-t border-neutral-dark pt-6">
@@ -310,8 +280,8 @@
                              <span>Seasonal Roasted Vegetable Medley</span>
                              <span class="text-lg text-primary-light ml-4 whitespace-nowrap">$15</span>
                          </h3>
-                         <p class="menu-item-description">A vibrant mix of locally sourced, oven-roasted seasonal vegetables tossed with herbs and olive oil. Ask your server for today's selection.</p>
-                         <p class="text-xs text-neutral-dark mt-1">(Vegan, Gluten-Free)</p>
+                         <p class="menu-item-description">A vibrant mix of <strong class="text-primary-light">locally sourced,</strong> oven-roasted seasonal vegetables tossed with herbs and olive oil. Ask your server for today's selection from our farm partners.</p>
+                         <p class="text-xs text-neutral-light/60 mt-1">(Vegan, Gluten-Free)</p>
                     </div>
                 </div>
             </section>
@@ -336,7 +306,7 @@
                          </h3>
                         <p class="menu-item-description">Warm, bubbling seasonal fruit topped with a crunchy oat and nut crumble. Served with vegan vanilla ice cream.</p>
                     </div>
-                    <!-- Add more desserts -->
+                    <!-- Item: Cheesecake -->
                     <div class="menu-item-card border-l-4 border-transparent pl-4 py-2">
                          <h3 class="text-xl font-semibold text-white flex justify-between">
                             <span>Vegan Cheesecake Slice</span>
@@ -347,7 +317,7 @@
                 </div>
             </section>
 
-            <!-- Drinks Section (Add if desired) -->
+            <!-- Drinks Section -->
              <section class="animate-fadeInUp [animation-delay:800ms]" style="opacity:0;">
                  <h2 class="font-serif text-3xl sm:text-4xl text-secondary text-center mb-10 border-b-2 border-primary pb-3 inline-block mx-auto px-6">Beverages</h2>
                  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
@@ -381,31 +351,70 @@
                  </div>
             </section>
 
+            <!-- Commitment Note Section -->
+            <section class="mt-16 pt-8 border-t border-neutral-dark text-center animate-fadeInUp [animation-delay:1000ms]" style="opacity:0;">
+                 <h4 class="font-serif text-xl text-secondary mb-3">Our Commitment</h4>
+                 <p class="text-neutral-light/80 text-sm max-w-2xl mx-auto">
+                    We prioritize fresh, seasonal ingredients from local farms and prepare our dishes daily in-house. Our carry-out packaging is chosen with sustainability in mind, using primarily <strong class="text-primary-light">compostable and recyclable materials</strong>. <a href="our-approach.html" class="text-primary hover:underline">Learn more about our approach</a>.
+                 </p>
+            </section>
+
         </div>
     </main>
 
-    <!-- Footer (Include the same footer component as index.html) -->
+    <!-- Footer -->
     <footer class="bg-neutral-darker border-t border-neutral-dark pt-16 pb-12">
-        <!-- Placeholder for Footer Content -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12 text-center md:text-left">
-                 <div><h5 class="text-white font-semibold mb-3">Green Bites</h5><p class="text-sm text-neutral-light/70">Deliciously Plant-Based.</p></div>
-                 <div><h5 class="text-white font-semibold mb-3">Quick Links</h5><ul class="text-sm text-neutral-light/70 space-y-1"><li class="hover:text-primary"><a href="menu.html">Menu</a></li><li class="hover:text-primary"><a href="reservations.html">Reserve</a></li></ul></div>
-                 <div><h5 class="text-white font-semibold mb-3">Contact</h5><p class="text-sm text-neutral-light/70">123 Veggie Lane<br>Flavor Town, FT 54321<br>(555) 123-4567</p></div>
-                 <div><h5 class="text-white font-semibold mb-3">Hours</h5><p class="text-sm text-neutral-light/70">Mon-Fri: 11am - 9pm<br>Sat-Sun: 10am - 10pm</p></div>
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12">
+                 <!-- Logo & About -->
+                 <div class="md:col-span-1 lg:col-span-2">
+                    <a href="index.html" class="inline-block mb-4">
+                        <img class="h-12 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Footer Logo">
+                    </a>
+                    <p class="text-neutral-light/80 text-sm leading-relaxed max-w-sm">
+                        Deliciously Plant-Based. Fresh ingredients, local focus.
+                    </p>
+                 </div>
+                 <!-- Quick Links -->
+                 <div>
+                    <h5 class="text-lg font-semibold text-white tracking-wide mb-4 font-serif">Quick Links</h5>
+                    <ul class="space-y-3 text-neutral-light/80 text-sm">
+                        <li><a href="index.html" class="hover:text-primary transition-colors duration-300">Home</a></li>
+                        <li><a href="menu.html" class="hover:text-primary transition-colors duration-300">Menu</a></li>
+                        <li><a href="our-approach.html" class="hover:text-primary transition-colors duration-300">Our Approach</a></li>
+                        <li><a href="aboutus.html" class="hover:text-primary transition-colors duration-300">Our Story</a></li>
+                        <li><a href="reviews.html" class="hover:text-primary transition-colors duration-300">Reviews</a></li>
+                        <li><a href="reservations.html" class="hover:text-primary transition-colors duration-300">Reserve</a></li>
+                        <li><a href="mailto:info@greenbites.example.com" class="hover:text-primary transition-colors duration-300">Contact</a></li> <!-- Example Contact Link -->
+                    </ul>
+                 </div>
+                 <!-- Contact Info -->
+                 <div>
+                    <h5 class="text-lg font-semibold text-white tracking-wide mb-4 font-serif">Visit Us</h5>
+                     <address class="not-italic text-neutral-light/80 space-y-3 text-sm">
+                        <p>12345 Main Street<br>Fairfax, VA 22030</p>
+                        <p><a href="tel:123-456-7890" class="hover:text-primary">(123) 456-7890</a></p>
+                     </address>
+                 </div>
+                 <!-- Hours -->
+                 <div>
+                     <h5 class="text-lg font-semibold text-white tracking-wide mb-4 font-serif">Hours</h5>
+                     <ul class="space-y-1 text-neutral-light/80 text-sm">
+                         <li>Mon-Fri: 11am - 9pm</li> <!-- Updated Example Hours -->
+                         <li>Sat-Sun: 10am - 10pm</li>
+                     </ul>
+                 </div>
             </div>
             <div class="border-t border-neutral-dark pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-neutral-light/60">
-                <p>© 2024 Green Bites. All Rights Reserved.</p>
+                <p>© <script>document.write(new Date().getFullYear())</script> Green Bites. All Rights Reserved.</p>
                 <div class="flex space-x-4 mt-4 md:mt-0">
-                    <!-- Add Social Icons Links Here -->
                     <a href="#" class="hover:text-primary">Facebook</a>
                     <a href="#" class="hover:text-primary">Instagram</a>
                 </div>
             </div>
          </div>
-         <!-- End Placeholder -->
     </footer>
 
-     <script src="/js/main.js"></script> <!-- Include if you add interactions like scroll reveal -->
+     <script src="/js/main.js"></script>
 </body>
 </html>
