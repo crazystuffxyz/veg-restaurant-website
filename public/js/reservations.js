@@ -15,89 +15,62 @@ $(document).ready(function() {
 
     // --- Calendar Initialization ---
     $('#calendar').fullCalendar({
-        header: {
-            left: 'prev',
-            center: 'title',
-            right: 'next'
-        },
+        header: { left: 'prev', center: 'title', right: 'next' },
         defaultDate: today,
         navLinks: false,
         editable: false,
-        eventLimit: true, // If you were showing events
+        eventLimit: true,
         selectable: true,
         selectHelper: true,
-        validRange: {
-           start: today,
-           end: maxDate
-        },
+        validRange: { start: today, end: maxDate },
         dayRender: function (date, cell) {
-            // Add past class to past days for styling
             if (date.isBefore(moment().startOf('day'))) {
                 cell.addClass('fc-past');
             }
         },
         dayClick: function(date, jsEvent, view) {
-             // Allow clicking today, prevent clicking past dates
-             if (date.isBefore(moment().startOf('day'))) {
-                return;
-             }
+             if (date.isBefore(moment().startOf('day'))) { return; }
             const selectedDate = date.format('YYYY-MM-DD');
-            // Only update if the date is different
             if ($dateInput.val() !== selectedDate) {
-                $dateInput.val(selectedDate).trigger('change'); // Set value AND trigger change event
+                $dateInput.val(selectedDate).trigger('change');
             } else {
-                 // If same date clicked, still visually highlight
                  $('.fc-day').removeClass('fc-day-selected-highlight');
                  $(this).addClass('fc-day-selected-highlight');
             }
-
-
-            // Scroll to form if needed (optional)
-             // $('html, body').animate({
-             //     scrollTop: $reservationForm.offset().top - 100 // Adjust offset for fixed nav
-             // }, 500);
-
         },
-        // events: [] // Keep empty unless you plan to show booked blocks on calendar
     });
 
-    // Set min/max attributes for date input
     $dateInput.attr('min', today);
     $dateInput.attr('value', today);
     $dateInput.attr('max', maxDate);
 
-    // --- Function to Fetch Available Times (REAL) ---
+    // --- Function to Fetch Available Times ---
     function fetchAvailableTimes(selectedDate, partySize) {
-        // Reset time select and message div
         $timeSelect.html('<option value="" disabled selected>Select date & guests first</option>').prop('disabled', true);
-        $messageDiv.html(''); // Clear previous user messages
+        $messageDiv.html('');
 
-        if (!selectedDate || !partySize) {
-            return; // Exit if date or party size is missing
-        }
+        if (!selectedDate || !partySize) { return; }
 
         console.log(`Fetching times for ${selectedDate}, party size ${partySize}`);
-        $timeLoader.removeClass('hidden').addClass('flex'); // Show loader
-        $timeSelect.prop('disabled', true); // Keep disabled during load
+        $timeLoader.removeClass('hidden').addClass('flex');
+        $timeSelect.prop('disabled', true);
 
-        // --- Fetch call to the new backend endpoint ---
         fetch(`/availability?date=${selectedDate}&partySize=${partySize}`)
             .then(response => {
-                $timeLoader.addClass('hidden').removeClass('flex'); // Hide loader regardless of outcome
+                $timeLoader.addClass('hidden').removeClass('flex');
                 if (!response.ok) {
-                    // Try parsing error from backend JSON first
                     return response.json().then(errData => {
                         throw new Error(errData.error || `Server error: ${response.status}`);
                     }).catch(() => {
-                        // If no JSON error body, throw generic HTTP error
                         throw new Error(`Network response was not ok: ${response.status}`);
                     });
                 }
                 return response.json();
             })
-            .then(data => { // Expecting { date, requestedPartySize, capacityLimit, slots: [...] }
+            .then(data => {
                 console.log("Availability data received:", data);
-                populateTimeSlots(data.slots, partySize); // Pass slots array and requested size
+                // *** Call the updated function ***
+                populateTimeSlotsClientSideCheck(data.slots, partySize);
             })
             .catch(error => {
                 console.error('Error fetching times:', error);
@@ -106,10 +79,11 @@ $(document).ready(function() {
             });
     }
 
-    // --- Function to Populate Time Slot Dropdown ---
-    function populateTimeSlots(slots, requestedPartySize) {
-        $timeSelect.empty(); // Clear previous options
+    // --- MODIFIED Function to Populate Time Slot Dropdown with Client-Side Past Check ---
+    function populateTimeSlotsClientSideCheck(slots, requestedPartySize) {
+        $timeSelect.empty();
         let availableSlotsFound = false;
+        const nowClient = moment(); // Get client's current time
 
         if (!slots || slots.length === 0) {
              $timeSelect.append('<option value="" disabled selected>No times available</option>');
@@ -118,104 +92,105 @@ $(document).ready(function() {
              return;
         }
 
-        // Add the default placeholder option first
         $timeSelect.append('<option value="" disabled selected>Select an available time</option>');
 
         slots.forEach(slot => {
             const option = $('<option></option>');
             option.val(slot.time); // e.g., "17:30"
-
             let displayText = slot.displayTime; // e.g., "5:30 PM"
-            let isAvailable = false;
+            let isDisabled = false;
+            let isPast = false;
 
-            switch(slot.status) {
-                case 'available':
-                    isAvailable = true;
-                    availableSlotsFound = true;
-                    // Optionally show seats left: displayText += ` (${slot.availableSeats} seats)`;
-                    break;
-                case 'limited':
-                    displayText += ` (Only ${slot.availableSeats} seat${slot.availableSeats > 1 ? 's' : ''} left)`;
-                    option.prop('disabled', true).addClass('unavailable'); // Mark as unavailable for selection
-                    break;
-                case 'full':
-                    displayText += ' (Booked)';
-                    option.prop('disabled', true).addClass('unavailable');
-                    break;
-                case 'past':
-                     displayText += ' (Past)';
-                     option.prop('disabled', true).addClass('unavailable');
-                     break;
-                default: // 'unknown' or other cases
-                     displayText += ' (Unavailable)';
-                     option.prop('disabled', true).addClass('unavailable');
+            // *** Client-Side Past Check ***
+            const slotDateTime = moment(slot.slotIsoString); // Parse the ISO string from server
+            if (slotDateTime.isBefore(nowClient)) {
+                isPast = true;
+                isDisabled = true;
+                displayText += ' (Past)';
+                option.addClass('unavailable'); // Apply unavailable styling
+            }
+            // *** End Client-Side Past Check ***
+
+            // If not past, check status from server
+            if (!isPast) {
+                switch(slot.status) {
+                    case 'available':
+                        availableSlotsFound = true;
+                        // displayText += ` (${slot.availableSeats} seats)`; // Optional: Show seats
+                        break;
+                    case 'limited':
+                         // Still potentially available, but show limited seats
+                        availableSlotsFound = true; // Treat as available for selection if needed
+                        displayText += ` (Only ${slot.availableSeats} seat${slot.availableSeats > 1 ? 's' : ''} left)`;
+                        // Decide if 'limited' should be selectable or not. If not:
+                        // isDisabled = true;
+                        // option.addClass('unavailable');
+                        break;
+                    case 'full':
+                        displayText += ' (Booked)';
+                        isDisabled = true;
+                        option.addClass('unavailable');
+                        break;
+                    // NOTE: No 'past' case needed here, handled above
+                    default: // 'unknown' or other cases
+                         displayText += ' (Unavailable)';
+                         isDisabled = true;
+                         option.addClass('unavailable');
+                }
             }
 
             option.text(displayText);
+            option.prop('disabled', isDisabled); // Set disabled based on checks
             $timeSelect.append(option);
         });
 
-        // Final check: if no slots were actually marked as 'available'
         if (!availableSlotsFound) {
-             $timeSelect.find('option:not([disabled])').remove(); // Remove the "Select..." placeholder
-             $timeSelect.prepend('<option value="" disabled selected>No suitable times available</option>'); // Add specific message
+             $timeSelect.find('option:not([disabled])').remove();
+             $timeSelect.prepend('<option value="" disabled selected>No suitable times available</option>');
              $messageDiv.html(`<span class="text-secondary-light text-sm">Sorry, we don't have availability for ${requestedPartySize} guest(s) at any time on this date. Please try another date or call us at <a href="tel:${restaurantPhoneNumber}" class="underline hover:text-primary">${restaurantPhoneNumber}</a>.</span>`);
              $timeSelect.prop('disabled', true);
         } else {
-             $timeSelect.prop('disabled', false); // Enable the select dropdown
-             // Optional: Add message about tables left for the day (requires backend logic)
-             // $messageDiv.html('<span class="text-green-300 text-sm">Select your preferred time below.</span>');
+             $timeSelect.prop('disabled', false);
         }
     }
-
 
     // --- Event Listeners for Date and Party Size Changes ---
     $dateInput.add($partySizeSelect).on('change', function() {
         const selectedDate = $dateInput.val();
         const partySize = $partySizeSelect.val();
 
-        // Update calendar highlight if date changed via input field or calendar click handled it
         if (selectedDate) {
              $('.fc-day').removeClass('fc-day-selected-highlight');
-             // Note: Selector finds the cell by data-date attribute
              $(`.fc-day[data-date="${selectedDate}"]`).addClass('fc-day-selected-highlight');
-
-             // Optionally, ensure the calendar view shows the selected date
-             // $('#calendar').fullCalendar('gotoDate', selectedDate);
         }
-
-        fetchAvailableTimes(selectedDate, partySize);
+        fetchAvailableTimes(selectedDate, partySize); // Calls the function that now uses the client-side check version
     });
 
-    // --- Form Submission Logic (Mostly Unchanged) ---
+    // --- Form Submission Logic (Unchanged) ---
     $reservationForm.submit(function (e) {
-        e.preventDefault(); // Prevent default browser submission
+        e.preventDefault();
 
-        // Client-Side Validation
         let isValid = true;
-        $('.text-red-400.text-xs').text(''); // Clear previous errors
-        $messageDiv.html(''); // Clear general messages
+        $('.text-red-400.text-xs').text('');
+        $messageDiv.html('');
 
         if (!$('#name').val()) { $('#name-error').text('Name is required.'); isValid = false; }
-        if (!$('#email').val() || !/^\S+@\S+\.\S+$/.test($('#email').val())) { // Basic email format check
+        if (!$('#email').val() || !/^\S+@\S+\.\S+$/.test($('#email').val())) {
             $('#email-error').text('Valid email is required.'); isValid = false;
         }
         if (!$partySizeSelect.val()) { $('#people-error').text('Party size is required.'); isValid = false; }
         if (!$dateInput.val()) { $('#date-error').text('Date is required.'); isValid = false; }
-        // Check if time is selected AND the selected option is not disabled
         if (!$timeSelect.val() || $timeSelect.find('option:selected').prop('disabled')) {
              $('#time-error').text('Please select an available time slot.'); isValid = false;
         }
 
         if (!isValid) {
             $messageDiv.html('<span class="text-red-400 text-sm">Please correct the errors above.</span>');
-            // Focus first invalid field (optional enhancement)
             $('.text-red-400.text-xs').not(':empty').first().prev('input, select, textarea').focus();
             return;
         }
 
-        // --- Proceed with submission ---
-        $messageDiv.html(''); // Clear messages
+        $messageDiv.html('');
         $buttonText.text('Sending Request...');
         $buttonSpinner.removeClass('hidden');
         $submitButton.prop('disabled', true).addClass('opacity-75 cursor-not-allowed');
@@ -225,18 +200,15 @@ $(document).ready(function() {
             email: $('#email').val(),
             numberOfPeople: $partySizeSelect.val(),
             date: $dateInput.val(),
-            time: $timeSelect.val(), // Use the selected time value (e.g., "17:30")
+            time: $timeSelect.val(),
             specialRequests: $('#specialRequests').val() || '',
         };
 
         console.log("Submitting data:", formData);
 
-        // Fetch API to submit to backend endpoint '/reserve' (Keep as is)
         fetch('/reserve', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json', },
             body: JSON.stringify(formData)
         })
         .then(response => {
@@ -248,7 +220,6 @@ $(document).ready(function() {
             return response.json();
         })
         .then(data => {
-            // --- Success Handling ---
             console.log('Success Response:', data);
             $messageDiv.html(`
                 <div class="p-4 bg-green-600/20 border border-green-500 rounded-lg text-green-300 text-sm">
@@ -257,12 +228,10 @@ $(document).ready(function() {
                  </div>
             `);
             $reservationForm[0].reset();
-            // Reset time select and message
             $timeSelect.html('<option value="" disabled selected>Select date & guests first</option>').prop('disabled', true);
-             $messageDiv.append('<div class="mt-2 text-xs text-neutral-light/70">Form reset. Select details for a new reservation.</div>'); // Add confirmation of reset
-            $('.fc-day').removeClass('fc-day-selected-highlight'); // Remove calendar highlight
+             $messageDiv.append('<div class="mt-2 text-xs text-neutral-light/70">Form reset. Select details for a new reservation.</div>');
+            $('.fc-day').removeClass('fc-day-selected-highlight');
 
-            // Re-enable button after a short delay
             setTimeout(() => {
                  $buttonText.text('Request Reservation');
                  $buttonSpinner.addClass('hidden');
@@ -270,7 +239,6 @@ $(document).ready(function() {
             }, 1000);
          })
         .catch(error => {
-            // --- Error Handling ---
             console.error('Error during fetch:', error);
             let errorMessage = "An unexpected error occurred. Please try again.";
             if (error && error.error) { errorMessage = error.error; }
@@ -284,12 +252,20 @@ $(document).ready(function() {
                 </div>
              `);
 
-             // Re-enable button
              $buttonText.text('Request Reservation');
              $buttonSpinner.addClass('hidden');
             $submitButton.prop('disabled', false).removeClass('opacity-75 cursor-not-allowed');
          });
 
     }); // End of form submit handler
+
+    // --- Initial check if date/party size are pre-filled ---
+    if ($dateInput.val() && $partySizeSelect.val()) {
+        fetchAvailableTimes($dateInput.val(), $partySizeSelect.val());
+        // Initial calendar highlight
+        $('.fc-day').removeClass('fc-day-selected-highlight');
+        $(`.fc-day[data-date="${$dateInput.val()}"]`).addClass('fc-day-selected-highlight');
+    }
+
 
 }); // End of document ready

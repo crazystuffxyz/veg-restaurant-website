@@ -1,0 +1,45 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+
+  <rect width="100" height="100" rx="12" ry="12" fill="#2A553E"/>
+  <g transform="translate(0, -2)">
+    <path fill="#9CCC65" d="M 50.0,16.0
+                           C 40.0,20.0 32.0,30.0 35.0,44.0
+                           L 33.0,46.0
+                           L 46.0,44.0 
+                           C 42.0,52.0 48.0,58.0 50.0,58.0
+                           C 52.0,58.0 58.0,52.0 54.0,44.0
+                           L 67.0,46.0
+                           L 65.0,44.0
+                           C 68.0,30.0 60.0,20.0 50.0,16.0 Z"/>
+    <path stroke="#2A553E" stroke-width="0.8" fill="none"
+          d="M 50.0,58.0 Q 50.0,35.0 50.0,16.0 M 50.0,40.0 L 40.0,35.0 M 50.0,40.0 L 60.0,35.0 M 50.0,48.0 L 42.0,43.0 M 50.0,48.0 L 58.0,43.0"/>
+  </g>
+
+  <text x="50" y="68"
+        font-family="sans-serif"
+        font-size="14"
+        font-weight="bold"
+        fill="#E8E4D9"
+        text-anchor="middle">
+    GREEN BITES
+  </text>
+
+  <text x="50" y="81"
+        font-family="sans-serif"
+        font-size="8"
+        fill="#E8E4D9"
+        text-anchor="middle"
+        letter-spacing="0.5">
+    VEGETARIAN
+  </text>
+
+  <text x="50" y="91"
+        font-family="sans-serif"
+        font-size="8"
+        fill="#E8E4D9"
+        text-anchor="middle"
+        letter-spacing="0.5">
+    RESTAURANT
+  </text>
+
+</svg>

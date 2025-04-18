@@ -38,18 +38,15 @@
               }
             },
             animation: {
-                // ... (keep existing animations)
                 fadeIn: 'fadeIn 1s ease-out forwards',
                 fadeInDown: 'fadeInDown 1.2s ease-out forwards',
                 fadeInUp: 'fadeInUp 1s ease-out forwards',
-                fadeInForm: 'fadeInUp 1s ease-out forwards 0.5s',
                 pulseGlow: 'pulseGlow 2.5s infinite ease-in-out',
                 spinSlow: 'spin 45s linear infinite',
                 slideInLeft: 'slideInLeft 1s ease-out forwards',
                 slideInRight: 'slideInRight 1s ease-out forwards',
             },
             keyframes: {
-                 // ... (keep existing keyframes)
                 fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
                 fadeInDown: { '0%': { opacity: '0', transform: 'translateY(-30px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
                 fadeInUp: { '0%': { opacity: '0', transform: 'translateY(30px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
@@ -61,8 +58,7 @@
                 slideInRight: { '0%': { opacity: '0', transform: 'translateX(50px)' }, '100%': { opacity: '1', transform: 'translateX(0)' } },
             },
              backgroundImage: {
-               // ... (keep existing background images)
-               'hero-pattern': "url('/Assets/Images/Hero/hero-bg.jpg')",
+               'hero-pattern': "url('/Assets/Images/Restaurant/Interior.jpg')",
                'menu-texture': "radial-gradient(circle, rgba(31,41,55,0.9) 0%, rgba(17,24,39,0.95) 80%), url('/path/to/your/subtle/texture.svg')",
             }
           }
@@ -84,11 +80,10 @@
 
     <!-- Base and Component Styles -->
     <style>
-      /* Form Styles (Keep as is) */
       .form-input {
           margin-top: 0.25rem; display: block; width: 100%; border-radius: 0.5rem;
-          background-color: rgba(55, 65, 81, 0.7); /* Slightly more opaque */
-          border: 1px solid #4b5563; /* Slightly lighter border */
+          background-color: rgba(55, 65, 81, 0.7);
+          border: 1px solid #4b5563;
           padding: 0.75rem 1rem; font-size: 1rem; color: #d1d5db;
           transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
           box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -98,96 +93,86 @@
       }
       .form-input::placeholder { color: #6b7280; opacity: 1; }
       .form-input:focus {
-          outline: none; border-color: #10b981; box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.5); /* Adjusted focus ring */
+          outline: none; border-color: #10b981; box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.5);
       }
       .form-label {
           display: block; font-size: 0.875rem; font-weight: 500;
-          color: rgba(209, 213, 219, 0.9); /* Slightly brighter label */
+          color: rgba(209, 213, 219, 0.9);
            margin-bottom: 0.25rem;
       }
       select.form-input option:disabled { color: #6b7280; background-color: rgba(31, 41, 55, 0.5); font-style: italic; }
       select.form-input option { background-color: #374151; color: #d1d5db; }
-      /* Style for unavailable options */
-      select.form-input option.unavailable { color: #9ca3af; /* Lighter gray */ text-decoration: line-through; }
+      select.form-input option.unavailable { color: #9ca3af; text-decoration: line-through; }
 
       /* --- Sleeker FullCalendar Overrides --- */
       .fc {
-        background-color: transparent; /* Make calendar bg transparent */
-        border: none; /* Remove main border */
+        background-color: transparent;
+        border: none;
         color: #d1d5db;
-        padding: 0; /* Remove padding, handled by wrapper */
+        padding: 0;
       }
-      /* Toolbar */
       .fc .fc-toolbar { margin-bottom: 1.5rem; }
       .fc .fc-toolbar h2 {
           color: #ffffff;
-          font-size: 1.6rem; /* Slightly smaller */
+          font-size: 1.6rem;
           font-family: 'Cormorant Garamond', serif;
           font-weight: 700;
       }
       .fc .fc-button {
-          background-color: #374151; /* Darker button bg */
-          color: #e5e7eb; /* Lighter text */
-          border: 1px solid #4b5563; /* Subtle border */
+          background-color: #374151;
+          color: #e5e7eb;
+          border: 1px solid #4b5563;
           box-shadow: none;
-          text-transform: capitalize; /* Less shouty */
-          font-weight: 500; /* Normal weight */
-          padding: 6px 14px !important; /* Slightly smaller padding */
+          text-transform: capitalize;
+          font-weight: 500;
+          padding: 6px 14px !important;
           cursor: pointer;
           transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-          border-radius: 6px; /* Rounded buttons */
-          margin: 0 3px; /* Spacing */
+          border-radius: 6px;
+          margin: 0 3px;
       }
       .fc .fc-button:hover { background-color: #4b5563; border-color: #6b7280; }
       .fc .fc-button:disabled { background-color: #1f2937; opacity: 0.6; cursor: default; border-color: #374151; }
-      .fc .fc-button .fc-icon { /* Style icons */
-            font-size: 1.2em; /* Adjust icon size if needed */
+      .fc .fc-button .fc-icon {
+            font-size: 1.2em;
             vertical-align: middle;
       }
-      /* Header Row (Mon, Tue...) */
       .fc th {
-          background-color: transparent; /* No header background */
-          color: #9ca3af; /* Gray-400 for day names */
-          border-color: #374151; /* Match grid lines */
+          background-color: transparent;
+          color: #9ca3af;
+          border-color: #374151;
           padding: 10px 0;
           font-weight: 500;
           font-size: 0.85rem;
           text-transform: uppercase;
-          border-bottom-width: 2px; /* Thicker bottom border */
+          border-bottom-width: 2px;
       }
-      /* Grid */
-      .fc-view, .fc-view > table { border: none; } /* Remove outer view border */
-      .fc-widget-content { border-color: #374151; /* Dark grid lines */ }
+      .fc-view, .fc-view > table { border: none; }
+      .fc-widget-content { border-color: #374151; }
       .fc-day { border-color: #374151; }
-      /* Today's Date */
-      .fc-day.fc-today { background-color: rgba(16, 185, 129, 0.1); /* Subtle primary highlight */ }
-      .fc-day.fc-today .fc-day-number { color: #f9fafb; font-weight: 600; } /* Brighter number for today */
-      /* Day Numbers */
+      .fc-day.fc-today { background-color: rgba(16, 185, 129, 0.1); }
+      .fc-day.fc-today .fc-day-number { color: #f9fafb; font-weight: 600; }
       .fc-day-number {
-          color: #d1d5db; /* Default day number color */
-          padding: 8px; /* More padding */
+          color: #d1d5db;
+          padding: 8px;
           font-size: 0.9rem;
       }
-      /* Other Month Days */
       .fc-day.fc-other-month .fc-day-number {
-          color: #4b5563; /* Darker gray for other months */
+          color: #4b5563;
           opacity: 0.7;
       }
       .fc-day.fc-past .fc-day-number {
-          color: #6b7280; /* Even dimmer for past days */
+          color: #6b7280;
           text-decoration: line-through;
       }
-      /* Day Selection Highlight */
       .fc-day-selected-highlight {
-          background-color: rgba(16, 185, 129, 0.25) !important; /* Slightly stronger selection */
-          border-radius: 4px; /* Rounded highlight */
+          background-color: rgba(16, 185, 129, 0.25) !important;
+          border-radius: 4px;
       }
-      .fc-unthemed td.fc-today { background-color: rgba(16, 185, 129, 0.1); } /* Ensure default theming doesn't override today */
-
-      /* Events (If used, keep simple) */
+      .fc-unthemed td.fc-today { background-color: rgba(16, 185, 129, 0.1); }
       .fc-event { background-color: #f59e0b; border: none; color: #111827; padding: 2px 5px; border-radius: 4px; font-size: 0.8rem; }
 
-      /* Loading Spinner (Keep as is) */
+      /* Loading Spinner */
       .spinner {
           border: 3px solid rgba(255, 255, 255, 0.3); border-radius: 50%;
           border-top-color: #10b981; width: 16px; height: 16px;
@@ -198,47 +183,52 @@
 </head>
 <body class="bg-neutral-darkest text-neutral-light font-sans antialiased selection:bg-primary selection:text-white">
 
-    <!-- Navigation (Keep As Is) -->
+    <!-- Navigation -->
     <nav x-data="{ open: false, scrolled: false }"
-         x-init="() => { scrolled = window.scrollY > 10; window.addEventListener('scroll', () => { scrolled = window.scrollY > 10 }) }"
+         @scroll.window="scrolled = (window.pageYOffset > 50)"
+         x-init="scrolled = (window.pageYOffset > 50)"
          class="fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-out"
          :class="{ 'bg-neutral-darkest shadow-lg': scrolled || open, 'bg-transparent': !scrolled && !open }">
-        <!-- ... Nav content remains the same ... -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-             <div class="flex justify-between items-center h-20">
-                 <!-- Logo -->
-                 <div class="flex-shrink-0">
-                     <a href="index.html" class="transition-opacity duration-300 hover:opacity-80">
-                         <img class="h-14 lg:h-16 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Logo">
-                     </a>
-                 </div>
-                 <!-- Desktop Menu -->
-                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="index.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">HOME</a>
-                    <a href="menu.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">MENU</a>
-                    <a href="our-approach.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR APPROACH</a>
-                    <a href="aboutus.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
-                    <a href="reviews.html" class="font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
-                    <!-- Active Link -->
-                    <a href="reservations.html" class="ml-4 inline-flex items-center px-5 py-2 border border-primary text-base font-semibold rounded-full shadow-sm text-primary bg-transparent hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">
+            <div class="flex justify-between items-center h-24">
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="transition-opacity duration-300 hover:opacity-80 focus:outline-none focus:opacity-80">
+                        <img class="h-16 lg:h-20 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Logo">
+                    </a>
+                </div>
+                 <div class="hidden md:flex items-center space-x-10">
+                    <a href="index.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">HOME</a>
+                    <a href="menu.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">MENU</a>
+                    <a href="our-approach.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR APPROACH</a>
+                    <a href="aboutus.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
+                    <a href="reviews.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
+                    <a href="reservations.html" class="ml-4 inline-flex items-center px-6 py-2.5 border border-primary text-base font-semibold rounded-full shadow-sm text-primary bg-transparent hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">
                         RESERVE
                     </a>
                 </div>
-                 <!-- Mobile Menu Button -->
-                 <div class="md:hidden flex items-center">
-                     <!-- Active Link -->
-                     <a href="reservations.html" class="inline-flex items-center px-4 py-2 mr-2 border border-primary text-sm font-semibold rounded-full text-primary hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">RESERVE</a>
-                     <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" :aria-expanded="open.toString()">
+                <div class="md:hidden flex items-center">
+                    <a href="reservations.html" class="inline-flex items-center px-4 py-2 mr-2 border border-primary text-sm font-semibold rounded-full text-primary hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">
+                        RESERVE
+                    </a>
+                    <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" :aria-expanded="open.toString()">
                          <span class="sr-only">Open main menu</span>
-                         <svg x-show="!open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-                         <svg x-show="open" style="display: none;" x-cloak class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                     </button>
-                 </div>
-             </div>
-         </div>
-         <!-- Mobile Menu -->
-         <div x-show="open" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" style="display: none;" class="md:hidden absolute top-full inset-x-0 bg-neutral-darkest shadow-lg p-4" id="mobile-menu">
-            <div class="pt-2 pb-3 space-y-3 text-center">
+                        <svg x-show="!open" class="block h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+                        <svg x-show="open" x-cloak style="display: none;" class="block h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+         <div x-show="open"
+              x-transition:enter="transition ease-out duration-200"
+              x-transition:enter-start="opacity-0 scale-95"
+              x-transition:enter-end="opacity-100 scale-100"
+              x-transition:leave="transition ease-in duration-150"
+              x-transition:leave-start="opacity-100 scale-100"
+              x-transition:leave-end="opacity-0 scale-95"
+              style="display: none;"
+              class="md:hidden absolute top-full inset-x-0 bg-neutral-darkest shadow-lg p-4 pt-2" id="mobile-menu"
+              x-cloak>
+            <div class="pt-2 pb-3 space-y-4 text-center">
                 <a href="index.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">HOME</a>
                 <a href="menu.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">MENU</a>
                 <a href="our-approach.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR APPROACH</a>
@@ -246,14 +236,29 @@
                 <a href="reviews.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
             </div>
         </div>
+        <script>
+             document.addEventListener('alpine:init', () => {
+                 Alpine.data('navState', () => ({
+                     open: false,
+                     scrolled: window.pageYOffset > 50,
+                     init() {
+                         window.addEventListener('scroll', () => {
+                             this.scrolled = window.pageYOffset > 50;
+                         });
+                     }
+                 }))
+             });
+        </script>
     </nav>
 
     <!-- Main Content Area -->
     <main class="container mx-auto max-w-7xl pt-28 md:pt-36 pb-16 px-4 sm:px-6 lg:px-8">
         <!-- Header Text -->
         <div class="text-center mb-12">
-             <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-white leading-tight">Book Your <span class="text-primary-light">Experience</span></h1>
-             <p class="mt-4 text-lg text-neutral-light/80 max-w-xl mx-auto">
+             <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-white leading-tight animate-fadeInDown" style="opacity:0;">
+                Book Your <span class="text-primary-light">Experience</span>
+             </h1>
+             <p class="mt-4 text-lg text-neutral-light/80 max-w-xl mx-auto animate-fadeInUp [animation-delay:200ms]" style="opacity:0;">
                  Select your preferred date, time, and party size below. Availability updated in real-time.
             </p>
          </div>
@@ -261,11 +266,10 @@
          <div class="flex flex-col lg:flex-row gap-10 lg:gap-12 items-start">
 
             <!-- Reservation Form Section -->
-             <section aria-labelledby="reservation-form-heading" class="w-full lg:w-5/12 xl:w-4/12">
+             <section aria-labelledby="reservation-form-heading" class="w-full lg:w-5/12 xl:w-4/12 animate-fadeInUp [animation-delay:400ms]" style="opacity:0;">
                  <div class="bg-neutral-darker p-6 sm:p-8 rounded-2xl shadow-2xl border border-neutral-dark">
                     <h2 id="reservation-form-heading" class="text-2xl font-semibold text-white mb-6 text-center font-serif">Reservation Details</h2>
                      <form id="reservationForm" class="space-y-5" novalidate>
-                         <!-- Adjusted reservation message area -->
                          <div id="reservationMessage" role="alert" aria-live="polite" class="mb-5 text-sm min-h-[2.5em] font-medium text-center">
                             <!-- Messages will be inserted here by JS -->
                          </div>
@@ -295,7 +299,7 @@
                                      <option value="8">8 People</option>
                                 </select>
                                  <div id="people-error" class="text-red-400 text-xs mt-1 h-4"></div>
-                                 <p class="text-xs text-neutral-light/60 mt-1">For parties > 8, please call <a href="tel:+17035551234" class="hover:text-primary underline">(703) 555-1234</a>.</p> <!-- Added Phone -->
+                                 <p class="text-xs text-neutral-light/60 mt-1">For parties > 8, please call <a href="tel:+17035551234" class="hover:text-primary underline">(703) 555-1234</a>.</p>
                             </div>
                             <div>
                                  <label for="date" class="form-label">Date:</label>
@@ -340,11 +344,10 @@
              </section>
 
             <!-- Calendar Section -->
-             <aside aria-labelledby="calendar-heading" class="w-full lg:w-7/12 xl:w-8/12">
-                 <!-- Updated Wrapper for better padding/border control -->
+             <aside aria-labelledby="calendar-heading" class="w-full lg:w-7/12 xl:w-8/12 animate-fadeInUp [animation-delay:600ms]" style="opacity:0;">
                  <div id='calendarWrapper' class="bg-neutral-darker p-4 sm:p-6 rounded-2xl shadow-2xl border border-neutral-dark">
                     <h2 id="calendar-heading" class="sr-only">Availability Calendar</h2>
-                    <div id='calendar'></div> <!-- Calendar itself has transparent bg now -->
+                    <div id='calendar'></div>
                     <p class="text-center text-sm text-neutral-light/70 mt-4">
                          Select a date on the calendar or use the form. Time availability depends on party size.
                     </p>
@@ -352,26 +355,23 @@
                 <div class="mt-6 text-center text-neutral-light/80 text-sm space-y-1">
                     <p><strong class="text-white">Hours:</strong> Mon-Sun 11:00 AM - 10:00 PM (Last Seating ~9:00 PM)</p>
                     <p>Reservations highly recommended. Walk-ins welcome subject to availability.</p>
-                    <p>Need help? Call us: <a href="tel:+17035551234" class="hover:text-primary underline font-semibold">(703) 555-1234</a></p> <!-- Added Phone -->
+                    <p>Need help? Call us: <a href="tel:+17035551234" class="hover:text-primary underline font-semibold">(703) 555-1234</a></p>
                 </div>
              </aside>
 
         </div>
     </main>
 
-    <!-- Footer (Keep As Is) -->
+    <!-- Footer -->
     <footer class="bg-neutral-darker border-t border-neutral-dark pt-16 pb-12 mt-16">
-        <!-- ... Footer content remains the same ... -->
          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12">
-                 <!-- Logo & About -->
                  <div class="md:col-span-1 lg:col-span-2">
                     <a href="index.html" class="inline-block mb-4">
                        <img class="h-12 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Footer Logo">
                    </a>
                     <p class="text-neutral-light/80 text-sm">Experience the best vegetarian cuisine in Fairfax, VA. Fresh ingredients, delightful flavors.</p>
                 </div>
-                <!-- Quick Links -->
                  <div>
                     <h5 class="text-lg font-semibold text-white tracking-wide mb-4 font-serif">Quick Links</h5>
                     <ul class="space-y-3 text-neutral-light/80 text-sm">
@@ -383,7 +383,6 @@
                         <li><a href="reservations.html" class="hover:text-primary transition-colors">Reservations</a></li>
                     </ul>
                 </div>
-                 <!-- Hours -->
                   <div>
                     <h5 class="text-lg font-semibold text-white tracking-wide mb-4 font-serif">Hours</h5>
                     <ul class="space-y-1 text-neutral-light/80 text-sm">
@@ -391,13 +390,12 @@
                        <li>(Kitchen closes 9:30 PM)</li>
                     </ul>
                 </div>
-                 <!-- Contact -->
                   <div>
                     <h5 class="text-lg font-semibold text-white tracking-wide mb-4 font-serif">Contact</h5>
                      <address class="not-italic text-neutral-light/80 space-y-1 text-sm">
-                        <p>123 Green Way, Fairfax, VA 22030</p> <!-- Example Address -->
-                        <p><a href="tel:+17035551234" class="hover:text-primary transition-colors font-semibold">(703) 555-1234</a></p> <!-- Example Phone -->
-                        <p><a href="mailto:info@greenbites.example.com" class="hover:text-primary transition-colors">info@greenbites.example.com</a></p> <!-- Example Email -->
+                        <p>123 Green Way, Fairfax, VA 22030</p>
+                        <p><a href="tel:+17035551234" class="hover:text-primary transition-colors font-semibold">(703) 555-1234</a></p>
+                        <p><a href="mailto:info@greenbites.example.com" class="hover:text-primary transition-colors">info@greenbites.example.com</a></p>
                     </address>
                 </div>
             </div>
@@ -419,6 +417,6 @@
 
     <!-- Load Your Custom Scripts LAST -->
     <script src="/js/reservations.js"></script>
-    <script src="/js/main.js"></script>
+    <script src="/js/main.js"></script> <!-- May need adjustment if main.js also handles animations -->
 </body>
 </html>
