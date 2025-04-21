@@ -8,9 +8,9 @@ const fs = require("fs");
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-const MAIL_USER = process.env.MAIL_USER || 'testpython230@gmail.com';
-const MAIL_PASS = process.env.MAIL_PASS || 'caphjwuafodufsba';
-const RESTAURANT_PHONE = process.env.RESTAURANT_PHONE || '(703) 555-1234';
+const MAIL_USER = process.env.MAIL_USER || 'noreply.greenbites@gmail.com';
+const MAIL_PASS = process.env.MAIL_PASS || 'nfsosblnvicdqddz';
+const RESTAURANT_PHONE = process.env.RESTAURANT_PHONE || '(703) 380-0543';
 const RESTAURANT_TIMEZONE = process.env.RESTAURANT_TIMEZONE || 'America/New_York';
 
 var wordsArray = fs.readFileSync("words.txt", 'utf8')
@@ -219,7 +219,7 @@ app.post('/reserve', async (req, res) => {
         };
         let info = await transporter.sendMail(mailOptions);
         console.log('Verification email sent:', info.messageId);
-        res.status(200).json({ success: true, message: `Verification email sent to ${escapeHtml(pendingReservation.email)}!` });
+        res.status(200).json({ success: true, message: `Verification email sent to ${escapeHtml(pendingReservation.email)}! Please check your spam folder if you didn't get the email.` });
 
     } catch (err) {
         console.error("Error processing reservation request:", err);
@@ -276,15 +276,17 @@ app.post('/reviews', (req, res) => {
     console.log("Received review submission:", req.body);
     const { name, stars, text } = req.body;
     var isOffensive = false;
+    var detectedOffensiveWords = [];
     badWords.forEach(phrase => {
         if(text && phrase && text.toLowerCase().includes(phrase.trim().toLowerCase())) {
             isOffensive = true;
+            detectedOffensiveWords.push(phrase);
         }
     });
 
     if(isOffensive){
          console.warn("Review blocked due to offensive content.");
-         return res.status(403).json({ success: false, error: 'Your review contains blocked terms. Please revise and resubmit.' });
+         return res.status(403).json({ success: false, error: 'Your review contains blocked terms. Please revise and resubmit. Blocked words: ' + detectedOffensiveWords.join(", ") });
     }
 
     const rating = parseInt(stars, 10);

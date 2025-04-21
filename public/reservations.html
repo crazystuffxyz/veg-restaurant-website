@@ -131,7 +131,6 @@
           border-radius: 6px;
           margin: 0 3px;
       }
-      .fc .fc-button:hover { background-color: #4b5563; border-color: #6b7280; }
       .fc .fc-button:disabled { background-color: #1f2937; opacity: 0.6; cursor: default; border-color: #374151; }
       .fc .fc-button .fc-icon {
             font-size: 1.2em;
@@ -363,51 +362,59 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-neutral-darker border-t border-neutral-dark pt-16 pb-12 mt-16">
-         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer class="bg-neutral-darker border-t border-neutral-dark pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12">
-                 <div class="md:col-span-1 lg:col-span-2">
-                    <a href="index.html" class="inline-block mb-4">
-                       <img class="h-12 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Footer Logo">
-                   </a>
-                    <p class="text-neutral-light/80 text-sm">Experience the best vegetarian cuisine in Fairfax, VA. Fresh ingredients, delightful flavors.</p>
+                <!-- Logo & About -->
+                <div class="md:col-span-1 lg:col-span-2">
+                     <a href="index.html" class="inline-block mb-4">
+                        <img class="h-12 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Footer Logo">
+                    </a>
+                    <p class="text-neutral-light/80 text-sm leading-relaxed max-w-sm">
+                        Celebrating plant-based deliciousness with fresh, local ingredients and modern culinary flair. Join us for an unforgettable vegetarian dining experience in Fairfax.
+                    </p>
                 </div>
-                 <div>
-                    <h5 class="text-lg font-semibold text-white tracking-wide mb-4 font-serif">Quick Links</h5>
+
+                <!-- Quick Links -->
+                <div>
+                    <h5 class="text-lg font-semibold text-white tracking-wide mb-4 font-serif">Explore</h5>
                     <ul class="space-y-3 text-neutral-light/80 text-sm">
-                        <li><a href="index.html" class="hover:text-primary transition-colors">Home</a></li>
-                        <li><a href="menu.html" class="hover:text-primary transition-colors">Menu</a></li>
-                        <li><a href="our-approach.html" class="hover:text-primary transition-colors">Our Approach</a></li>
-                        <li><a href="aboutus.html" class="hover:text-primary transition-colors">Our Story</a></li>
-                        <li><a href="reviews.html" class="hover:text-primary transition-colors">Reviews</a></li>
-                        <li><a href="reservations.html" class="hover:text-primary transition-colors">Reservations</a></li>
+                        <li><a href="index.html" class="hover:text-primary transition-colors duration-300">Home</a></li>
+                        <li><a href="menu.html" class="hover:text-primary transition-colors duration-300">Menu</a></li>
+                        <li><a href="our-approach.html" class="hover:text-primary transition-colors duration-300">Our Approach</a></li>
+                        <li><a href="aboutus.html" class="hover:text-primary transition-colors duration-300">Our Story</a></li>
+                        <li><a href="reviews.html" class="hover:text-primary transition-colors duration-300">Reviews</a></li>
+                        <li><a href="reservations.html" class="hover:text-primary transition-colors duration-300">Reservations</a></li>
                     </ul>
                 </div>
-                  <div>
-                    <h5 class="text-lg font-semibold text-white tracking-wide mb-4 font-serif">Hours</h5>
-                    <ul class="space-y-1 text-neutral-light/80 text-sm">
-                       <li>Mon - Sun: 11:00 AM - 10:00 PM</li>
-                       <li>(Kitchen closes 9:30 PM)</li>
-                    </ul>
-                </div>
-                  <div>
-                    <h5 class="text-lg font-semibold text-white tracking-wide mb-4 font-serif">Contact</h5>
-                     <address class="not-italic text-neutral-light/80 space-y-1 text-sm">
-                        <p>123 Green Way, Fairfax, VA 22030</p>
-                        <p><a href="tel:+17035551234" class="hover:text-primary transition-colors font-semibold">(703) 555-1234</a></p>
-                        <p><a href="mailto:info@greenbites.example.com" class="hover:text-primary transition-colors">info@greenbites.example.com</a></p>
+
+                <!-- Contact Info -->
+                 <div>
+                    <h5 class="text-lg font-semibold text-white tracking-wide mb-4 font-serif">Visit Us</h5>
+                    <address class="not-italic text-neutral-light/80 space-y-3 text-sm">
+                        <p>
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2 -mt-1 text-primary" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" /></svg>
+                            12345 Main Street<br>
+                            Fairfax, VA 22030
+                        </p>
+                         <p>
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2 -mt-1 text-primary" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" /></svg>
+                            <a href="tel:+7033800543" class="hover:text-primary">(703) 380-0543</a>
+                        </p>
+                        <p>
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2 -mt-1 text-primary" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" /><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" /></svg>
+                            <a href="mailto:restaurant.greenbites@gmail.com" class="hover:text-primary">restaurant.greenbites@gmail.com</a>
+                         </p>
                     </address>
                 </div>
+
             </div>
-             <div class="border-t border-neutral-dark pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-neutral-light/60">
-                 <p>© <script>document.write(new Date().getFullYear())</script> Green Bites. All Rights Reserved.</p>
-                 <div class="flex space-x-4 mt-4 md:mt-0">
-                     <a href="#" class="hover:text-white transition-colors">Facebook</a>
-                     <a href="#" class="hover:text-white transition-colors">Instagram</a>
-                     <a href="#" class="hover:text-white transition-colors">Yelp</a>
-                 </div>
-             </div>
-         </div>
+
+            <!-- Bottom Bar -->
+            <div class="border-t border-neutral-dark pt-8 flex flex-col md:flex-row justify-between items-center text-sm">
+                <p class="text-neutral-light/60 mb-4 md:mb-0">© <script>document.write(new Date().getFullYear())</script> Green Bites. All Rights Reserved. </p>
+            </div>
+        </div>
     </footer>
 
     <!-- Scripts: Load Libraries FIRST -->
