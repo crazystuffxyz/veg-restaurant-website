@@ -48,7 +48,7 @@
                 fadeInDown: 'fadeInDown 1.2s ease-out forwards',
                 fadeInUp: 'fadeInUp 1s ease-out forwards',
                 pulseGlow: 'pulseGlow 2.5s infinite ease-in-out',
-                spinSlow: 'spin 45s linear infinite',
+                spinSlow: 'spin 15s linear infinite',
                 slideInLeft: 'slideInLeft 1s ease-out forwards',
                 slideInRight: 'slideInRight 1s ease-out forwards',
             },
@@ -202,13 +202,30 @@
                 Reserve Your Table
             </a>
         </div>
-
-         <!-- Decorative spinning element -->
-        <div class="absolute bottom-10 right-10 opacity-10 z-5 hidden lg:block">
-             <svg class="w-24 h-24 text-primary-light animate-spinSlow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M5 3v4M3 5h4M5 21v-4M3 19h4M19 3v4M17 5h4M19 21v-4M17 19h4M12 5v14M5 12h14"/>
-            </svg>
-        </div>
+<!-- Decorative spinning element with static center leaf -->
+<div class="absolute bottom-10 right-10 opacity-80 z-5 hidden lg:block">
+    <div class="relative w-48 h-48">
+      
+      <!-- Rotating circular text -->
+      <div class="absolute inset-0 animate-spinSlow">
+        <svg viewBox="0 0 200 200" class="w-full h-full text-primary-light">
+          <defs>
+            <path id="circlePath" d="M 100, 100 m -75, 0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
+          </defs>
+          <text font-size="12" fill="currentColor">
+            <textPath href="#circlePath" startOffset="0%">
+              SUSTAINABLE VEGETARIAN RESTAURANT • SUSTAINABLE VEGETARIAN RESTAURANT • 
+            </textPath>
+          </text>
+        </svg>
+      </div>
+  
+      <!-- Centered leaf that does NOT rotate -->
+      <img src="/Assets/Images/Logo/Leaf.png" alt="Leaf" class="absolute top-1/2 left-1/2 w-12 h-12 -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+    </div>
+  </div>
+  
+  
          <!-- Scroll Down Indicator -->
          <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 hidden sm:block">
             <a href="#about" aria-label="Scroll down to learn more" class="animate-bounce">
