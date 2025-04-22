@@ -49,12 +49,13 @@ const AVAILABLE_TIMES = [
 
 // --- Review Data Stores ---
 let reviews = [ // Approved Reviews
-    { id: 'initial1', name: 'Alice G.', stars: 5, text: 'Absolutely loved the atmosphere and the food! The Salad was spectacular. Will definitely be back.', createdAt: moment().subtract(2, 'days').toISOString(), status: 'approved' },
-    { id: 'initial2', name: null, stars: 4, text: 'Great place for vegetarians. Service was a bit slow during peak hours, but the food quality made up for it.', createdAt: moment().subtract(1, 'day').toISOString(), status: 'approved' },
     { id: 'review-bobby', name: 'Bobby Filet', stars: 5, text: 'The chef actually beat me on my own show. I am not a big fan of Vegetarian food but this place is legit.', createdAt: moment('2025-04-04').toISOString(), status: 'approved' },
     { id: 'review-guy', name: 'Guy Scary', stars: 5, text: 'If you need a funkalicious trip to flavortown, this is your spot. The real deal.', createdAt: moment('2025-04-07').toISOString(), status: 'approved' },
     { id: 'review-ramsay', name: 'Garden Ramsay', stars: 4, text: "My restaurants are better but this one comes a close second. I'd rather be here today than file my taxes.", createdAt: moment('2025-04-15').toISOString(), status: 'approved' },
     { id: 'review-alex', name: 'Alex Garamasalachili', stars: 5, text: 'If you are looking for healthy and flavorful options, you have got to come here. It is only a matter of time before Green Bites gets a visit from someone from The Tire Company', createdAt: moment('2025-04-18').toISOString(), status: 'approved' },
+    { id: 'initial1', name: 'Alice G.', stars: 5, text: 'Absolutely loved the atmosphere and the food! The Salad was spectacular. Will definitely be back.', createdAt: moment().subtract(2, 'days').toISOString(), status: 'approved' },
+    { id: 'initial2', name: null, stars: 4, text: 'Great place for vegetarians. Service was a bit slow during peak hours, but the food quality made up for it.', createdAt: moment().subtract(1, 'day').toISOString(), status: 'approved' },
+
 ];
 
 
