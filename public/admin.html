@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Review Approval</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; background-color: #f4f4f4; color: #333; }
+        .container { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h1, h2 { color: #2c5282; }
+        .review { border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px; background-color: #fdfdfd; }
+        .review p { margin: 5px 0; }
+        .review strong { color: #4a5568; }
+        .review-actions button {
+            padding: 8px 15px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s ease;
+        }
+        .approve-btn { background-color: #48bb78; color: white; }
+        .approve-btn:hover { background-color: #38a169; }
+        .reject-btn { background-color: #f56565; color: white; }
+        .reject-btn:hover { background-color: #e53e3e; }
+        #message { margin-top: 15px; padding: 10px; border-radius: 5px; }
+        .success { background-color: #dcfce7; color: #166534; border: 1px solid #a7f3d0; }
+        .error { background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+        #loading { display: none; margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin - Review Approval</h1>
+        <div id="message"></div>
+        <div id="loading">Loading pending reviews...</div>
+        <div id="pending-reviews">
+            <h2>Pending Reviews</h2>
+            <!-- Reviews will be loaded here -->
+        </div>
+    </div>
+
+    <script>
+        const pendingReviewsDiv = document.getElementById('pending-reviews');
+        const messageDiv = document.getElementById('message');
+        const loadingDiv = document.getElementById('loading');
+
+        function showMessage(text, type = 'info') {
+            messageDiv.textContent = text;
+            messageDiv.className = type; // Assign 'success' or 'error' class
+            messageDiv.style.display = 'block';
+            setTimeout(() => { messageDiv.style.display = 'none'; }, 5000);
+        }
+
+        async function fetchPendingReviews() {
+            loadingDiv.style.display = 'block';
+            pendingReviewsDiv.innerHTML = '<h2>Pending Reviews</h2>'; // Clear previous
+            try {
+                // No need to explicitly set Authorization header here if logged in via browser prompt
+                const response = await fetch('/admin/api/reviews/pending');
+                if (!response.ok) {
+                    if (response.status === 401) {
+                         throw new Error('Unauthorized. Please refresh and login.');
+                    }
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const reviews = await response.json();
+
+                if (reviews.length === 0) {
+                    pendingReviewsDiv.innerHTML += '<p>No reviews waiting for approval.</p>';
+                } else {
+                    reviews.forEach(review => {
+                        const reviewElement = document.createElement('div');
+                        reviewElement.className = 'review';
+                        reviewElement.id = `review-${review.id}`;
+                        reviewElement.innerHTML = `
+                            <p><strong>ID:</strong> ${review.id}</p>
+                            <p><strong>Name:</strong> ${review.name || 'Anonymous'}</p>
+                            <p><strong>Stars:</strong> ${'⭐'.repeat(review.stars)} (${review.stars})</p>
+                            <p><strong>Text:</strong> ${review.text || '<i>No text provided</i>'}</p>
+                            <p><strong>Submitted:</strong> ${new Date(review.createdAt).toLocaleString()}</p>
+                            <div class="review-actions">
+                                <button class="approve-btn" onclick="approveReview('${review.id}')">Approve</button>
+                                <button class="reject-btn" onclick="rejectReview('${review.id}')">Reject</button>
+                            </div>
+                        `;
+                        pendingReviewsDiv.appendChild(reviewElement);
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching pending reviews:', error);
+                showMessage(`Error loading reviews: ${error.message}`, 'error');
+                pendingReviewsDiv.innerHTML = '<h2>Pending Reviews</h2><p>Could not load reviews.</p>';
+            } finally {
+                 loadingDiv.style.display = 'none';
+            }
+        }
+
+        async function approveReview(reviewId) {
+            try {
+                const response = await fetch(`/admin/api/reviews/approve/${reviewId}`, {
+                    method: 'POST',
+                    // Browser should handle auth if logged in
+                });
+                if (!response.ok) {
+                     throw new Error(`Failed to approve review. Status: ${response.status}`);
+                }
+                const result = await response.json();
+                showMessage(result.message, 'success');
+                // Remove the approved review from the list
+                const reviewElement = document.getElementById(`review-${reviewId}`);
+                if (reviewElement) {
+                    reviewElement.remove();
+                }
+                 // Refresh if list becomes empty
+                if (pendingReviewsDiv.querySelectorAll('.review').length === 0) {
+                    fetchPendingReviews();
+                }
+            } catch (error) {
+                console.error('Error approving review:', error);
+                showMessage(`Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function rejectReview(reviewId) {
+             if (!confirm('Are you sure you want to reject and delete this review? This cannot be undone.')) {
+                return;
+            }
+            try {
+                const response = await fetch(`/admin/api/reviews/reject/${reviewId}`, {
+                    method: 'DELETE',
+                     // Browser should handle auth if logged in
+                });
+                 if (!response.ok) {
+                     throw new Error(`Failed to reject review. Status: ${response.status}`);
+                 }
+                const result = await response.json();
+                showMessage(result.message, 'success');
+                 // Remove the rejected review from the list
+                const reviewElement = document.getElementById(`review-${reviewId}`);
+                if (reviewElement) {
+                    reviewElement.remove();
+                }
+                // Refresh if list becomes empty
+                if (pendingReviewsDiv.querySelectorAll('.review').length === 0) {
+                    fetchPendingReviews();
+                }
+            } catch (error) {
+                console.error('Error rejecting review:', error);
+                showMessage(`Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Initial load
+        fetchPendingReviews();
+    </script>
+</body>
+</html>
