@@ -1,3 +1,4 @@
+// NOTE: This file appears to be largely superseded by js/reservations.js which includes FullCalendar integration.
 $(document).ready(function() {
   $('#calendar').fullCalendar({
     header: {
