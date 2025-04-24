@@ -1,3 +1,4 @@
+// index.js
 const express = require('express');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
@@ -28,11 +29,11 @@ function escapeHtml(unsafe) {
     if (typeof unsafe !== 'string') return "";
     // Basic escaping, consider a library like 'he' for more robust escaping if needed
     return unsafe
-         .replace(/&/g, "&amp;") // Must be first
-         .replace(/</g, "&lt;")
-         .replace(/>/g, "&gt;")
-         .replace(/"/g, "&quot;")
-         .replace(/'/g, "&#039;");
+         .replace(/&/g, "&") // Must be first
+         .replace(/</g, "<")
+         .replace(/>/g, ">")
+         .replace(/"/g, "\"")
+         .replace(/'/g, "'");
  }
 
 let reservations = [];
@@ -60,7 +61,7 @@ let reviews = [ // Approved Reviews
 
 
 let unapprovedReviews = []; // Pending Reviews
-let reviewIdCounter = reviews.length + unapprovedReviews.length; // Start counter based on existing reviews
+let reviewIdCounter = reviews.length + unapprovedReviews.length + 100; // Start counter based on existing reviews, add buffer
 // --- End Review Data Stores ---
 
 
@@ -286,9 +287,9 @@ app.get('/verify', (req, res) => {
 
 // --- Review Endpoints ---
 app.get('/reviews', (req, res) => {
-    // Return only *approved* reviews
+    // Return only *approved* reviews sorted by newest first
     const sortedApprovedReviews = [...reviews] // Use the 'reviews' array (approved)
-        .filter(r => r.status === 'approved') // Ensure only approved are sent (belt-and-suspenders)
+        .filter(r => r.status === 'approved') // Ensure only approved are sent
         .sort((a, b) => moment(b.createdAt).diff(moment(a.createdAt)));
     res.status(200).json(sortedApprovedReviews);
 });
@@ -306,7 +307,6 @@ app.post('/reviews', (req, res) => {
     const reviewText = text && typeof text === 'string' ? text.trim().slice(0, MAX_TEXT_LENGTH) : null;
     const reviewerName = name && typeof name === 'string' ? name.trim().slice(0, 50) : null;
 
-    // **MODIFIED:** Add to unapprovedReviews instead of reviews
     const newReview = {
         id: `rev_${Date.now()}_${reviewIdCounter++}`, // Ensure unique ID
         name: reviewerName ? escapeHtml(reviewerName) : null,
@@ -319,11 +319,9 @@ app.post('/reviews', (req, res) => {
     unapprovedReviews.unshift(newReview); // Add to the front of the pending queue
     console.log("New review submitted for approval:", newReview.id);
 
-    // **MODIFIED:** Update response message
     res.status(201).json({
         success: true,
         message: 'Thank you for your review! It has been submitted for approval and should appear within 24 hours once verified.'
-        // Do NOT send the review object back to the client here, as it's not approved yet.
     });
 });
 
@@ -333,17 +331,16 @@ function adminAuth(req, res, next) {
 
     if (!authHeader) {
         res.setHeader('WWW-Authenticate', 'Basic realm="Admin Area"');
-        return res.status(401).send(verificationResponsePage('Authentication Required', 'You need to log in to access the admin area.', 'error'));
+        // Use the HTML response for auth prompts
+        return res.status(401).send(verificationResponsePage('Authentication Required', 'You need to log in to access the admin area.', 'error', true)); // Pass true to indicate it's an auth challenge page
     }
 
-    // Check if it's Basic auth
     const [type, credentials] = authHeader.split(' ');
     if (type !== 'Basic' || !credentials) {
         res.setHeader('WWW-Authenticate', 'Basic realm="Admin Area"');
-        return res.status(401).send(verificationResponsePage('Authentication Required', 'Invalid authentication method. Basic Auth required.', 'error'));
+        return res.status(401).send(verificationResponsePage('Authentication Required', 'Invalid authentication method. Basic Auth required.', 'error', true));
     }
 
-    // Decode credentials (Base64)
     let decoded;
     try {
         decoded = Buffer.from(credentials, 'base64').toString('utf8');
@@ -354,15 +351,12 @@ function adminAuth(req, res, next) {
 
     const [username, password] = decoded.split(':');
 
-    // Compare with stored credentials
     if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-        // Credentials match, proceed to the next middleware/route handler
         return next();
     } else {
-        // Credentials don't match
         console.warn(`Admin login failed for user: ${username}`);
         res.setHeader('WWW-Authenticate', 'Basic realm="Admin Area"');
-        return res.status(401).send(verificationResponsePage('Authentication Failed', 'Invalid username or password.', 'error'));
+        return res.status(401).send(verificationResponsePage('Authentication Failed', 'Invalid username or password.', 'error', true));
     }
 }
 
@@ -377,14 +371,15 @@ adminRouter.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
-// API endpoint to get pending reviews
+// --- Admin API Endpoints ---
+
+// GET Pending Reviews
 adminRouter.get('/api/reviews/pending', (req, res) => {
-     // Sort by newest first
     const sortedPending = [...unapprovedReviews].sort((a, b) => moment(b.createdAt).diff(moment(a.createdAt)));
     res.status(200).json(sortedPending);
 });
 
-// API endpoint to approve a review
+// POST Approve Review
 adminRouter.post('/api/reviews/approve/:id', (req, res) => {
     const reviewId = req.params.id;
     const reviewIndex = unapprovedReviews.findIndex(r => r.id === reviewId);
@@ -393,19 +388,16 @@ adminRouter.post('/api/reviews/approve/:id', (req, res) => {
         return res.status(404).json({ success: false, message: 'Review not found in pending list.' });
     }
 
-    // Remove from unapproved and get the review object
     const [reviewToApprove] = unapprovedReviews.splice(reviewIndex, 1);
-
-    // Update status and add to the approved list
     reviewToApprove.status = 'approved';
-    reviewToApprove.approvedAt = moment().toISOString(); // Optional: track approval time
+    reviewToApprove.approvedAt = moment().toISOString();
     reviews.unshift(reviewToApprove); // Add to the beginning of approved reviews
 
     console.log(`Admin approved review: ${reviewId}`);
     res.status(200).json({ success: true, message: `Review ${reviewId} approved.` });
 });
 
-// API endpoint to reject (delete) a pending review
+// DELETE Reject Pending Review
 adminRouter.delete('/api/reviews/reject/:id', (req, res) => {
     const reviewId = req.params.id;
     const initialLength = unapprovedReviews.length;
@@ -415,8 +407,37 @@ adminRouter.delete('/api/reviews/reject/:id', (req, res) => {
         return res.status(404).json({ success: false, message: 'Review not found in pending list.' });
     }
 
-    console.log(`Admin rejected review: ${reviewId}`);
-    res.status(200).json({ success: true, message: `Review ${reviewId} rejected and removed.` });
+    console.log(`Admin rejected pending review: ${reviewId}`);
+    res.status(200).json({ success: true, message: `Pending review ${reviewId} rejected and removed.` });
+});
+
+// *** NEW *** GET Approved Reviews
+adminRouter.get('/api/reviews/approved', (req, res) => {
+    // Sort by newest first (or by approval date if available)
+    const sortedApproved = [...reviews]
+        .filter(r => r.status === 'approved') // Double-check status
+        .sort((a, b) => {
+            const dateA = a.approvedAt || a.createdAt; // Prefer approval date if it exists
+            const dateB = b.approvedAt || b.createdAt;
+            return moment(dateB).diff(moment(dateA));
+        });
+    res.status(200).json(sortedApproved);
+});
+
+// *** NEW *** DELETE Approved Review
+adminRouter.delete('/api/reviews/approved/delete/:id', (req, res) => {
+    const reviewId = req.params.id;
+    const reviewIndex = reviews.findIndex(r => r.id === reviewId);
+
+    if (reviewIndex === -1) {
+        return res.status(404).json({ success: false, message: 'Approved review not found.' });
+    }
+
+    // Remove from the approved reviews array
+    const [deletedReview] = reviews.splice(reviewIndex, 1); // Use splice to remove
+
+    console.log(`Admin deleted approved review: ${reviewId} (Name: ${deletedReview.name || 'N/A'})`);
+    res.status(200).json({ success: true, message: `Approved review ${reviewId} deleted successfully.` });
 });
 
 // Mount the admin router
@@ -425,40 +446,63 @@ app.use('/admin', adminRouter);
 
 
 // --- HTML Template Functions ---
-function verificationResponsePage(title, message, status = "info") {
-    // ... (keep existing function)
-    let backgroundColor = '#e0f2fe'; let textColor = '#075985'; let icon = 'ℹ️';
-    if (status === 'success') { backgroundColor = '#dcfce7'; textColor = '#166534'; icon = '✅'; }
-    else if (status === 'error') { backgroundColor = '#fee2e2'; textColor = '#991b1b'; icon = '❌'; }
+function verificationResponsePage(title, message, status = "info", isAuthChallenge = false) {
+    // Added Tailwind classes for a basic look, matching the admin panel style
+    let bgColor = 'bg-blue-100'; let textColor = 'text-blue-800'; let borderColor = 'border-blue-300'; let icon = 'ℹ️';
+    if (status === 'success') { bgColor = 'bg-green-100'; textColor = 'text-green-800'; borderColor = 'border-green-300'; icon = '✅'; }
+    else if (status === 'error') { bgColor = 'bg-red-100'; textColor = 'text-red-800'; borderColor = 'border-red-300'; icon = '❌'; }
     // Use explicit escapeHtml calls for user-provided or dynamic content
-    return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${escapeHtml(title)} - Green Bites</title><style>body{font-family:sans-serif;margin:0;padding:0;background-color:#f3f4f6;display:flex;justify-content:center;align-items:center;min-height:100vh;}.container{background-color:#fff;padding:30px 40px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1);text-align:center;max-width:500px;margin:20px;}h1{color:#333;margin:0 0 15px;font-size:1.8em;}.status-box{background-color:${backgroundColor};color:${textColor};border-radius:6px;padding:15px;margin-top:20px;border:1px solid ${textColor}30;}.status-box p{margin:0;font-size:1.1em;line-height:1.6;}.icon{font-size:2em;display:block;margin-bottom:10px;}.footer{margin-top:25px;font-size:0.9em;color:#6b7280;}a{color:#1d4ed8;text-decoration:none;}a:hover{text-decoration:underline;}</style></head><body><div class="container"><h1>${escapeHtml(title)}</h1><div class="status-box"><span class="icon">${icon}</span><p>${message}</p></div><div class="footer"><p>Return to <a href="/">Green Bites Home</a></p><p>Questions? Call us at ${escapeHtml(RESTAURANT_PHONE)}</p></div></div></body></html>`;
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${escapeHtml(title)} - Green Bites</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 md:p-12 rounded-lg shadow-lg text-center max-w-lg mx-4">
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">${escapeHtml(title)}</h1>
+        <div class="status-box ${bgColor} ${textColor} border ${borderColor} rounded-md p-4 mb-6">
+            <span class="text-3xl block mb-2">${icon}</span>
+            <p class="text-base md:text-lg leading-relaxed">${message}</p> <!-- Raw HTML allowed here for formatting like <strong> -->
+        </div>
+        ${isAuthChallenge ?
+            '<p class="text-sm text-gray-600">Please provide your admin credentials.</p>' :
+            `<div class="mt-8 text-sm text-gray-600">
+                <p><a href="/" class="text-blue-600 hover:underline">Return to Green Bites Home</a></p>
+                <p class="mt-2">Questions? Call us at ${escapeHtml(RESTAURANT_PHONE)}</p>
+            </div>`
+        }
+    </div>
+</body>
+</html>`;
 }
 
+
 function verificationEmailTemplate(reservation, verificationLink, expiryMinutes) {
-    // ... (keep existing function, ensure escaping)
+    // Added inline styles for better email client compatibility, resembling Tailwind theme
     const reservationTimezone = reservation.timezone || RESTAURANT_TIMEZONE;
     const formattedDate = moment.tz(`${reservation.date} ${reservation.time}`, "YYYY-MM-DD HH:mm", reservationTimezone).format("dddd, MMMM Do, YYYY");
     const formattedTime = moment.tz(`${reservation.date} ${reservation.time}`, "YYYY-MM-DD HH:mm", reservationTimezone).format("h:mm A z");
-    const approxExpiryLocal = moment(reservation.verificationExpires).format("h:mm A z"); // Already timezone aware from moment object
-    // Ensure all dynamic reservation data is escaped
+    const approxExpiryLocal = moment(reservation.verificationExpires).format("h:mm A z"); // Already timezone aware
     const safeName = escapeHtml(reservation.name);
     const safeGuests = escapeHtml(reservation.numberOfPeople.toString());
-    const safeRequests = reservation.specialRequests ? `<p><strong>Requests:</strong> ${escapeHtml(reservation.specialRequests)}</p>` : '';
+    const safeRequests = reservation.specialRequests ? `<p style="margin-bottom: 10px;"><strong>Requests:</strong> ${escapeHtml(reservation.specialRequests)}</p>` : '';
 
-    return `<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Confirm Your Reservation</title> <style> body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; } .container { padding: 20px; max-width: 600px; margin: 20px auto; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; } h2 { color: #2c5282; } p { margin-bottom: 15px; } strong { color: #1a202c; } .details { background-color: #fff; padding: 15px; border-radius: 5px; margin-bottom: 20px; border: 1px solid #eee; } .details strong { display: inline-block; min-width: 100px; } .button-container { text-align: center; margin: 25px 0; } .button { background-color: #48bb78; color: white !important; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 16px; display: inline-block; } .button:hover { background-color: #38a169; } .expires { font-size: 0.9em; color: #718096; text-align: center; margin-top: 5px; } .footer { margin-top: 20px; font-size: 0.85em; text-align: center; color: #a0aec0; } </style> </head> <body> <div class="container"> <h2>Confirm Your Reservation at Green Bites</h2> <p>Hello ${safeName},</p> <p>Please confirm your reservation details below and click the button to verify:</p> <div class="details"> <p><strong>Name:</strong> ${safeName}</p> <p><strong>Date:</strong> ${formattedDate}</p> <p><strong>Time:</strong> ${formattedTime}</p> <p><strong>Guests:</strong> ${safeGuests}</p> ${safeRequests} </div> <p>Confirm within <strong style="color: #dd6b20;">${expiryMinutes} minutes</strong>:</p> <div class="button-container"> <a href="${verificationLink}" target="_blank" class="button">Verify My Reservation</a> </div> <p class="expires">Link expires around ${approxExpiryLocal}.</p> <p>If you didn't request this, please ignore this email.</p> <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;"> <p>Sincerely,<br>The Green Bites Team</p> <div class="footer"> <p>Green Bites | 123 Green Way, Fairfax, VA | ${escapeHtml(RESTAURANT_PHONE)}</p> </div> </div> </body> </html>`;
+    return `<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Confirm Your Reservation</title> <style> body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; line-height: 1.6; color: #374151; margin: 0; padding: 0; background-color: #f3f4f6; } .container { padding: 25px; max-width: 600px; margin: 20px auto; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; } h2 { color: #1e40af; margin-top: 0; } p { margin-bottom: 15px; } strong { color: #111827; font-weight: 600; } .details { background-color: #f9fafb; padding: 15px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #e5e7eb; } .details strong { display: inline-block; min-width: 80px; } .button-container { text-align: center; margin: 30px 0; } .button { background-color: #10b981; color: #ffffff !important; padding: 12px 28px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 16px; display: inline-block; border: none; cursor: pointer; } .expires { font-size: 0.9em; color: #6b7280; text-align: center; margin-top: -15px; margin-bottom: 20px; } .footer { margin-top: 25px; font-size: 0.85em; text-align: center; color: #9ca3af; border-top: 1px solid #e5e7eb; padding-top: 15px; } </style> </head> <body> <div class="container"> <h2>Confirm Your Reservation at Green Bites</h2> <p>Hello ${safeName},</p> <p>Please confirm your reservation details below and click the button to verify:</p> <div class="details"> <p style="margin-bottom: 10px;"><strong>Name:</strong> ${safeName}</p> <p style="margin-bottom: 10px;"><strong>Date:</strong> ${formattedDate}</p> <p style="margin-bottom: 10px;"><strong>Time:</strong> ${formattedTime}</p> <p style="margin-bottom: 10px;"><strong>Guests:</strong> ${safeGuests}</p> ${safeRequests} </div> <p>Please confirm within <strong style="color: #d97706;">${expiryMinutes} minutes</strong> to secure your table:</p> <div class="button-container"> <a href="${verificationLink}" target="_blank" class="button" style="color: #ffffff;">Verify My Reservation</a> </div> <p class="expires">This verification link expires around ${approxExpiryLocal}.</p> <p>If you didn't request this reservation, please ignore this email. Your details won't be stored if unverified.</p> <div class="footer"> <p>Green Bites | 123 Green Way, Fairfax, VA | ${escapeHtml(RESTAURANT_PHONE)}</p> </div> </div> </body> </html>`;
 }
 
 function confirmationEmailTemplate(reservation) {
-    // ... (keep existing function, ensure escaping)
+    // Added inline styles for better email client compatibility, resembling Tailwind theme
     const reservationTimezone = reservation.timezone || RESTAURANT_TIMEZONE;
     const formattedDate = moment.tz(`${reservation.date} ${reservation.time}`, "YYYY-MM-DD HH:mm", reservationTimezone).format("dddd, MMMM Do, YYYY");
     const formattedTime = moment.tz(`${reservation.date} ${reservation.time}`, "YYYY-MM-DD HH:mm", reservationTimezone).format("h:mm A z");
-    // Ensure all dynamic reservation data is escaped
     const safeName = escapeHtml(reservation.name);
     const safeGuests = escapeHtml(reservation.numberOfPeople.toString());
-    const safeRequests = reservation.specialRequests ? `<p><strong>Requests:</strong> ${escapeHtml(reservation.specialRequests)}</p>` : '';
+    const safeRequests = reservation.specialRequests ? `<p style="margin-bottom: 10px;"><strong>Requests:</strong> ${escapeHtml(reservation.specialRequests)}</p>` : '';
 
-    return `<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Reservation Confirmed!</title> <style> body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; } .container { padding: 20px; max-width: 600px; margin: 20px auto; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; } h2 { color: #38a169; } p { margin-bottom: 15px; } strong { color: #1a202c; } .details { background-color: #fff; padding: 15px; border-radius: 5px; margin-bottom: 20px; border: 1px solid #eee; } .details strong { display: inline-block; min-width: 100px; } .footer { margin-top: 20px; font-size: 0.85em; text-align: center; color: #a0aec0; } </style> </head> <body> <div class="container"> <h2>Your Green Bites Reservation is Confirmed!</h2> <p>Hello ${safeName},</p> <p>This email confirms your reservation details:</p> <div class="details"> <p><strong>Name:</strong> ${safeName}</p> <p><strong>Date:</strong> ${formattedDate}</p> <p><strong>Time:</strong> ${formattedTime}</p> <p><strong>Guests:</strong> ${safeGuests}</p> ${safeRequests} </div> <p>We look forward to welcoming you!</p> <p><strong>Notes:</strong> Please arrive 5-10 minutes early. If plans change, contact us. We are at 123 Green Way, Fairfax, VA.</p> <p>Sincerely,<br>The Green Bites Team</p> <div class="footer"> <p>Green Bites | 123 Green Way, Fairfax, VA | ${escapeHtml(RESTAURANT_PHONE)}</p> </div> </div> </body> </html>`;
+    return `<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Reservation Confirmed!</title> <style> body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; line-height: 1.6; color: #374151; margin: 0; padding: 0; background-color: #f3f4f6; } .container { padding: 25px; max-width: 600px; margin: 20px auto; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; } h2 { color: #059669; margin-top: 0; } p { margin-bottom: 15px; } strong { color: #111827; font-weight: 600; } .details { background-color: #f9fafb; padding: 15px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #e5e7eb; } .details strong { display: inline-block; min-width: 80px; } .notes { background-color: #eff6ff; color: #1e40af; padding: 15px; border-radius: 6px; border: 1px solid #bfdbfe; font-size: 0.95em; } .footer { margin-top: 25px; font-size: 0.85em; text-align: center; color: #9ca3af; border-top: 1px solid #e5e7eb; padding-top: 15px; } </style> </head> <body> <div class="container"> <h2>Your Green Bites Reservation is Confirmed!</h2> <p>Hello ${safeName},</p> <p>This email confirms your reservation details:</p> <div class="details"> <p style="margin-bottom: 10px;"><strong>Name:</strong> ${safeName}</p> <p style="margin-bottom: 10px;"><strong>Date:</strong> ${formattedDate}</p> <p style="margin-bottom: 10px;"><strong>Time:</strong> ${formattedTime}</p> <p style="margin-bottom: 10px;"><strong>Guests:</strong> ${safeGuests}</p> ${safeRequests} </div> <p>We look forward to welcoming you!</p> <div class="notes"> <p style="margin: 0;"><strong>Notes:</strong> Please try to arrive 5-10 minutes before your reservation time. If your plans change, please call us at ${escapeHtml(RESTAURANT_PHONE)} to modify or cancel. Our address is 123 Green Way, Fairfax, VA.</p> </div> <p style="margin-top: 20px;">Sincerely,<br>The Green Bites Team</p> <div class="footer"> <p>Green Bites | 123 Green Way, Fairfax, VA | ${escapeHtml(RESTAURANT_PHONE)}</p> </div> </div> </body> </html>`;
 }
 
 async function sendConfirmationEmail(reservation) {
@@ -492,53 +536,20 @@ setInterval(() => {
         if (res.status === 'pending_verification' && moment(res.verificationExpires).isBefore(now)) {
             console.log(`Auto-expiring pending reservation: ID ${res.id}`);
             reservations[index].status = 'expired_unverified';
-            reservations[index].verificationToken = null;
+            reservations[index].verificationToken = null; // Clear sensitive info
             markedExpiredCount++;
         }
     });
     if (markedExpiredCount > 0) console.log(`Cleanup marked ${markedExpiredCount} as 'expired_unverified'.`);
 
-    // Optional: Clean up very old unapproved reviews?
-    // const cutoff = moment().subtract(30, 'days'); // e.g., remove pending reviews older than 30 days
-    // const initialUnapprovedCount = unapprovedReviews.length;
-    // unapprovedReviews = unapprovedReviews.filter(r => moment(r.createdAt).isAfter(cutoff));
-    // if (unapprovedReviews.length < initialUnapprovedCount) {
-    //    console.log(`Cleaned up ${initialUnapprovedCount - unapprovedReviews.length} old pending reviews.`);
-    // }
-
 }, 10 * 60 * 1000); // Check every 10 minutes
 
 
 // --- Deprecated/Replaced Endpoints ---
-// Remove or secure the old /current-reservations endpoint if it exists
-const ADMIN_API_KEY = process.env.ADMIN_API_KEY || null; // Kept for reference but likely unused now
+const ADMIN_API_KEY = process.env.ADMIN_API_KEY || null;
 app.get('/current-reservations', (req, res) => {
      console.warn("/current-reservations is deprecated. Use admin panel for reservation info (if needed).");
-     // Apply adminAuth if you still need this endpoint for some reason
-     // For now, just return unauthorized or not found
      return res.status(410).json({ error: 'Endpoint deprecated. Use admin panel.'});
-
-    // OLD LOGIC (replace or remove)
-    // const apiKey = req.query.apiKey;
-    // if (!ADMIN_API_KEY || !apiKey || apiKey !== ADMIN_API_KEY) {
-    //     console.warn("Unauthorized attempt to access /current-reservations");
-    //     return res.status(401).json({ error: 'Unauthorized' });
-    // }
-    // const sortedReservations = [...reservations].sort((a, b) => {
-    //      const timeA = moment.tz(`${a.date} ${a.time}`, "YYYY-MM-DD HH:mm", a.timezone || RESTAURANT_TIMEZONE);
-    //      const timeB = moment.tz(`${b.date} ${b.time}`, "YYYY-MM-DD HH:mm", b.timezone || RESTAURANT_TIMEZONE);
-    //      return timeA.diff(timeB);
-    //  });
-    // // Filter sensitive info
-    // const safeReservations = sortedReservations.map(r => ({
-    //     id: r.id, name: r.name, email: r.email, // Consider if email should be shown here
-    //     date: r.date, time: r.time, numberOfPeople: r.numberOfPeople,
-    //     specialRequests: r.specialRequests, status: r.status,
-    //     requestedAt: r.requestedAt, verifiedAt: r.verifiedAt,
-    //     timezone: r.timezone
-    //     // Omit: verificationToken, verificationExpires
-    // }));
-    // res.status(200).json({ count: safeReservations.length, reservations: safeReservations });
 });
 
 
@@ -550,30 +561,26 @@ app.get('/', (req, res) => {
 // Serve other static HTML files directly (e.g., menu.html, about.html)
 app.get('/:pageName.html', (req, res, next) => {
     const pageName = req.params.pageName;
-     // Prevent accessing admin.html directly without auth
      if (pageName.toLowerCase() === 'admin') {
-         return res.redirect('/admin'); // Redirect to the authenticated route
+         return res.redirect('/admin');
      }
-    // Basic check for valid characters to prevent directory traversal
     if (/^[a-zA-Z0-9_-]+$/.test(pageName)) {
         const filePath = path.join(__dirname, 'public', `${pageName}.html`);
-        // Check if file exists before sending
         fs.access(filePath, fs.constants.R_OK, (err) => {
             if (err) {
                  console.log(`Static HTML file not found or not readable: ${pageName}.html`);
                  next(); // Pass to 404 handler
             } else {
                 res.sendFile(filePath, (err) => {
-                    // Handle potential errors during sendFile (though less common after fs.access)
                     if (err) {
                          console.error(`Error serving ${pageName}.html:`, err);
-                         next(err); // Pass error to error handler
+                         next(err);
                     }
                 });
             }
         });
     } else {
-         next(); // Invalid page name format, pass to 404 handler
+         next();
     }
 });
 
@@ -584,7 +591,7 @@ app.use((err, req, res, next) => {
     if (res.headersSent) { return next(err); }
     const message = 'Oops! Something went wrong on our end. Please try again later.';
     if (req.accepts('json')) {
-        // Try to detect if it's an admin API request
+        // Check if it's an admin API request specifically
         if (req.originalUrl.startsWith('/admin/api/')) {
              res.status(500).json({ success: false, message: 'Internal Server Error' });
         } else {
@@ -597,22 +604,22 @@ app.use((err, req, res, next) => {
 
 // 404 Handler (Keep at the very end)
 app.use((req, res, next) => {
-    res.status(404).send(verificationResponsePage('Page Not Found', `Sorry, the page you requested (${escapeHtml(req.originalUrl)}) does not exist.`, 'error'));
+    res.status(404).send(verificationResponsePage('Page Not Found', `Sorry, the page you requested (<code>${escapeHtml(req.originalUrl)}</code>) does not exist.`, 'error'));
 });
 
 // --- Start Server ---
 app.listen(PORT, () => {
     console.log(`-------------------------------------------------------`);
-    console.log(` Green Bites Server Listening on http://localhost:${PORT}`);
-    console.log(` Restaurant Time Zone: ${RESTAURANT_TIMEZONE}`);
-    console.log(` Static files served from: ${path.join(__dirname, 'public')}`);
-    console.log(` Restaurant Phone: ${escapeHtml(RESTAURANT_PHONE)}`);
+    console.log(` ✅ Green Bites Server Listening on http://localhost:${PORT}`);
+    console.log(` 🕒 Restaurant Time Zone: ${RESTAURANT_TIMEZONE}`);
+    console.log(` 📁 Static files served from: ${path.join(__dirname, 'public')}`);
+    console.log(` 📞 Restaurant Phone: ${escapeHtml(RESTAURANT_PHONE)}`);
     console.log(` --- Admin Access ---`);
-    console.log(` Admin Panel: http://localhost:${PORT}/admin`);
-    console.log(` Admin User: ${ADMIN_USERNAME}`);
-    console.log(` Admin Pass: [Set via env or code]`);
-    console.warn(` >>> Basic Authentication is NOT secure over HTTP. Use HTTPS! <<<`);
-    console.warn(` >>> Data (Reservations, Reviews) is IN-MEMORY and LOST on restart! <<<`);
-    console.warn(` >>> Ensure MAIL_USER/PASS (App Password) & ADMIN_USER/PASS are set securely. <<<`);
+    console.log(` 🔑 Admin Panel: http://localhost:${PORT}/admin`);
+    console.log(` 👤 Admin User: ${ADMIN_USERNAME}`);
+    console.log(` 🔒 Admin Pass: [Set via env or code]`);
+    console.warn(` >>> ❗ Basic Authentication is NOT secure over HTTP. USE HTTPS! <<<`);
+    console.warn(` >>> 💾 Data (Reservations, Reviews) is IN-MEMORY and LOST on restart! <<<`);
+    console.warn(` >>> ⚙️ Ensure MAIL_USER/PASS (App Password) & ADMIN_USER/PASS are set securely. <<<`);
     console.log(`-------------------------------------------------------`);
 });
