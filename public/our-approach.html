@@ -62,8 +62,8 @@
                 slideInRight: { '0%': { opacity: '0', transform: 'translateX(50px)' }, '100%': { opacity: '1', transform: 'translateX(0)' } },
             },
              backgroundImage: {
-               'hero-pattern': "url('/Assets/Images/Restaurant/Exterior.jpg')",
-               // Using inline style for background image now
+               // Example pattern - no longer used for header
+               // 'hero-pattern': "url('/Assets/Images/Restaurant/Exterior.jpg')",
              }
           }
         }
@@ -82,7 +82,7 @@
              @apply bg-neutral-darker p-6 rounded-xl shadow-lg border border-neutral-dark transition-shadow hover:shadow-primary/20 hover:shadow-md h-full flex flex-col;
         }
         .approach-card p {
-            @apply flex-grow;
+            @apply flex-grow; /* Ensures paragraphs take up space to align content */
         }
     </style>
 
@@ -91,101 +91,113 @@
 
     <!-- Navigation -->
     <nav x-data="{ open: false, scrolled: false }"
-    @scroll.window="scrolled = (window.pageYOffset > 50)"
-    x-init="scrolled = (window.pageYOffset > 50)"
-    class="fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-out"
-    :class="{ 'bg-neutral-darkest shadow-lg': scrolled || open, 'bg-transparent': !scrolled && !open }">
-   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-       <!-- Increased height h-24 -->
-       <div class="flex justify-between items-center h-24">
-           <!-- Logo -->
-           <div class="flex-shrink-0">
-               <a href="index.html" class="transition-opacity duration-300 hover:opacity-80 focus:outline-none focus:opacity-80">
-                   <!-- Increased logo size h-16 lg:h-20 -->
-                   <img class="h-16 lg:h-20 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Logo">
-               </a>
-           </div>
+         @scroll.window="scrolled = (window.pageYOffset > 50)"
+         x-init="scrolled = (window.pageYOffset > 50)"
+         class="fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-out"
+         :class="{ 'bg-neutral-darkest shadow-lg': scrolled || open, 'bg-transparent': !scrolled && !open }">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+           <!-- Increased height h-24 -->
+           <div class="flex justify-between items-center h-24">
+               <!-- Logo -->
+               <div class="flex-shrink-0">
+                   <a href="index.html" class="transition-opacity duration-300 hover:opacity-80 focus:outline-none focus:opacity-80">
+                       <!-- Increased logo size h-16 lg:h-20 -->
+                       <img class="h-16 lg:h-20 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Logo">
+                   </a>
+               </div>
 
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex items-center space-x-10"> <!-- Increased space-x-10 -->
-               <!-- Increased text-lg -->
-               <a href="index.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">HOME</a>
-               <!-- Active Link: Increased text-lg, added pb-1 -->
-               <a href="menu.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">MENU</a>
-               <!-- Increased text-lg -->
-               <a href="our-approach.html" class="text-lg font-medium tracking-wide text-primary border-b-2 border-primary pb-1 transition-colors duration-300">OUR APPROACH</a>
-                <!-- Increased text-lg -->
-               <a href="aboutus.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
-                <!-- Increased text-lg -->
-               <a href="reviews.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
-               <!-- Adjusted padding px-6 py-2.5, kept text-base for contrast (optional) - GOLD RESERVE -->
-               <a href="reservations.html" class="ml-4 inline-flex items-center px-6 py-2.5 border border-secondary-dark text-base font-semibold rounded-full shadow-sm text-secondary-dark bg-transparent hover:bg-secondary-dark hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-secondary-dark transition-colors duration-300">
-                   RESERVE
-               </a>
-           </div>
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-10"> <!-- Increased space-x-10 -->
+                   <!-- Increased text-lg -->
+                   <a href="index.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">HOME</a>
+                   <!-- Active Link: Increased text-lg, added pb-1 -->
+                   <a href="menu.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">MENU</a>
+                   <!-- Increased text-lg -->
+                   <a href="our-approach.html" class="text-lg font-medium tracking-wide text-primary border-b-2 border-primary pb-1 transition-colors duration-300">OUR APPROACH</a>
+                    <!-- Increased text-lg -->
+                   <a href="aboutus.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
+                    <!-- Increased text-lg -->
+                   <a href="reviews.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
+                   <!-- Adjusted padding px-6 py-2.5, kept text-base for contrast (optional) - GOLD RESERVE -->
+                   <a href="reservations.html" class="ml-4 inline-flex items-center px-6 py-2.5 border border-secondary-dark text-base font-semibold rounded-full shadow-sm text-secondary-dark bg-transparent hover:bg-secondary-dark hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-secondary-dark transition-colors duration-300">
+                       RESERVE
+                   </a>
+               </div>
 
-           <!-- Mobile Menu Button -->
-           <div class="md:hidden flex items-center">
-               <!-- Mobile Reserve button - kept text-sm as it's common for mobile actions - GOLD RESERVE -->
-               <a href="reservations.html" class="inline-flex items-center px-4 py-2 mr-2 border border-secondary-dark text-sm font-semibold rounded-full text-secondary-dark hover:bg-secondary-dark hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-secondary-dark transition-colors duration-300">
-                   RESERVE
-               </a>
-               <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" :aria-expanded="open.toString()">
-                    <span class="sr-only">Open main menu</span>
-                   <!-- Hamburger Icon -->
-                   <svg x-show="!open" class="block h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
-                   <!-- Close Icon -->
-                   <svg x-show="open" x-cloak style="display: none;" class="block h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-               </button>
+               <!-- Mobile Menu Button -->
+               <div class="md:hidden flex items-center">
+                   <!-- Mobile Reserve button - kept text-sm as it's common for mobile actions - GOLD RESERVE -->
+                   <a href="reservations.html" class="inline-flex items-center px-4 py-2 mr-2 border border-secondary-dark text-sm font-semibold rounded-full text-secondary-dark hover:bg-secondary-dark hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-secondary-dark transition-colors duration-300">
+                       RESERVE
+                   </a>
+                   <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" :aria-expanded="open.toString()">
+                        <span class="sr-only">Open main menu</span>
+                       <!-- Hamburger Icon -->
+                       <svg x-show="!open" class="block h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+                       <!-- Close Icon -->
+                       <svg x-show="open" x-cloak style="display: none;" class="block h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                   </button>
+               </div>
            </div>
        </div>
-   </div>
 
-    <!-- Mobile Menu -->
-    <!-- Added slight padding-top pt-2 -->
-    <div x-show="open"
-         x-transition:enter="transition ease-out duration-200"
-         x-transition:enter-start="opacity-0 scale-95"
-         x-transition:enter-end="opacity-100 scale-100"
-         x-transition:leave="transition ease-in duration-150"
-         x-transition:leave-start="opacity-100 scale-100"
-         x-transition:leave-end="opacity-0 scale-95"
-         style="display: none;"
-         class="md:hidden absolute top-full inset-x-0 bg-neutral-darkest shadow-lg p-4 pt-2" id="mobile-menu"
-         x-cloak>
-       <!-- Kept mobile text-lg, adjusted spacing slightly -->
-       <div class="pt-2 pb-3 space-y-4 text-center">
-           <a href="index.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">HOME</a>
-           <!-- Active Link -->
-           <a href="menu.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">MENU</a>
-           <a href="our-approach.html" class="block py-2 text-lg font-medium text-primary transition-colors duration-300">OUR APPROACH</a>
-           <a href="aboutus.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
-           <a href="reviews.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
+        <!-- Mobile Menu -->
+        <!-- Added slight padding-top pt-2 -->
+        <div x-show="open"
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 scale-95"
+             x-transition:enter-end="opacity-100 scale-100"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 scale-100"
+             x-transition:leave-end="opacity-0 scale-95"
+             style="display: none;"
+             class="md:hidden absolute top-full inset-x-0 bg-neutral-darkest shadow-lg p-4 pt-2" id="mobile-menu"
+             x-cloak>
+           <!-- Kept mobile text-lg, adjusted spacing slightly -->
+           <div class="pt-2 pb-3 space-y-4 text-center">
+               <a href="index.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">HOME</a>
+               <!-- Active Link -->
+               <a href="menu.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">MENU</a>
+               <a href="our-approach.html" class="block py-2 text-lg font-medium text-primary transition-colors duration-300">OUR APPROACH</a>
+               <a href="aboutus.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
+               <a href="reviews.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
+           </div>
        </div>
-   </div>
-   <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('navState', () => ({
-                open: false,
-                scrolled: window.pageYOffset > 50,
-                init() {
-                    window.addEventListener('scroll', () => {
-                        this.scrolled = window.pageYOffset > 50;
-                    });
-                }
-            }))
-        });
-   </script>
-</nav>
+       <script>
+            // Included directly inside nav for simplicity here, could be moved
+            document.addEventListener('alpine:init', () => {
+                Alpine.data('navState', () => ({
+                    open: false,
+                    scrolled: window.pageYOffset > 50,
+                    init() {
+                        window.addEventListener('scroll', () => {
+                            this.scrolled = window.pageYOffset > 50;
+                        });
+                    }
+                }))
+            });
+       </script>
+    </nav>
     <!-- End Navigation -->
 
 
-    <!-- Header Section - Replaced previous structure -->
-    <header class="relative pt-48 pb-32 bg-cover bg-center text-center bg-[url('/Assets/Images/Restaurant/ingredients-close-up.jpg')]">
-        <!-- Gradient Overlay -->
-        <div class="absolute inset-0 bg-gradient-to-t from-neutral-darkest via-neutral-darkest/80 to-neutral-darkest/60"></div>
+    <!-- Header Section - Modified to use img tag method -->
+    <header class="relative h-[60vh] md:h-[70vh] min-h-[450px] flex items-center justify-center text-center overflow-hidden">
+        <!-- Background Image Container -->
+        <div class="absolute inset-0 z-0">
+             <picture>
+                 <!-- Optional: Add <source> tags for different screen sizes if needed -->
+                 <img src="/Assets/Images/Restaurant/ingredients-close-up.jpg"
+                      alt="Close-up of fresh colorful ingredients like herbs and vegetables"
+                      class="w-full h-full object-cover object-center filter brightness-75">
+            </picture>
+            <!-- Gradient Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-neutral-darkest via-black/70 to-black/50"></div>
+            <!-- Note: Previous overlay was: from-neutral-darkest via-neutral-darkest/80 to-neutral-darkest/60 -->
+        </div>
+
         <!-- Content -->
-        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+        <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
              <h1 class="font-serif text-5xl sm:text-6xl lg:text-7xl text-white font-bold leading-tight animate-fadeInDown">
                 Our <span class="text-primary-light">Approach</span> - Freshness & Responsibility
              </h1>
@@ -194,13 +206,15 @@
              </p>
         </div>
     </header>
+    <!-- End Header Section -->
 
-    <!-- Main Content - Adjusted top padding -->
+
+    <!-- Main Content -->
      <main class="py-16 md:py-24 bg-neutral-darkest"> <!-- Adjusted top padding -->
          <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
 
             <!-- Introduction -->
-            <section class="text-center max-w-3xl mx-auto animate-fadeInUp" style="opacity:0;">
+            <section class="text-center max-w-3xl mx-auto animate-fadeInUp" style="opacity:0;"> <!-- Consider adding opacity for JS animations -->
                 <h2 class="font-serif text-3xl md:text-4xl text-secondary mb-4">Why is Green Bites Different?</h2>
                 <p class="text-lg text-neutral-light/80 leading-relaxed">
                     At Green Bites, 'fresh' and 'sustainable' aren't just buzzwords – they are the foundation of everything we do. We believe that mindful choices in sourcing, preparation, and our environmental impact create not just better food, but a better dining experience - discover how our commitment shapes every dish we serve.
@@ -219,7 +233,7 @@
                     </div>
                 </div>
                 <div class="order-1 md:order-2">
-                    <!-- Placeholder Image -->
+                    <!-- Image for Farm-to-Table -->
                     <img src="/Assets/Images/Restaurant/Fresh Farm Vegetables.jpg" alt="Fresh vegetables from a local farm" class="rounded-2xl shadow-xl aspect-video object-cover w-full">
                 </div>
             </section>
@@ -227,7 +241,7 @@
              <!-- Section 2: Preparation -->
             <section class="grid md:grid-cols-2 gap-12 items-center animate-fadeInUp [animation-delay:400ms]" style="opacity:0;">
                 <div class="order-1">
-                    <!-- Placeholder Image -->
+                    <!-- Image for Preparation -->
                     <img src="/Assets/Images/Restaurant/Kitchen.jpg" alt="Chef preparing fresh vegetarian dish" class="rounded-2xl shadow-xl aspect-video object-cover w-full">
                 </div>
                 <div class="order-2">
@@ -254,7 +268,7 @@
                     </div>
                     <!-- Card 2: Eco-Packaging -->
                     <div class="approach-card">
-                         <svg class="approach-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12zM14.25 9a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" /> </svg> <!-- Heart Icon (as placeholder) -->
+                         <svg class="approach-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12zM14.25 9a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" /> </svg> <!-- Using Heart Icon -->
                         <h4 class="text-xl font-semibold text-white mb-2">Eco-Friendly Packaging</h4>
                         <p class="text-neutral-light/80 text-sm leading-relaxed">For both dine-in necessities and carry-out orders, we prioritize materials that are compostable, biodegradable, or made from recycled content, minimizing our reliance on single-use plastics.</p>
                     </div>
@@ -282,6 +296,8 @@
 
          </div>
      </main>
+    <!-- End Main Content -->
+
 
     <!-- Footer -->
     <footer class="bg-neutral-darker border-t border-neutral-dark pt-16 pb-12">
@@ -340,10 +356,32 @@
     </footer>
     <!-- End Footer -->
 
-    <!-- Custom JavaScript -->
+    <!-- Custom JavaScript (Optional: for animations if not handled by Tailwind classes) -->
     <script src="/js/main.js"></script>
     <script>
-        // The animations should be handled by main.js if using the Intersection Observer setup
+        // Example: Triggering animations on scroll using Intersection Observer
+        // This would typically be in main.js
+        const animatedElements = document.querySelectorAll('.animate-fadeInUp, .animate-fadeInDown, .animate-slideInLeft, .animate-slideInRight');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1'; // Make visible
+                    // entry.target.classList.add('animation-applied'); // Optional: Add class to prevent re-animation
+                    // Remove the inline style if the animation class itself handles opacity
+                    // observer.unobserve(entry.target); // Optional: Stop observing once animated
+                } else {
+                    // Optional: Reset if you want animation to repeat on scroll up/down
+                    // entry.target.style.opacity = '0';
+                }
+            });
+        }, {
+            threshold: 0.1 // Trigger when 10% of the element is visible
+        });
+
+        animatedElements.forEach(el => {
+            observer.observe(el);
+        });
     </script>
 </body>
 </html>
