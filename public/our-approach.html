@@ -63,7 +63,7 @@
             },
              backgroundImage: {
                'hero-pattern': "url('/Assets/Images/Hero/hero-bg.jpg')",
-               'approach-header-bg': "linear-gradient(rgba(17, 24, 39, 0.8), rgba(17, 24, 39, 0.8)), url('/Assets/Images/Restaurant/ingredients-close-up.jpg')", // Example header image
+               // Removed 'approach-header-bg', apply directly in HTML
              }
           }
         }
@@ -180,9 +180,11 @@
     <!-- End Navigation -->
 
 
-    <!-- Header Section -->
-    <header class="relative pt-48 pb-32 bg-approach-header-bg bg-cover bg-center overflow-hidden">
-        <div class="absolute inset-0 bg-neutral-darkest opacity-60"></div> <!-- Overlay -->
+    <!-- Header Section - Updated with Background Image and Gradient Overlay -->
+    <header class="relative pt-48 pb-32 bg-cover bg-center text-center bg-[url('/Assets/Images/Restaurant/ingredients-close-up.jpg')]">
+        <!-- Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-t from-neutral-darkest via-neutral-darkest/80 to-neutral-darkest/60"></div>
+        <!-- Content -->
         <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
              <h1 class="font-serif text-5xl sm:text-6xl lg:text-7xl text-white font-bold leading-tight animate-fadeInDown">
                 Our <span class="text-primary-light">Approach</span> - Freshness & Responsibility
