@@ -118,16 +118,16 @@
                <a href="aboutus.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
                 <!-- Increased text-lg -->
                <a href="reviews.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
-               <!-- Adjusted padding px-6 py-2.5, kept text-base for contrast (optional) -->
-               <a href="reservations.html" class="ml-4 inline-flex items-center px-6 py-2.5 border border-primary text-base font-semibold rounded-full shadow-sm text-primary bg-transparent hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">
+               <!-- Adjusted padding px-6 py-2.5, kept text-base for contrast (optional) - GOLD RESERVE -->
+               <a href="reservations.html" class="ml-4 inline-flex items-center px-6 py-2.5 border border-secondary-dark text-base font-semibold rounded-full shadow-sm text-secondary-dark bg-transparent hover:bg-secondary-dark hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-secondary-dark transition-colors duration-300">
                    RESERVE
                </a>
            </div>
 
            <!-- Mobile Menu Button -->
            <div class="md:hidden flex items-center">
-               <!-- Mobile Reserve button - kept text-sm as it's common for mobile actions -->
-               <a href="reservations.html" class="inline-flex items-center px-4 py-2 mr-2 border border-primary text-sm font-semibold rounded-full text-primary hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-primary transition-colors duration-300">
+               <!-- Mobile Reserve button - kept text-sm as it's common for mobile actions - GOLD RESERVE -->
+               <a href="reservations.html" class="inline-flex items-center px-4 py-2 mr-2 border border-secondary-dark text-sm font-semibold rounded-full text-secondary-dark hover:bg-secondary-dark hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-secondary-dark transition-colors duration-300">
                    RESERVE
                </a>
                <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" :aria-expanded="open.toString()">
@@ -185,10 +185,10 @@
         <div class="absolute inset-0 bg-neutral-darkest opacity-60"></div> <!-- Overlay -->
         <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
              <h1 class="font-serif text-5xl sm:text-6xl lg:text-7xl text-white font-bold leading-tight animate-fadeInDown">
-                Our <span class="text-primary-light">Approach</span>
+                Our <span class="text-primary-light">Approach</span> - Freshness & Responsibility
              </h1>
              <p class="mt-6 text-lg sm:text-xl text-neutral-light/90 max-w-2xl mx-auto animate-fadeInUp [animation-delay:300ms]">
-                Rooted in Freshness & Responsibility: How We Craft Your Meal.
+                Discover how our commitment to local sourcing, mindful preparation, and sustainability shapes every dish we serve.
              </p>
         </div>
     </header>
@@ -199,9 +199,9 @@
 
             <!-- Introduction -->
             <section class="text-center max-w-3xl mx-auto animate-fadeInUp" style="opacity:0;">
-                <h2 class="font-serif text-3xl md:text-4xl text-secondary mb-4">The Green Bites Difference</h2>
+                <h2 class="font-serif text-3xl md:text-4xl text-secondary mb-4">Why is Green Bites Different?</h2>
                 <p class="text-lg text-neutral-light/80 leading-relaxed">
-                    At Green Bites, 'fresh' and 'sustainable' aren't just buzzwords – they are the foundation of everything we do. We believe that mindful choices in sourcing, preparation, and our environmental impact create not just better food, but a better dining experience. Discover how our commitment shapes every dish we serve.
+                    At Green Bites, 'fresh' and 'sustainable' aren't just buzzwords – they are the foundation of everything we do. We believe that mindful choices in sourcing, preparation, and our environmental impact create not just better food, but a better dining experience - discover how our commitment shapes every dish we serve.
                 </p>
             </section>
 
@@ -212,8 +212,8 @@
                     <h3 class="font-serif text-3xl md:text-4xl text-white leading-tight mb-5">From Local Fields to Your Fork</h3>
                     <div class="space-y-4 text-neutral-light/85 leading-relaxed">
                         <p>We're passionate about showcasing the incredible bounty of Virginia. We build strong relationships with local farmers and producers who share our dedication to <strong class="text-primary-light">organic and sustainable agriculture</strong>. This means prioritizing seasonal ingredients harvested at their peak flavor and nutritional value.</p>
-                        <p>By sourcing locally, we not only guarantee unparalleled freshness but also support our community's farmers and reduce the carbon footprint associated with long-distance transportation. Our menu evolves with the seasons, ensuring you always taste the best of what our region has to offer.</p>
-                        <p>We proudly partner with growers like <em class="text-secondary">Fairfax Gardens</em> for vibrant greens and <em class="text-secondary">Piedmont Produce</em> for earthy root vegetables. [Replace with specific examples if possible]</p>
+                        <p>By sourcing locally, we not only guarantee unparalleled freshness, but we are also supporting our community's farmers and reduce the carbon footprint associated with long-distance transportation. Our menu evolves with the seasons, ensuring you always taste the best of what our region has to offer.</p>
+                        <p>We proudly partner with growers like <em class="text-secondary">Fairfax Gardens</em> for vibrant greens (like our spinach and arugula) and <em class="text-secondary">Piedmont Produce</em> for earthy root vegetables (such as beets and carrots).</p>
                     </div>
                 </div>
                 <div class="order-1 md:order-2">
@@ -232,7 +232,7 @@
                     <span class="inline-block text-primary font-semibold uppercase tracking-widest mb-2">Preparation</span>
                     <h3 class="font-serif text-3xl md:text-4xl text-white leading-tight mb-5">Crafted with Passion & Purpose</h3>
                     <div class="space-y-4 text-neutral-light/85 leading-relaxed">
-                        <p>Our kitchen is where the magic happens. We believe in letting the quality of our ingredients shine, which is why we prepare almost everything <strong class="text-primary-light">from scratch, daily</strong>. From our signature sauces and dressings to our house-made veggie burger patties and fresh-baked bread, we avoid shortcuts and processed ingredients.</p>
+                        <p>Our kitchen is where the magic happens. We believe in letting the quality of our ingredients shine, which is why we prepare almost everything <strong class="text-primary-light">from scratch, daily</strong>. From our signature sauces and dressings to our house-made veggie burger patties and fresh-baked bread, we avoid taking shortcuts and using processed ingredients.</p>
                         <p>Our chefs employ techniques that enhance natural flavors – roasting vegetables to deepen their sweetness, quickly sautéing greens to retain their vibrancy, and carefully balancing spices. We focus on <strong class="text-primary-light">whole, unprocessed foods</strong> to create dishes that are as nourishing as they are delicious.</p>
                          <p>Each meal is made-to-order with attention to detail, ensuring freshness and accommodating dietary needs with care.</p>
                     </div>
