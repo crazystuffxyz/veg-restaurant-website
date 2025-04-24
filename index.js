@@ -28,11 +28,11 @@ function escapeHtml(unsafe) {
     if (typeof unsafe !== 'string') return "";
     // Basic escaping, consider a library like 'he' for more robust escaping if needed
     return unsafe
-         .replace(/&/g, "&") // Must be first
-         .replace(/</g, "<")
-         .replace(/>/g, ">")
-         .replace(/"/g, "\"")
-         .replace(/'/g, "'");
+         .replace(/&/g, "&amp;") // Must be first
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
  }
 
 let reservations = [];
@@ -263,22 +263,23 @@ app.get('/verify', (req, res) => {
         console.warn(`Verification failed: Token expired for ID ${resId}.`);
         reservation.status = 'expired_unverified';
         reservation.verificationToken = null;
-        reservations[reservationIndex] = reservation;
+        reservations[reservationIndex] = reservation; // Make sure to update the array
         return res.status(410).send(verificationResponsePage("Verification Expired", `Sorry, this link expired (valid for ${VERIFICATION_EXPIRY_MINUTES} minutes). Please make a new reservation.`, "error"));
     }
     if (reservation.verificationToken !== token) return res.status(400).send(verificationResponsePage("Verification Failed", "Invalid token.", "error"));
 
 
     console.log(`Verification SUCCESS for ID: ${resId}`);
-    reservation.status = 'confirmed';
-    reservation.verificationToken = null; reservation.verificationExpires = null;
-    reservation.verifiedAt = moment().toISOString();
-    reservations[reservationIndex] = reservation;
+    reservations[reservationIndex].status = 'confirmed'; // Update status directly in the array
+    reservations[reservationIndex].verificationToken = null;
+    reservations[reservationIndex].verificationExpires = null;
+    reservations[reservationIndex].verifiedAt = moment().toISOString();
+    // No need to reassign reservation = reservations[reservationIndex]; here
 
-    sendConfirmationEmail(reservation).catch(err => console.error(`Error sending confirmation email for ${resId}:`, err));
+    sendConfirmationEmail(reservations[reservationIndex]).catch(err => console.error(`Error sending confirmation email for ${resId}:`, err));
 
     res.status(200).send(verificationResponsePage("Reservation Confirmed!",
-        `Thank you, ${escapeHtml(reservation.name)}! Your reservation for ${escapeHtml(reservation.numberOfPeople.toString())} on <strong>${displayDate}</strong> at <strong>${displayTime}</strong> is confirmed. ${reservation.specialRequests ? '<br/><br/>Request: "' + escapeHtml(reservation.specialRequests) + '"': ''}<br/><br/>See you soon!`,
+        `Thank you, ${escapeHtml(reservations[reservationIndex].name)}! Your reservation for ${escapeHtml(reservations[reservationIndex].numberOfPeople.toString())} on <strong>${displayDate}</strong> at <strong>${displayTime}</strong> is confirmed. ${reservations[reservationIndex].specialRequests ? '<br/><br/>Request: "' + escapeHtml(reservations[reservationIndex].specialRequests) + '"': ''}<br/><br/>See you soon!`,
         "success"));
 });
 
