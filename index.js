@@ -37,7 +37,7 @@ function escapeHtml(unsafe) {
  }
 
 let reservations = [];
-const RESERVATION_DURATION_MINUTES = 61;
+const RESERVATION_DURATION_MINUTES = 90;
 const CAPACITY_LIMIT = 50;
 const TIME_SLOT_INTERVAL = 30; // Not directly used in availability logic currently, but kept for context
 const VERIFICATION_EXPIRY_MINUTES = 15;
