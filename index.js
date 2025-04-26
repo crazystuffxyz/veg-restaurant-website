@@ -146,6 +146,9 @@ transporter.verify((error, success) => {
     else console.log('Nodemailer is ready to send emails.');
 });
 
+// index.js
+// ... (keep all other code the same before this endpoint) ...
+
 // --- Availability Endpoint ---
 app.get('/availability', (req, res) => {
     const { date, partySize } = req.query;
@@ -262,7 +265,6 @@ app.get('/availability', (req, res) => {
         slots: finalAvailability // Send the availability list after applying the block-out rule
     });
 });
-// --- Reservation Endpoints ---
 app.post('/reserve', async (req, res) => {
     // ... (keep existing endpoint code)
     console.log("Received reservation request:", req.body);
