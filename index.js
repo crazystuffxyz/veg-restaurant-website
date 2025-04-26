@@ -48,15 +48,17 @@ const AVAILABLE_TIMES = [
     "19:00", "19:30", "20:00", "20:30", "21:00"
 ];
 
-// --- Review Data Stores ---
 let reviews = [ // Approved Reviews
     { id: 'review-bobby', name: 'Bobby Filet', stars: 5, text: 'The chef actually beat me on my own show. I am not a big fan of Vegetarian food but this place is legit.', createdAt: moment('2025-04-04').toISOString(), status: 'approved' },
     { id: 'review-guy', name: 'Guy Scary', stars: 5, text: 'If you need a funkalicious trip to flavortown, this is your spot. The real deal.', createdAt: moment('2025-04-07').toISOString(), status: 'approved' },
     { id: 'review-ramsay', name: 'Garden Ramsay', stars: 4, text: "My restaurants are better but this one comes a close second. I'd rather be here today than file my taxes.", createdAt: moment('2025-04-16').toISOString(), status: 'approved' },
     { id: 'review-alex', name: 'Alex Garamasalachili', stars: 5, text: 'If you are looking for healthy and flavorful options, you have got to come here. It is only a matter of time before Green Bites gets a visit from someone from The Tire Company', createdAt: moment('2025-04-18').toISOString(), status: 'approved' },
-    { id: 'initial1', name: 'Alice G.', stars: 5, text: 'Absolutely loved the atmosphere and the food! The Salad was spectacular. Will definitely be back.', createdAt: moment().subtract(2, 'days').toISOString(), status: 'approved' },
-    { id: 'initial2', name: null, stars: 4, text: 'Great place for vegetarians. Service was a bit slow during peak hours, but the food quality made up for it.', createdAt: moment().subtract(1, 'day').toISOString(), status: 'approved' },
-
+    { id: 'review-chen', name: 'Wei Chen', stars: 5, text: "A delightful experience. The avocado toast and mixed greens were simply divine. Exceptional service.", createdAt: moment('2025-03-28').toISOString(), status: 'approved' },
+    { id: 'review-garcia', name: 'Maria Garcia', stars: 5, text: "An absolute gem. The farm-to-table approach really shines, especially in the roasted beet salad.", createdAt: moment('2025-03-29').toISOString(), status: 'approved' },
+    { id: 'review-ali', name: 'Fatima Ali', stars: 5, text: "Fresh ingredients and amazing presentation. The vegan chili had a wonderful mix of spices.", createdAt: moment('2025-03-30').toISOString(), status: 'approved' },
+    { id: 'review-smith', name: 'John Smith', stars: 5, text: "I love the creativity. The kale Caesar salad and the organic tofu scramble are my top picks.", createdAt: moment('2025-03-31').toISOString(), status: 'approved' },
+    { id: 'review-patel', name: 'Priya Patel', stars: 5, text: "The veggie burger was a revelation. Packed with flavor and served with a side of crispy sweet potato fries!", createdAt: moment('2025-04-01').toISOString(), status: 'approved' },
+    { id: 'review-kim', name: 'David Kim', stars: 5, text: "Great food. We got Spinach which was not very bitter and tasted extremely fresh. Quinoa Salad and Falafel were absolutely delish!", createdAt: moment('2025-04-02').toISOString(), status: 'approved' },
 ];
 
 
