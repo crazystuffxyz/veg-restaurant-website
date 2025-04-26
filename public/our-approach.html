@@ -107,18 +107,15 @@
 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-10"> <!-- Increased space-x-10 -->
-                   <!-- Increased text-lg -->
                    <a href="index.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">HOME</a>
-                   <!-- Active Link: Increased text-lg, added pb-1 -->
                    <a href="menu.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">MENU</a>
-                   <!-- Increased text-lg -->
+                   <!-- Active Link: OUR APPROACH -->
                    <a href="our-approach.html" class="text-lg font-medium tracking-wide text-primary border-b-2 border-primary pb-1 transition-colors duration-300">OUR APPROACH</a>
-                    <!-- Increased text-lg -->
                    <a href="aboutus.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
-                    <!-- Increased text-lg -->
                    <a href="reviews.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
+                   <a href="references.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REFERENCES</a>
                    <!-- Adjusted padding px-6 py-2.5, kept text-base for contrast (optional) - GOLD RESERVE -->
-                   <a href="reservations.html" class="ml-4 inline-flex items-center px-6 py-2.5 border border-secondary-dark text-base font-semibold rounded-full shadow-sm text-secondary-dark bg-transparent hover:bg-secondary-dark hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-secondary-dark transition-colors duration-300">
+                   <a href="reservations.html" class="inline-flex justify-center items-center px-8 py-3 border border-secondary text-secondary rounded-full text-base font-semibold hover:bg-secondary hover:text-neutral-darkest transition-colors duration-300 ease-out">
                        RESERVE
                    </a>
                </div>
@@ -126,7 +123,7 @@
                <!-- Mobile Menu Button -->
                <div class="md:hidden flex items-center">
                    <!-- Mobile Reserve button - kept text-sm as it's common for mobile actions - GOLD RESERVE -->
-                   <a href="reservations.html" class="inline-flex items-center px-4 py-2 mr-2 border border-secondary-dark text-sm font-semibold rounded-full text-secondary-dark hover:bg-secondary-dark hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-secondary-dark transition-colors duration-300">
+                   <a href="reservations.html" class="inline-flex justify-center items-center px-8 py-3 border border-secondary text-secondary rounded-full text-base font-semibold hover:bg-secondary hover:text-neutral-darkest transition-colors duration-300 ease-out mr-2"> <!-- Added mr-2 for spacing -->
                        RESERVE
                    </a>
                    <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" :aria-expanded="open.toString()">
@@ -155,11 +152,12 @@
            <!-- Kept mobile text-lg, adjusted spacing slightly -->
            <div class="pt-2 pb-3 space-y-4 text-center">
                <a href="index.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">HOME</a>
-               <!-- Active Link -->
                <a href="menu.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">MENU</a>
+                <!-- Active Link: OUR APPROACH -->
                <a href="our-approach.html" class="block py-2 text-lg font-medium text-primary transition-colors duration-300">OUR APPROACH</a>
                <a href="aboutus.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
                <a href="reviews.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
+               <a href="references.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">REFERENCES</a>
            </div>
        </div>
        <script>

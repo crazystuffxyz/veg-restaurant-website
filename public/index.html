@@ -85,89 +85,86 @@
     x-init="scrolled = (window.pageYOffset > 50)"
     class="fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-out"
     :class="{ 'bg-neutral-darkest shadow-lg': scrolled || open, 'bg-transparent': !scrolled && !open }">
-   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-       <!-- Increased height h-24 -->
-       <div class="flex justify-between items-center h-24">
-           <!-- Logo -->
-           <div class="flex-shrink-0">
-               <a href="index.html" class="transition-opacity duration-300 hover:opacity-80 focus:outline-none focus:opacity-80">
-                   <!-- Increased logo size h-16 lg:h-20 -->
-                   <img class="h-16 lg:h-20 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Logo">
-               </a>
-           </div>
+       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+           <!-- Increased height h-24 -->
+           <div class="flex justify-between items-center h-24">
+               <!-- Logo -->
+               <div class="flex-shrink-0">
+                   <a href="index.html" class="transition-opacity duration-300 hover:opacity-80 focus:outline-none focus:opacity-80">
+                       <!-- Increased logo size h-16 lg:h-20 -->
+                       <img class="h-16 lg:h-20 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Logo">
+                   </a>
+               </div>
 
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex items-center space-x-10"> <!-- Increased space-x-10 -->
-               <!-- Increased text-lg -->
-               <a href="index.html" class="text-lg font-medium tracking-wide text-primary border-b-2 border-primary pb-1 transition-colors duration-300">HOME</a>
-               <!-- Active Link: Increased text-lg, added pb-1 -->
-               <a href="menu.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">MENU</a>
-               <!-- Increased text-lg -->
-               <a href="our-approach.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR APPROACH</a>
-                <!-- Increased text-lg -->
-               <a href="aboutus.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
-                <!-- Increased text-lg -->
-               <a href="reviews.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
-               <!-- Adjusted padding px-6 py-2.5, kept text-base for contrast (optional) - GOLD RESERVE -->
-               <a href="reservations.html" class="ml-4 inline-flex items-center px-6 py-2.5 border border-secondary-dark text-base font-semibold rounded-full shadow-sm text-secondary-dark bg-transparent hover:bg-secondary-dark hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-secondary-dark transition-colors duration-300">
-                   RESERVE
-               </a>
-           </div>
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-10"> <!-- Increased space-x-10 -->
+                   <!-- Active Link: HOME -->
+                   <a href="index.html" class="text-lg font-medium tracking-wide text-primary border-b-2 border-primary pb-1 transition-colors duration-300">HOME</a>
+                   <a href="menu.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">MENU</a>
+                   <a href="our-approach.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR APPROACH</a>
+                   <a href="aboutus.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
+                   <a href="reviews.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
+                   <a href="references.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REFERENCES</a>
+                   <!-- Adjusted padding px-6 py-2.5, kept text-base for contrast (optional) - GOLD RESERVE -->
+                   <a href="reservations.html" class="inline-flex justify-center items-center px-8 py-3 border border-secondary text-secondary rounded-full text-base font-semibold hover:bg-secondary hover:text-neutral-darkest transition-colors duration-300 ease-out">
+                       RESERVE
+                   </a>
+               </div>
 
-           <!-- Mobile Menu Button -->
-           <div class="md:hidden flex items-center">
-               <!-- Mobile Reserve button - kept text-sm as it's common for mobile actions - GOLD RESERVE -->
-               <a href="reservations.html" class="inline-flex items-center px-4 py-2 mr-2 border border-secondary-dark text-sm font-semibold rounded-full text-secondary-dark hover:bg-secondary-dark hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-secondary-dark transition-colors duration-300">
-                   RESERVE
-               </a>
-               <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" :aria-expanded="open.toString()">
-                    <span class="sr-only">Open main menu</span>
-                   <!-- Hamburger Icon -->
-                   <svg x-show="!open" class="block h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
-                   <!-- Close Icon -->
-                   <svg x-show="open" x-cloak style="display: none;" class="block h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-               </button>
+               <!-- Mobile Menu Button -->
+               <div class="md:hidden flex items-center">
+                   <!-- Mobile Reserve button - kept text-sm as it's common for mobile actions - GOLD RESERVE -->
+                   <a href="reservations.html" class="inline-flex justify-center items-center px-8 py-3 border border-secondary text-secondary rounded-full text-base font-semibold hover:bg-secondary hover:text-neutral-darkest transition-colors duration-300 ease-out mr-2"> <!-- Added mr-2 for spacing -->
+                       RESERVE
+                   </a>
+                   <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" :aria-expanded="open.toString()">
+                        <span class="sr-only">Open main menu</span>
+                       <!-- Hamburger Icon -->
+                       <svg x-show="!open" class="block h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+                       <!-- Close Icon -->
+                       <svg x-show="open" x-cloak style="display: none;" class="block h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                   </button>
+               </div>
            </div>
        </div>
-   </div>
 
-    <!-- Mobile Menu -->
-    <!-- Added slight padding-top pt-2 -->
-    <div x-show="open"
-         x-transition:enter="transition ease-out duration-200"
-         x-transition:enter-start="opacity-0 scale-95"
-         x-transition:enter-end="opacity-100 scale-100"
-         x-transition:leave="transition ease-in duration-150"
-         x-transition:leave-start="opacity-100 scale-100"
-         x-transition:leave-end="opacity-0 scale-95"
-         style="display: none;"
-         class="md:hidden absolute top-full inset-x-0 bg-neutral-darkest shadow-lg p-4 pt-2" id="mobile-menu"
-         x-cloak>
-       <!-- Kept mobile text-lg, adjusted spacing slightly -->
-       <div class="pt-2 pb-3 space-y-4 text-center">
-           <a href="index.html" class="block py-2 text-lg font-medium text-primary transition-colors duration-300">HOME</a>
-           <!-- Active Link -->
-           <a href="menu.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">MENU</a>
-           <a href="our-approach.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR APPROACH</a>
-           <a href="aboutus.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
-           <a href="reviews.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
+        <!-- Mobile Menu -->
+        <!-- Added slight padding-top pt-2 -->
+        <div x-show="open"
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 scale-95"
+             x-transition:enter-end="opacity-100 scale-100"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 scale-100"
+             x-transition:leave-end="opacity-0 scale-95"
+             style="display: none;"
+             class="md:hidden absolute top-full inset-x-0 bg-neutral-darkest shadow-lg p-4 pt-2" id="mobile-menu"
+             x-cloak>
+           <!-- Kept mobile text-lg, adjusted spacing slightly -->
+           <div class="pt-2 pb-3 space-y-4 text-center">
+               <!-- Active Link: HOME -->
+               <a href="index.html" class="block py-2 text-lg font-medium text-primary transition-colors duration-300">HOME</a>
+               <a href="menu.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">MENU</a>
+               <a href="our-approach.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR APPROACH</a>
+               <a href="aboutus.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
+               <a href="reviews.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
+               <a href="references.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">REFERENCES</a>
+           </div>
        </div>
-   </div>
-   <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('navState', () => ({
-                open: false,
-                scrolled: window.pageYOffset > 50,
-                init() {
-                    window.addEventListener('scroll', () => {
-                        this.scrolled = window.pageYOffset > 50;
-                    });
-                }
-            }))
-        });
-   </script>
-</nav>
-
+       <script>
+            document.addEventListener('alpine:init', () => {
+                Alpine.data('navState', () => ({
+                    open: false,
+                    scrolled: window.pageYOffset > 50,
+                    init() {
+                        window.addEventListener('scroll', () => {
+                            this.scrolled = window.pageYOffset > 50;
+                        });
+                    }
+                }))
+            });
+       </script>
+    </nav>
     <!-- Hero Section -->
     <header class="relative h-screen min-h-[600px] flex items-center justify-center text-center overflow-hidden">
         <!-- Background Image/Video -->
@@ -196,7 +193,7 @@
                 Modern Vegetarian Cuisine
             </p>
             <address class="not-italic text-sm text-neutral-light/80 mb-12 animate-fadeInDown [animation-delay:600ms]">
-                12345 Main Street, Fairfax, VA <span class="mx-2">|</span> (123) 456-7890
+                12345 Main Street, Fairfax, VA <span class="mx-2">|</span> (703) 380-0543
             </address>
             <a href="reservations.html" class="inline-block px-10 py-4 bg-primary rounded-full text-lg font-semibold text-white shadow-lg hover:bg-primary-dark transform hover:scale-105 transition-all duration-300 ease-out animate-pulseGlow [animation-delay:900ms]">
                 Reserve Your Table
@@ -215,7 +212,7 @@
           <text font-size="12" fill="currentColor">
             <!-- Reverted textPath content: Repeat text to fill circle -->
             <textPath href="#circlePath" startOffset="0%" letter-spacing="1.2">
-              SUSTAINABLE VEGETARIAN RESTAURANT • GREEN BITES OFFICIAL SITE • 
+                GREEN BITES OFFICIAL SITE — SUSTAINABLE VEGETARIAN RESTAURANT • 
             </textPath>
           </text>
         </svg>
@@ -360,7 +357,7 @@
                 </div>
 
                 <div class="mt-16 text-center animate-fadeInUp [animation-delay:1300ms]" style="opacity:0;">
-                    <a href="reservations.html" class="inline-block px-10 py-4 bg-secondary rounded-full text-lg font-semibold text-neutral-darkest shadow-lg hover:bg-secondary-dark transform hover:scale-105 transition-all duration-300 ease-out">
+                    <a href="reservations.html" class="inline-flex justify-center items-center px-8 py-3 border border-secondary text-secondary rounded-full text-base font-semibold hover:bg-secondary hover:text-neutral-darkest transition-colors duration-300 ease-out">
                         Ready to Taste the Difference? Reserve Now!
                     </a>
                 </div>

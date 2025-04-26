@@ -253,7 +253,7 @@ reviewsToDisplay.forEach(review => {
 
         if (!stars) {
             $ratingError.text('Please select a star rating.');
-            $reviewMessage.html('<span class="text-red-400">Please correct the error above.</span>');
+            $reviewMessage.html('<span class="text-red-400">Please correct the error below.</span>');
             $('html, body').animate({ scrollTop: $('.star-rating').offset().top - 150 }, 300);
             return;
         }

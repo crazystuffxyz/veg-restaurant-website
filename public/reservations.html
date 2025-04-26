@@ -79,106 +79,147 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <!-- Base and Component Styles -->
+    <!-- Base and Component Styles -->
     <style>
-      .form-input {
-          margin-top: 0.25rem; display: block; width: 100%; border-radius: 0.5rem;
-          background-color: rgba(55, 65, 81, 0.7);
-          border: 1px solid #4b5563;
-          padding: 0.75rem 1rem; font-size: 1rem; color: #d1d5db;
-          transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-          box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-      }
-      input[type="date"].form-input, input[type="time"].form-input {
-          color-scheme: dark;
-      }
-      .form-input::placeholder { color: #6b7280; opacity: 1; }
-      .form-input:focus {
-          outline: none; border-color: #10b981; box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.5);
-      }
-      .form-label {
-          display: block; font-size: 0.875rem; font-weight: 500;
-          color: rgba(209, 213, 219, 0.9);
-           margin-bottom: 0.25rem;
-      }
-      select.form-input option:disabled { color: #6b7280; background-color: rgba(31, 41, 55, 0.5); font-style: italic; }
-      select.form-input option { background-color: #374151; color: #d1d5db; }
-      select.form-input option.unavailable { color: #9ca3af; text-decoration: line-through; }
-
-      /* --- Sleeker FullCalendar Overrides --- */
-      .fc {
-        background-color: transparent;
-        border: none;
-        color: #d1d5db;
-        padding: 0;
-      }
-      .fc .fc-toolbar { margin-bottom: 1.5rem; }
-      .fc .fc-toolbar h2 {
-          color: #ffffff;
-          font-size: 1.6rem;
-          font-family: 'Cormorant Garamond', serif;
-          font-weight: 700;
-      }
-      .fc .fc-button {
-          background-color: #374151;
-          color: #e5e7eb;
-          border: 1px solid #4b5563;
-          box-shadow: none;
-          text-transform: capitalize;
-          font-weight: 500;
-          padding: 6px 14px !important;
-          cursor: pointer;
-          transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-          border-radius: 6px;
-          margin: 0 3px;
-      }
-      .fc .fc-button:disabled { background-color: #1f2937; opacity: 0.6; cursor: default; border-color: #374151; }
-      .fc .fc-button .fc-icon {
-            font-size: 1.2em;
-            vertical-align: middle;
-      }
-      .fc th {
+        .form-input {
+            margin-top: 0.25rem; display: block; width: 100%; border-radius: 0.5rem;
+            background-color: rgba(55, 65, 81, 0.7);
+            border: 1px solid #4b5563;
+            padding: 0.75rem 1rem; font-size: 1rem; color: #d1d5db;
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+        input[type="date"].form-input, input[type="time"].form-input {
+            color-scheme: dark;
+        }
+        .form-input::placeholder { color: #6b7280; opacity: 1; }
+        .form-input:focus {
+            outline: none; border-color: #10b981; box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.5);
+        }
+        .form-label {
+            display: block; font-size: 0.875rem; font-weight: 500;
+            color: rgba(209, 213, 219, 0.9);
+             margin-bottom: 0.25rem;
+        }
+        select.form-input option:disabled { color: #6b7280; background-color: rgba(31, 41, 55, 0.5); font-style: italic; }
+        select.form-input option { background-color: #374151; color: #d1d5db; }
+        select.form-input option.unavailable { color: #9ca3af; text-decoration: line-through; }
+  
+        /* --- Sleeker FullCalendar Overrides --- */
+        .fc {
           background-color: transparent;
-          color: #9ca3af;
-          border-color: #374151;
-          padding: 10px 0;
-          font-weight: 500;
-          font-size: 0.85rem;
-          text-transform: uppercase;
-          border-bottom-width: 2px;
-      }
-      .fc-view, .fc-view > table { border: none; }
-      .fc-widget-content { border-color: #374151; }
-      .fc-day { border-color: #374151; }
-      .fc-day.fc-today { background-color: rgba(16, 185, 129, 0.1); }
-      .fc-day.fc-today .fc-day-number { color: #f9fafb; font-weight: 600; }
-      .fc-day-number {
+          border: none;
           color: #d1d5db;
-          padding: 8px;
-          font-size: 0.9rem;
+          padding: 0;
+        }
+        .fc .fc-toolbar { margin-bottom: 1.5rem; }
+        .fc .fc-toolbar h2 {
+            color: #ffffff;
+            font-size: 1.6rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+        }
+  
+        /* === MODIFIED SECTION START === */
+        .fc .fc-button {
+            /* Base styling - mimicking Tailwind bg-neutral-dark, text-gray-200, border, etc. */
+            background-color: #374151; /* bg-neutral-dark */
+            color: #e5e7eb;           /* text-gray-200 approx */
+            border: 1px solid #4b5563; /* border border-neutral-600 */
+            box-shadow: none;
+            text-transform: capitalize; /* capitalize */
+            font-weight: 500;         /* font-medium */
+            cursor: pointer;          /* cursor-pointer */
+            border-radius: 6px;       /* rounded-md */
+            margin: 0 3px;            /* mx-[3px] or approx mx-1 */
+  
+            /* Layout Fixes - Use flexbox for alignment (like Tailwind) */
+            display: inline-flex;     /* Ensures content flows correctly */
+            align-items: center;      /* Vertically centers content */
+            justify-content: center;  /* Horizontally centers content */
+            padding: 0.5rem 1rem;     /* py-2 px-4 equivalent - Adjust if needed */
+            line-height: 1.25;        /* Ensure line height doesn't add weird space */
+  
+            /* Transitions (like Tailwind) */
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms; /* duration-150 */
+        }
+  
+        /* Explicit Hover State (Mimicking Tailwind hover:bg-neutral-600 hover:border-neutral-500) */
+      /* FullCalendar Hover State (using its specific class) */
+      .fc .fc-button.fc-state-hover { /* <-- Target FC's class */
+          background-color: #4b5563; /* bg-neutral-600 */
+          border-color: #6b7280;     /* border-neutral-500 */
+          color: #f9fafb;           /* text-gray-50 */
+          /* No !important needed unless it still conflicts */
       }
-      .fc-day.fc-other-month .fc-day-number {
-          color: #4b5563;
-          opacity: 0.7;
-      }
-      .fc-day.fc-past .fc-day-number {
-          color: #6b7280;
-          text-decoration: line-through;
-      }
-      .fc-day-selected-highlight {
-          background-color: rgba(16, 185, 129, 0.25) !important;
-          border-radius: 4px;
-      }
-      .fc-unthemed td.fc-today { background-color: rgba(16, 185, 129, 0.1); }
-      .fc-event { background-color: #f59e0b; border: none; color: #111827; padding: 2px 5px; border-radius: 4px; font-size: 0.8rem; }
 
-      /* Loading Spinner */
-      .spinner {
-          border: 3px solid rgba(255, 255, 255, 0.3); border-radius: 50%;
-          border-top-color: #10b981; width: 16px; height: 16px;
-          animation: spin 1s linear infinite;
+      /* Optional: Style for Active/Pressed state if needed */
+      .fc .fc-button.fc-state-active {
+           background-color: #6b7280; /* bg-neutral-500 */
+           border-color: #9ca3af;     /* border-neutral-400 */
       }
-       @keyframes spin { to { transform: rotate(360deg); } }
-    </style>
+  
+         /* Disabled State (Mimicking Tailwind opacity-60 cursor-not-allowed) */
+        .fc .fc-button:disabled {
+            background-color: #1f2937; /* bg-neutral-800 (or keep original) */
+            opacity: 0.6;             /* opacity-60 */
+            cursor: default;          /* cursor-not-allowed */
+            border-color: #374151;   /* border-neutral-700 (or keep original) */
+        }
+  
+        /* Icon adjustments (ensure vertical alignment via flex) */
+        .fc .fc-button .fc-icon {
+            /* vertical-align: middle; /* No longer needed due to flex align-items */
+            /* font-size: 1.2em; /* Inherit or set specifically if needed */
+            /* display: inline-block; /* Ensured by parent flex */
+        }
+        /* === MODIFIED SECTION END === */
+  
+        .fc th {
+            background-color: transparent;
+            color: #9ca3af;
+            border-color: #374151;
+            padding: 10px 0;
+            font-weight: 500;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            border-bottom-width: 2px;
+        }
+        .fc-view, .fc-view > table { border: none; }
+        .fc-widget-content { border-color: #374151; }
+        .fc-day { border-color: #374151; }
+        .fc-day.fc-today { background-color: rgba(16, 185, 129, 0.1); }
+        .fc-day.fc-today .fc-day-number { color: #f9fafb; font-weight: 600; }
+        .fc-day-number {
+            color: #d1d5db;
+            padding: 8px;
+            font-size: 0.9rem;
+        }
+        .fc-day.fc-other-month .fc-day-number {
+            color: #4b5563;
+            opacity: 0.7;
+        }
+        .fc-day.fc-past .fc-day-number {
+            color: #6b7280;
+            text-decoration: line-through;
+        }
+        .fc-day-selected-highlight {
+            background-color: rgba(16, 185, 129, 0.25) !important;
+            border-radius: 4px;
+        }
+        .fc-unthemed td.fc-today { background-color: rgba(16, 185, 129, 0.1); }
+        .fc-event { background-color: #f59e0b; border: none; color: #111827; padding: 2px 5px; border-radius: 4px; font-size: 0.8rem; }
+  
+        /* Loading Spinner */
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3); border-radius: 50%;
+            border-top-color: #10b981; width: 16px; height: 16px;
+            animation: spin 1s linear infinite;
+        }
+         @keyframes spin { to { transform: rotate(360deg); } }
+      </style>
 </head>
 <body class="bg-neutral-darkest text-neutral-light font-sans antialiased selection:bg-primary selection:text-white">
 
@@ -201,14 +242,15 @@
                     <a href="our-approach.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR APPROACH</a>
                     <a href="aboutus.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
                     <a href="reviews.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
-                     <!-- Active Link: GOLD RESERVE -->
-                    <a href="reservations.html" class="ml-4 inline-flex items-center px-6 py-2.5 border border-secondary-dark text-base font-semibold rounded-full shadow-sm text-secondary-dark bg-transparent hover:bg-secondary-dark hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-secondary-dark transition-colors duration-300">
+                    <a href="references.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REFERENCES</a>
+                     <!-- Active Link: GOLD RESERVE - Note: Applied bg-secondary and text-neutral-darkest directly for active state-->
+                    <a href="reservations.html" class="inline-flex justify-center items-center px-8 py-3 border border-secondary bg-secondary text-neutral-darkest rounded-full text-base font-semibold transition-colors duration-300 ease-out">
                         RESERVE
                     </a>
                 </div>
                 <div class="md:hidden flex items-center">
                      <!-- Mobile Reserve button - GOLD RESERVE -->
-                    <a href="reservations.html" class="inline-flex items-center px-4 py-2 mr-2 border border-secondary-dark text-sm font-semibold rounded-full text-secondary-dark hover:bg-secondary-dark hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-secondary-dark transition-colors duration-300">
+                    <a href="reservations.html" class="inline-flex justify-center items-center px-8 py-3 border border-secondary bg-secondary text-neutral-darkest rounded-full text-base font-semibold transition-colors duration-300 ease-out mr-2"> <!-- Added mr-2, added active style -->
                         RESERVE
                     </a>
                     <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" :aria-expanded="open.toString()">
@@ -235,6 +277,7 @@
                 <a href="our-approach.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR APPROACH</a>
                 <a href="aboutus.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
                 <a href="reviews.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
+                <a href="references.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">REFERENCES</a>
             </div>
         </div>
         <script>
@@ -253,7 +296,7 @@
     </nav>
 
     <!-- Header Section (similar to menu.html) -->
-    <header class="relative pt-48 pb-32 bg-cover bg-center text-center bg-[url('/Assets/Images/Restaurant/Interior_Wide.jpg')]"> <!-- Use a suitable image -->
+    <header class="relative pt-48 pb-32 bg-cover bg-center text-center bg-[url('/Assets/Images/Restaurant/Interior.jpg')]"> <!-- Use a suitable image -->
         <div class="absolute inset-0 bg-gradient-to-t from-neutral-darkest via-neutral-darkest/80 to-neutral-darkest/60"></div>
         <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
              <h1 class="font-serif text-5xl sm:text-6xl md:text-7xl font-bold text-white leading-tight tracking-tight animate-fadeInDown">

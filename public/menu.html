@@ -123,18 +123,15 @@
 
              <!-- Desktop Menu -->
              <div class="hidden md:flex items-center space-x-10"> <!-- Increased space-x-10 -->
-                <!-- Increased text-lg -->
                 <a href="index.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">HOME</a>
-                <!-- Active Link: Increased text-lg, added pb-1 -->
+                <!-- Active Link: MENU -->
                 <a href="menu.html" class="text-lg font-medium tracking-wide text-primary border-b-2 border-primary pb-1 transition-colors duration-300">MENU</a>
-                <!-- Increased text-lg -->
                 <a href="our-approach.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR APPROACH</a>
-                 <!-- Increased text-lg -->
                 <a href="aboutus.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
-                 <!-- Increased text-lg -->
                 <a href="reviews.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
+                <a href="references.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REFERENCES</a>
                 <!-- Adjusted padding px-6 py-2.5, kept text-base for contrast (optional) - GOLD RESERVE -->
-                <a href="reservations.html" class="ml-4 inline-flex items-center px-6 py-2.5 border border-secondary-dark text-base font-semibold rounded-full shadow-sm text-secondary-dark bg-transparent hover:bg-secondary-dark hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-secondary-dark transition-colors duration-300">
+                <a href="reservations.html" class="inline-flex justify-center items-center px-8 py-3 border border-secondary text-secondary rounded-full text-base font-semibold hover:bg-secondary hover:text-neutral-darkest transition-colors duration-300 ease-out">
                     RESERVE
                 </a>
             </div>
@@ -142,7 +139,7 @@
             <!-- Mobile Menu Button -->
             <div class="md:hidden flex items-center">
                 <!-- Mobile Reserve button - kept text-sm as it's common for mobile actions - GOLD RESERVE -->
-                <a href="reservations.html" class="inline-flex items-center px-4 py-2 mr-2 border border-secondary-dark text-sm font-semibold rounded-full text-secondary-dark hover:bg-secondary-dark hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-darkest focus:ring-secondary-dark transition-colors duration-300">
+                <a href="reservations.html" class="inline-flex justify-center items-center px-8 py-3 border border-secondary text-secondary rounded-full text-base font-semibold hover:bg-secondary hover:text-neutral-darkest transition-colors duration-300 ease-out mr-2"> <!-- Added mr-2 for spacing -->
                     RESERVE
                 </a>
                 <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" :aria-expanded="open.toString()">
@@ -171,11 +168,12 @@
         <!-- Kept mobile text-lg, adjusted spacing slightly -->
         <div class="pt-2 pb-3 space-y-4 text-center">
             <a href="index.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">HOME</a>
-            <!-- Active Link -->
+            <!-- Active Link: MENU -->
             <a href="menu.html" class="block py-2 text-lg font-medium text-primary transition-colors duration-300">MENU</a>
             <a href="our-approach.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR APPROACH</a>
             <a href="aboutus.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
             <a href="reviews.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
+            <a href="references.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">REFERENCES</a>
         </div>
     </div>
     <script>
@@ -192,7 +190,6 @@
          });
     </script>
 </nav>
-
     <!-- Menu Header Section -->
     <header class="relative pt-48 pb-32 bg-menu-header-bg bg-cover bg-center text-center"> <!-- Increased pt -->
          <div class="absolute inset-0 bg-gradient-to-t from-neutral-darkest via-neutral-darkest/80 to-neutral-darkest/60"></div>
@@ -223,7 +220,7 @@
                                 <span class="text-primary-light">$14</span>
                             </h3>
                             <p class="menu-item-description">Warm, wonderfully creamy blend of spinach, artichoke hearts, and vegan parmesan, served with organic tortilla chips.</p>
-                             <p class="denotation">(V option available)</p>
+                             <p class="denotation">(VE option available)</p>
                         </div>
                     </div>
                     <!-- Item: Falafel -->
@@ -235,7 +232,7 @@
                                  <span class="text-primary-light">$13</span>
                              </h3>
                              <p class="menu-item-description">Perfectly golden-fried chickpea fritters with our signature house-made tahini sauce and fresh greens of your choice.</p>
-                              <p class="denotation">(V, GF option available)</p>
+                              <p class="denotation">(VE, GF option available)</p>
                          </div>
                      </div>
                      <!-- Item: Avocado Toast -->
@@ -247,7 +244,7 @@
                                 <span class="text-primary-light">$12</span>
                             </h3>
                             <p class="menu-item-description">Creamy organic guacamole served on toasted whole-wheat bread, topped with vibrant locally sourced heirloom tomatoes, creamy cottage cheese, and delicate microgreens. Finished with a tangy balsamic glaze.</p>
-                             <p class="denotation">(V option)</p>
+                             <p class="denotation">(VE option)</p>
                         </div>
                     </div>
                      <!-- Item: Roasted Tomato Bruschetta -->
@@ -259,7 +256,7 @@
                                   <span class="text-primary-light">$11</span>
                               </h3>
                               <p class="menu-item-description">Toasted crunchy sourdough topped with sweet roasted cherry tomatoes, fragrant fresh basil, crisp onions, briny olives, and zesty cilantro.</p>
-                              <p class="denotation">(V option)</p>
+                              <p class="denotation">(VE option)</p>
                           </div>
                      </div>
                 </div>
@@ -278,7 +275,7 @@
                                  <span class="text-primary-light">$16</span>
                              </h3>
                              <p class="menu-item-description">Light and fluffy quinoa tossed with crisp cucumber, juicy tomatoes, shredded cabbage, sharp red onion, and a bright lemon-herb vinaigrette.</p>
-                              <p class="denotation">(V, GF)</p>
+                              <p class="denotation">(VE, GF)</p>
                          </div>
                      </div>
                     <!-- Item: Pasta Coriander Salad -->
@@ -290,7 +287,7 @@
                                  <span class="text-primary-light">$15</span>
                               </h3>
                               <p class="menu-item-description">Tender thin vermicelli pasta with vibrant microgreens, sweet roasted red peppers, marinated organic tofu, and a nutty Asian sesame dressing.</p>
-                               <p class="denotation">(V)</p>
+                               <p class="denotation">(VE)</p>
                           </div>
                      </div>
                     <!-- Item: Beet Salad -->
@@ -302,7 +299,7 @@
                                  <span class="text-primary-light">$17</span>
                              </h3>
                             <p class="menu-item-description">Earthy roasted beet root slices nestled in fresh baby spinach and peppery arugula, sprinkled with toasted pine nuts, and drizzled with a delicate champagne vinaigrette.</p>
-                             <p class="denotation">(V, GF)</p>
+                             <p class="denotation">(VE, GF)</p>
                          </div>
                     </div>
                     <!-- Item: Mixed Greens -->
@@ -314,7 +311,7 @@
                                 <span class="text-primary-light">$9</span>
                              </h3>
                             <p class="menu-item-description">A simple yet elegant mix of fresh, <strong class="text-primary-light">locally sourced</strong> seasonal greens, sweet cherry tomatoes, and sliced white mushrooms with your choice of house vinaigrette or creamy ranch.</p>
-                             <p class="denotation">(V option, GF)</p>
+                             <p class="denotation">(VE option, GF)</p>
                          </div>
                     </div>
                 </div>
@@ -333,7 +330,7 @@
                                 <span class="text-lg text-primary-light ml-4 whitespace-nowrap">$18</span>
                             </h3>
                             <p class="menu-item-description">Our hearty, flavorful house-made black bean & quinoa patty, layered with fresh tomato, crisp red onion, and creamy vegan aioli on a perfectly toasted brioche bun. Served with your choice of side.</p>
-                             <p class="denotation">(Choice: Sweet Potato Fries, Mixed Greens, Regular Fries) (V option available)</p>
+                             <p class="denotation">(Choice: Sweet Potato Fries, Mixed Greens, Regular Fries) (VE option available)</p>
                         </div>
                     </div>
                     <!-- Item: Eggplant Parmesan -->
@@ -357,7 +354,7 @@
                                  <span class="text-lg text-primary-light ml-4 whitespace-nowrap">$16</span>
                             </h3>
                             <p class="menu-item-description">A deeply flavorful, slow-simmered blend of hearty kidney beans, fire-roasted tomatoes, and aromatic spices, boldly elevated with the intense heat of ghost peppers. Finished with fresh cilantro and served with a side of artisan bread.</p>
-                             <p class="denotation">(V, GF option - no bread)</p>
+                             <p class="denotation">(VE, GF option - no bread)</p>
                          </div>
                      </div>
                     <!-- Item: Mapo tofu -->
@@ -369,7 +366,7 @@
                                 <span class="text-lg text-primary-light ml-4 whitespace-nowrap">$17</span>
                             </h3>
                              <p class="menu-item-description">Silken, savory turmeric-spiced tofu gently simmering in a classic spicy Sichuan chili bean sauce with fermented black beans. Served alongside fluffy white rice.</p>
-                             <p class="denotation">(Available All Day) (V, GF option)</p>
+                             <p class="denotation">(Available All Day) (VE, GF option)</p>
                          </div>
                     </div>
                     <!-- Item: Veggie Pizza -->
@@ -381,7 +378,7 @@
                                  <span class="text-lg text-primary-light ml-4 whitespace-nowrap">$19</span>
                              </h3>
                              <p class="menu-item-description">Personal-sized thin crust pizza topped with robust marinara, creamy vegan mozzarella, colorful bell peppers, sliced onions, earthy mushrooms, and black olives.</p>
-                              <p class="denotation">(V)</p>
+                              <p class="denotation">(VE)</p>
                          </div>
                      </div>
                     <!-- Item: Seasonal Veg -->
@@ -393,7 +390,7 @@
                                  <span class="text-lg text-primary-light ml-4 whitespace-nowrap">$15</span>
                              </h3>
                              <p class="menu-item-description">A vibrant mix of <strong class="text-primary-light">locally sourced,</strong> oven-roasted seasonal vegetables tossed with fragrant herbs and quality olive oil. Ask your server for today's delightful selection from our farm partners.</p>
-                             <p class="denotation">(V, GF)</p> <!-- Denoted Vegan, GF -->
+                             <p class="denotation">(VE, GF)</p> <!-- Denoted Vegan, GF -->
                          </div>
                     </div>
                 </div>
@@ -412,19 +409,19 @@
                                 <span class="text-primary-light">$10</span>
                             </h3>
                             <p class="menu-item-description">Surprisingly rich and decadently creamy dark chocolate mousse. An elegant finish.</p>
-                             <p class="denotation">(V, GF)</p>
+                             <p class="denotation">(VE, GF)</p>
                          </div>
                      </div>
                     <!-- Item: Fruit Crumb Cake -->
                      <div class="menu-item-card">
-                         <img src="/Assets/Images/Menu/Fruit Crumb Cake.jpg" alt="Vegan Berry Crumb Cake" class="menu-image"> <!-- Corrected image path assumption -->
+                         <img src="/Assets/Images/Menu/Fruit Crum Cake.jpg" alt="Vegan Berry Crumb Cake" class="menu-image"> <!-- Corrected image path assumption -->
                          <div class="p-4">
                              <h3 class="text-xl font-semibold text-white flex justify-between">
                                 <span>Berry Crumb Cake</span> <!-- Removed (Vegan) from name -->
                                 <span class="text-primary-light">$11</span>
                              </h3>
                             <p class="menu-item-description">Warm, sweet mixed berry compote topped with a delightful crunchy oat and nut crumble.</p>
-                             <p class="denotation">(V)</p> <!-- Added denotation -->
+                             <p class="denotation">(VE)</p> <!-- Added denotation -->
                          </div>
                     </div>
                     <!-- Item: Cheesecake -->
@@ -436,7 +433,7 @@
                                 <span class="text-primary-light">$12</span>
                              </h3>
                             <p class="menu-item-description">Indulgently creamy bruleed cinnamon cheesecake with a hint of spice. Ask for today's available flavor!</p>
-                             <p class="denotation">(V)</p> <!-- Denoted Vegan -->
+                             <p class="denotation">(VE)</p> <!-- Denoted Vegan -->
                          </div>
                     </div>
                 </div>
@@ -449,10 +446,10 @@
                      <div>
                         <h4 class="text-xl font-semibold text-white mb-3">Fresh Juices & Smoothies</h4>
                         <ul class="text-neutral-light/80 space-y-1">
-                             <li>Green Goddess Smoothie <span class="denotation">(V, GF)</span> - $9</li>
-                             <li>Berry Blast Smoothie <span class="denotation">(V, GF)</span> - $9</li>
-                             <li>Fresh Squeezed Orange Juice <span class="denotation">(V, GF)</span> - $6</li>
-                            <li>Carrot Ginger Elixir <span class="denotation">(V, GF)</span> - $7</li>
+                             <li>Green Goddess Smoothie <span class="denotation">(VE, GF)</span> - $9</li>
+                             <li>Berry Blast Smoothie <span class="denotation">(VE, GF)</span> - $9</li>
+                             <li>Fresh Squeezed Orange Juice <span class="denotation">(VE, GF)</span> - $6</li>
+                            <li>Carrot Ginger Elixir <span class="denotation">(VE, GF)</span> - $7</li>
                         </ul>
                      </div>
                       <div>
@@ -481,7 +478,7 @@
                  <h4 class="font-serif text-xl text-secondary mb-3">Our Commitment</h4>
                  <p class="text-neutral-light/80 text-sm max-w-2xl mx-auto">
                     We prioritize fresh, seasonal ingredients from local farms and prepare our dishes daily in-house. Our carry-out packaging is chosen with sustainability in mind, using primarily <strong class="text-primary-light">compostable and recyclable materials</strong>. <a href="our-approach.html" class="text-primary hover:underline">Learn more about our approach</a>.
-                    <br><span class="denotation mt-2 block">(V = Vegan, GF = Gluten-Free. Please inform your server of any allergies.)</span>
+                    <br><span class="denotation mt-2 block">(VE = Vegan, GF = Gluten-Free. Please inform your server of any allergies.)</span>
                  </p>
             </section>
 
