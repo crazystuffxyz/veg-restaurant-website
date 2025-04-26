@@ -89,92 +89,79 @@
 <body class="bg-neutral-darkest text-neutral-light font-sans antialiased selection:bg-primary selection:text-white">
 
     <!-- Navigation -->
-    <nav x-data="{ open: false, scrolled: false }"
-         @scroll.window="scrolled = (window.pageYOffset > 50)"
-         x-init="scrolled = (window.pageYOffset > 50)"
-         class="fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-out"
-         :class="{ 'bg-neutral-darkest shadow-lg': scrolled || open, 'bg-transparent': !scrolled && !open }">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-           <!-- Increased height h-24 -->
-           <div class="flex justify-between items-center h-24">
+<!-- Navigation for: our-approach.html -->
+<nav x-data="{ open: false, scrolled: false }"
+@scroll.window="scrolled = (window.pageYOffset > 50)"
+x-init="scrolled = (window.pageYOffset > 50)"
+class="fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-out"
+:class="{ 'bg-neutral-darkest shadow-lg': scrolled || open, 'bg-transparent': !scrolled && !open }">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+       <div class="flex justify-between items-center h-24" style="text-align: center">
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-9">
                <!-- Logo -->
                <div class="flex-shrink-0">
-                   <a href="index.html" class="transition-opacity duration-300 hover:opacity-80 focus:outline-none focus:opacity-80">
-                       <!-- Increased logo size h-16 lg:h-20 -->
-                       <img class="h-16 lg:h-20 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Logo">
-                   </a>
-               </div>
+                    <a href="index.html" class="transition-opacity duration-300 hover:opacity-80 focus:outline-none focus:opacity-80">
+                        <img class="h-16 lg:h-20 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Logo">
+                    </a>
+                </div>
+               <a href="index.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">HOME</a>
+               <a href="menu.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">MENU</a>
+               <!-- Active Link: OUR APPROACH -->
+               <a href="our-approach.html" class="text-lg font-medium tracking-wide text-primary border-b-2 border-primary pb-1 transition-colors duration-300">OUR APPROACH</a>
+               <a href="aboutus.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
+               <a href="reviews.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
+               <a href="references.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REFERENCES</a>
+               <a href="reservations.html" class="inline-flex justify-center items-center px-8 py-3 border border-secondary text-secondary rounded-full text-base font-semibold hover:bg-secondary hover:text-neutral-darkest transition-colors duration-300 ease-out">
+                   RESERVE
+               </a>
+           </div>
 
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-10"> <!-- Increased space-x-10 -->
-                   <a href="index.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">HOME</a>
-                   <a href="menu.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">MENU</a>
-                   <!-- Active Link: OUR APPROACH -->
-                   <a href="our-approach.html" class="text-lg font-medium tracking-wide text-primary border-b-2 border-primary pb-1 transition-colors duration-300">OUR APPROACH</a>
-                   <a href="aboutus.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
-                   <a href="reviews.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
-                   <a href="references.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">REFERENCES</a>
-                   <!-- Adjusted padding px-6 py-2.5, kept text-base for contrast (optional) - GOLD RESERVE -->
-                   <a href="reservations.html" class="inline-flex justify-center items-center px-8 py-3 border border-secondary text-secondary rounded-full text-base font-semibold hover:bg-secondary hover:text-neutral-darkest transition-colors duration-300 ease-out">
-                       RESERVE
-                   </a>
+           <!-- Mobile Menu Button -->
+           <div class="md:hidden flex items-center justify-center gap-4 w-full">
+               <!-- Logo -->
+               <div class="flex-shrink-0">
+                    <a href="index.html" class="transition-opacity duration-300 hover:opacity-80 focus:outline-none focus:opacity-80">
+                        <img class="h-16 lg:h-20 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO_ORIGINAL.png" alt="Green Bites Logo">
+                    </a>
                </div>
-
-               <!-- Mobile Menu Button -->
-               <div class="md:hidden flex items-center">
-                   <!-- Mobile Reserve button - kept text-sm as it's common for mobile actions - GOLD RESERVE -->
-                   <a href="reservations.html" class="inline-flex justify-center items-center px-8 py-3 border border-secondary text-secondary rounded-full text-base font-semibold hover:bg-secondary hover:text-neutral-darkest transition-colors duration-300 ease-out mr-2"> <!-- Added mr-2 for spacing -->
-                       RESERVE
-                   </a>
-                   <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" :aria-expanded="open.toString()">
-                        <span class="sr-only">Open main menu</span>
-                       <!-- Hamburger Icon -->
-                       <svg x-show="!open" class="block h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
-                       <!-- Close Icon -->
-                       <svg x-show="open" x-cloak style="display: none;" class="block h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                   </button>
-               </div>
+               <a href="reservations.html" class="inline-flex justify-center items-center px-8 py-3 border border-secondary text-secondary rounded-full text-base font-semibold hover:bg-secondary hover:text-neutral-darkest transition-colors duration-300 ease-out mr-2">
+                   RESERVE
+               </a>
+               <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-light" aria-controls="mobile-menu" :aria-expanded="open.toString()">
+                    <span class="sr-only">Open main menu</span>
+                   <!-- Hamburger Icon -->
+                   <svg x-show="!open" class="block h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+                   <!-- Close Icon -->
+                   <svg x-show="open" x-cloak style="display: none;" class="block h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+               </button>
            </div>
        </div>
+   </div>
 
-        <!-- Mobile Menu -->
-        <!-- Added slight padding-top pt-2 -->
-        <div x-show="open"
-             x-transition:enter="transition ease-out duration-200"
-             x-transition:enter-start="opacity-0 scale-95"
-             x-transition:enter-end="opacity-100 scale-100"
-             x-transition:leave="transition ease-in duration-150"
-             x-transition:leave-start="opacity-100 scale-100"
-             x-transition:leave-end="opacity-0 scale-95"
-             style="display: none;"
-             class="md:hidden absolute top-full inset-x-0 bg-neutral-darkest shadow-lg p-4 pt-2" id="mobile-menu"
-             x-cloak>
-           <!-- Kept mobile text-lg, adjusted spacing slightly -->
-           <div class="pt-2 pb-3 space-y-4 text-center">
-               <a href="index.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">HOME</a>
-               <a href="menu.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">MENU</a>
-                <!-- Active Link: OUR APPROACH -->
-               <a href="our-approach.html" class="block py-2 text-lg font-medium text-primary transition-colors duration-300">OUR APPROACH</a>
-               <a href="aboutus.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
-               <a href="reviews.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
-               <a href="references.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">REFERENCES</a>
-           </div>
+    <!-- Mobile Menu -->
+    <div x-show="open"
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0 scale-95"
+         x-transition:enter-end="opacity-100 scale-100"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100 scale-100"
+         x-transition:leave-end="opacity-0 scale-95"
+         style="display: none;"
+         class="md:hidden absolute top-full inset-x-0 bg-neutral-darkest shadow-lg p-4 pt-2" id="mobile-menu"
+         x-cloak>
+       <div class="pt-2 pb-3 space-y-4 text-center">
+           <a href="index.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">HOME</a>
+           <a href="menu.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">MENU</a>
+           <!-- Active Link: OUR APPROACH -->
+           <a href="our-approach.html" class="block py-2 text-lg font-medium text-primary transition-colors duration-300">OUR APPROACH</a>
+           <a href="aboutus.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">OUR STORY</a>
+           <a href="reviews.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">REVIEWS</a>
+           <a href="references.html" class="block py-2 text-lg font-medium text-white hover:text-primary transition-colors duration-300">REFERENCES</a>
        </div>
-       <script>
-            // Included directly inside nav for simplicity here, could be moved
-            document.addEventListener('alpine:init', () => {
-                Alpine.data('navState', () => ({
-                    open: false,
-                    scrolled: window.pageYOffset > 50,
-                    init() {
-                        window.addEventListener('scroll', () => {
-                            this.scrolled = window.pageYOffset > 50;
-                        });
-                    }
-                }))
-            });
-       </script>
-    </nav>
+   </div>
+</nav>
     <!-- End Navigation -->
 
 
@@ -226,7 +213,7 @@
                     <div class="space-y-4 text-neutral-light/85 leading-relaxed">
                         <p>We're passionate about showcasing the incredible bounty of Virginia. We build strong relationships with local farmers and producers who share our dedication to <strong class="text-primary-light">organic and sustainable agriculture</strong>. This means prioritizing seasonal ingredients harvested at their peak flavor and nutritional value.</p>
                         <p>By sourcing locally, we not only guarantee unparalleled freshness, but we are also supporting our community's farmers and reduce the carbon footprint associated with long-distance transportation. Our menu evolves with the seasons, ensuring you always taste the best of what our region has to offer.</p>
-                        <p>We proudly partner with growers like <em class="text-secondary">Fairfax Gardens</em> for vibrant greens (like our spinach and arugula) and <em class="text-secondary">Piedmont Produce</em> for earthy root vegetables (such as beets and carrots).</p>
+                        <p>We proudly partner with local growers for vibrant greens (like our spinach and arugula) and for earthy root vegetables (such as beets and carrots).</p>
                     </div>
                 </div>
                 <div class="order-1 md:order-2">
@@ -320,6 +307,7 @@
                         <li><a href="aboutus.html" class="hover:text-primary transition-colors duration-300">Our Story</a></li>
                         <li><a href="reviews.html" class="hover:text-primary transition-colors duration-300">Reviews</a></li>
                         <li><a href="reservations.html" class="hover:text-primary transition-colors duration-300">Reservations</a></li>
+                        <li><a href="references.html" class="hover:text-primary transition-colors duration-300">References</a></li>
                     </ul>
                 </div>
 

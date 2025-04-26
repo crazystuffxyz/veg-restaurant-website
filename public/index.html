@@ -87,17 +87,17 @@
     :class="{ 'bg-neutral-darkest shadow-lg': scrolled || open, 'bg-transparent': !scrolled && !open }">
        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
            <!-- Increased height h-24 -->
-           <div class="flex justify-between items-center h-24">
-               <!-- Logo -->
-               <div class="flex-shrink-0">
-                   <a href="index.html" class="transition-opacity duration-300 hover:opacity-80 focus:outline-none focus:opacity-80">
-                       <!-- Increased logo size h-16 lg:h-20 -->
-                       <img class="h-16 lg:h-20 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Logo">
-                   </a>
-               </div>
+           <div class="flex justify-between items-center h-24" style="text-align: center">
 
                 <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-10"> <!-- Increased space-x-10 -->
+                <div class="hidden md:flex items-center space-x-9"> <!-- Increased space-x-10 -->
+                                   <!-- Logo -->
+               <div class="flex-shrink-0">
+                <a href="index.html" class="transition-opacity duration-300 hover:opacity-80 focus:outline-none focus:opacity-80">
+                    <!-- Increased logo size h-16 lg:h-20 -->
+                    <img class="h-16 lg:h-20 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO.png" alt="Green Bites Logo">
+                </a>
+            </div>
                    <!-- Active Link: HOME -->
                    <a href="index.html" class="text-lg font-medium tracking-wide text-primary border-b-2 border-primary pb-1 transition-colors duration-300">HOME</a>
                    <a href="menu.html" class="text-lg font-medium tracking-wide text-white hover:text-primary transition-colors duration-300">MENU</a>
@@ -112,7 +112,14 @@
                </div>
 
                <!-- Mobile Menu Button -->
-               <div class="md:hidden flex items-center">
+               <div class="md:hidden flex items-center justify-center gap-4 w-full">
+                               <!-- Logo -->
+               <div class="flex-shrink-0">
+                <a href="index.html" class="transition-opacity duration-300 hover:opacity-80 focus:outline-none focus:opacity-80">
+                    <!-- Increased logo size h-16 lg:h-20 -->
+                    <img class="h-16 lg:h-20 w-auto" src="/Assets/Images/Logo/GREEN_BITES_LOGO_ORIGINAL.png" alt="Green Bites Logo">
+                </a>
+            </div>
                    <!-- Mobile Reserve button - kept text-sm as it's common for mobile actions - GOLD RESERVE -->
                    <a href="reservations.html" class="inline-flex justify-center items-center px-8 py-3 border border-secondary text-secondary rounded-full text-base font-semibold hover:bg-secondary hover:text-neutral-darkest transition-colors duration-300 ease-out mr-2"> <!-- Added mr-2 for spacing -->
                        RESERVE
@@ -202,7 +209,7 @@
 <!-- Decorative spinning element with static center leaf -->
 <div class="absolute bottom-10 right-10 opacity-80 z-5 hidden lg:block">
     <div class="relative w-48 h-48">
-      
+
       <!-- Rotating circular text -->
       <div class="absolute inset-0 animate-spinSlow"> <!-- spinSlow duration adjusted in config -->
         <svg viewBox="0 0 200 200" class="w-full h-full text-primary-light">
@@ -212,18 +219,18 @@
           <text font-size="12" fill="currentColor">
             <!-- Reverted textPath content: Repeat text to fill circle -->
             <textPath href="#circlePath" startOffset="0%" letter-spacing="1.2">
-                GREEN BITES OFFICIAL SITE — SUSTAINABLE VEGETARIAN RESTAURANT • 
+                GREEN BITES OFFICIAL SITE — SUSTAINABLE VEGETARIAN RESTAURANT •
             </textPath>
           </text>
         </svg>
       </div>
-  
+
       <!-- Centered leaf that does NOT rotate -->
       <img src="/Assets/Images/Logo/Leaf.png" alt="Leaf" class="absolute top-1/2 left-1/2 w-12 h-12 -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
     </div>
   </div>
-  
-  
+
+
          <!-- Scroll Down Indicator -->
          <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 hidden sm:block">
             <a href="#about" aria-label="Scroll down to learn more" class="animate-bounce">
@@ -321,38 +328,38 @@
                     <!-- Testimonial Card 1 -->
                     <div class="bg-neutral-darker p-6 rounded-xl shadow-lg border border-neutral-dark transform hover:scale-[1.03] transition-transform duration-300 ease-out animate-fadeInUp [animation-delay:600ms]" style="opacity:0;">
                         <svg class="w-8 h-8 text-primary mb-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-                        <p class="text-neutral-light mb-4 italic">"Great food. We got <span class='text-primary-light font-medium'>Spinach</span> which was not very bitter and tasted extremely fresh. <span class='text-primary-light font-medium'>Quinoa Salad</span> and <span class='text-primary-light font-medium'>Falafel</span> were absolutely delish!"</p>
-                        <p class="text-sm font-semibold text-secondary">- David Kim</p>
+                        <p class="text-neutral-light mb-4 italic">"Great food. We got the <span class='text-primary-light font-medium'>Creamed Spinach & Artichoke Dip</span> which was wonderfully creamy and tasted extremely fresh. The <span class='text-primary-light font-medium'>Mediterranean Quinoa Salad</span> and <span class='text-primary-light font-medium'>Crispy Falafel Platter</span> were absolutely delish!"</p>
+                        <p class="text-sm font-semibold text-secondary">- David K.</p> <!-- Shortened last name for privacy/generic feel -->
                     </div>
                     <!-- Testimonial Card 2 -->
                     <div class="bg-neutral-darker p-6 rounded-xl shadow-lg border border-neutral-dark transform hover:scale-[1.03] transition-transform duration-300 ease-out animate-fadeInUp [animation-delay:700ms]" style="opacity:0;">
                          <svg class="w-8 h-8 text-primary mb-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-                        <p class="text-neutral-light mb-4 italic">"The <span class='text-primary-light font-medium'>veggie burger</span> was a revelation. Packed with flavor and served with a side of crispy <span class='text-primary-light font-medium'>sweet potato fries</span>!"</p>
-                        <p class="text-sm font-semibold text-secondary">- Priya Patel</p>
+                        <p class="text-neutral-light mb-4 italic">"The <span class='text-primary-light font-medium'>Green Bites Signature Burger</span> was a revelation. Packed with flavor and served with a side of crispy <span class='text-primary-light font-medium'>sweet potato fries</span>!"</p>
+                        <p class="text-sm font-semibold text-secondary">- Priya P.</p> <!-- Shortened last name -->
                     </div>
                      <!-- Testimonial Card 3 -->
                      <div class="bg-neutral-darker p-6 rounded-xl shadow-lg border border-neutral-dark transform hover:scale-[1.03] transition-transform duration-300 ease-out animate-fadeInUp [animation-delay:800ms]" style="opacity:0;">
                          <svg class="w-8 h-8 text-primary mb-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-                        <p class="text-neutral-light mb-4 italic">"I love the creativity. The <span class='text-primary-light font-medium'>kale Caesar salad</span> and the organic <span class='text-primary-light font-medium'>tofu scramble</span> are my top picks."</p>
-                        <p class="text-sm font-semibold text-secondary">- John Smith</p>
+                        <p class="text-neutral-light mb-4 italic">"I love the creativity. The <span class='text-primary-light font-medium'>Mapo Tofu</span> had an incredible depth of flavor, and the <span class='text-primary-light font-medium'>Artisan Veggie Pizza</span> was loaded with fresh toppings."</p>
+                        <p class="text-sm font-semibold text-secondary">- John S.</p> <!-- Shortened last name -->
                     </div>
                      <!-- Testimonial Card 4 -->
                      <div class="bg-neutral-darker p-6 rounded-xl shadow-lg border border-neutral-dark transform hover:scale-[1.03] transition-transform duration-300 ease-out animate-fadeInUp [animation-delay:900ms]" style="opacity:0;">
                          <svg class="w-8 h-8 text-primary mb-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-                        <p class="text-neutral-light mb-4 italic">"Fresh ingredients and amazing presentation. The <span class='text-primary-light font-medium'>vegan chili</span> had a wonderful mix of spices."</p>
-                        <p class="text-sm font-semibold text-secondary">- Fatima Ali</p>
+                        <p class="text-neutral-light mb-4 italic">"Fresh ingredients and amazing presentation. The <span class='text-primary-light font-medium'>Ghost Pepper Chili</span> had a wonderful, bold mix of spices."</p>
+                        <p class="text-sm font-semibold text-secondary">- Fatima A.</p> <!-- Shortened last name -->
                     </div>
                      <!-- Testimonial Card 5 -->
                      <div class="bg-neutral-darker p-6 rounded-xl shadow-lg border border-neutral-dark transform hover:scale-[1.03] transition-transform duration-300 ease-out animate-fadeInUp [animation-delay:1000ms]" style="opacity:0;">
                          <svg class="w-8 h-8 text-primary mb-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-                        <p class="text-neutral-light mb-4 italic">"An absolute gem. The farm-to-table approach really shines, especially in the <span class='text-primary-light font-medium'>roasted beet salad</span>."</p>
-                        <p class="text-sm font-semibold text-secondary">- Maria Garcia</p>
+                        <p class="text-neutral-light mb-4 italic">"An absolute gem. The farm-to-table approach really shines, especially in the <span class='text-primary-light font-medium'>Spinach Beet Salad</span>."</p>
+                        <p class="text-sm font-semibold text-secondary">- Maria G.</p> <!-- Shortened last name -->
                     </div>
                     <!-- Testimonial Card 6 -->
                     <div class="bg-neutral-darker p-6 rounded-xl shadow-lg border border-neutral-dark transform hover:scale-[1.03] transition-transform duration-300 ease-out animate-fadeInUp [animation-delay:1100ms]" style="opacity:0;">
                          <svg class="w-8 h-8 text-primary mb-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-                        <p class="text-neutral-light mb-4 italic">"A delightful experience. The <span class='text-primary-light font-medium'>avocado toast</span> and <span class='text-primary-light font-medium'>mixed greens</span> were simply divine. Exceptional service."</p>
-                        <p class="text-sm font-semibold text-secondary">- Wei Chen</p>
+                        <p class="text-neutral-light mb-4 italic">"A delightful experience. The <span class='text-primary-light font-medium'>Gourmet Avocado Toast</span> and <span class='text-primary-light font-medium'>Simple Mixed Greens</span> were simply divine. Exceptional service."</p>
+                        <p class="text-sm font-semibold text-secondary">- Wei C.</p> <!-- Shortened last name -->
                     </div>
                 </div>
 
@@ -390,6 +397,7 @@
                         <li><a href="aboutus.html" class="hover:text-primary transition-colors duration-300">Our Story</a></li>
                         <li><a href="reviews.html" class="hover:text-primary transition-colors duration-300">Reviews</a></li>
                         <li><a href="reservations.html" class="hover:text-primary transition-colors duration-300">Reservations</a></li>
+                        <li><a href="references.html" class="hover:text-primary transition-colors duration-300">References</a></li>
                     </ul>
                 </div>
 
