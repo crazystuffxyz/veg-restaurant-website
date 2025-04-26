@@ -37,8 +37,8 @@ function escapeHtml(unsafe) {
  }
 
 let reservations = [];
-const RESERVATION_DURATION_MINUTES = 120;
-const CAPACITY_LIMIT = 20;
+const RESERVATION_DURATION_MINUTES = 60;
+const CAPACITY_LIMIT = 50;
 const TIME_SLOT_INTERVAL = 30; // Not directly used in availability logic currently, but kept for context
 const VERIFICATION_EXPIRY_MINUTES = 15;
 const MIN_ADVANCE_BOOKING_MINUTES = 15;
@@ -70,12 +70,13 @@ let reviewIdCounter = reviews.length + unapprovedReviews.length + 100; // Start 
 function calculateOccupancy(targetDateTimeInZone) {
     // ... (keep existing function)
     let currentOccupancyAtTime = 0;
-    const slotEndTime = moment(targetDateTimeInZone).add(RESERVATION_DURATION_MINUTES, 'minutes');
     reservations.forEach(res => {
         if (res.status !== 'confirmed') return;
+        const slotEndTime = moment(targetDateTimeInZone);
         let resStartTime = moment.tz(`${res.date} ${res.time}`, "YYYY-MM-DD HH:mm", res.timezone || RESTAURANT_TIMEZONE);
         let resEndTime = moment(resStartTime).add(RESERVATION_DURATION_MINUTES, 'minutes');
-        if (resStartTime.isBefore(slotEndTime) && resEndTime.isAfter(targetDateTimeInZone)) {
+        if ((resStartTime.isBefore(slotEndTime)||resStartTime.isSame(slotEndTime)) && resEndTime.isAfter(targetDateTimeInZone)) {
+            console.log(`Start time ${resStartTime} is in between ${targetDateTimeInZone} and  ${slotEndTime}`)
             currentOccupancyAtTime += parseInt(res.numberOfPeople, 10) || 0;
         }
     });
@@ -145,9 +146,6 @@ transporter.verify((error, success) => {
     if (error) console.error('Nodemailer verification failed:', error);
     else console.log('Nodemailer is ready to send emails.');
 });
-
-// index.js
-// ... (keep all other code the same before this endpoint) ...
 
 // --- Availability Endpoint ---
 app.get('/availability', (req, res) => {
@@ -265,6 +263,7 @@ app.get('/availability', (req, res) => {
         slots: finalAvailability // Send the availability list after applying the block-out rule
     });
 });
+// --- Reservation Endpoints ---
 app.post('/reserve', async (req, res) => {
     // ... (keep existing endpoint code)
     console.log("Received reservation request:", req.body);
@@ -546,7 +545,7 @@ function confirmationEmailTemplate(reservation) {
     const safeGuests = escapeHtml(reservation.numberOfPeople.toString());
     const safeRequests = reservation.specialRequests ? `<p style="margin-bottom: 10px;"><strong>Requests:</strong> ${escapeHtml(reservation.specialRequests)}</p>` : '';
 
-    return `<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Reservation Confirmed!</title> <style> body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; line-height: 1.6; color: #374151; margin: 0; padding: 0; background-color: #f3f4f6; } .container { padding: 25px; max-width: 600px; margin: 20px auto; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; } h2 { color: #059669; margin-top: 0; } p { margin-bottom: 15px; } strong { color: #111827; font-weight: 600; } .details { background-color: #f9fafb; padding: 15px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #e5e7eb; } .details strong { display: inline-block; min-width: 80px; } .notes { background-color: #eff6ff; color: #1e40af; padding: 15px; border-radius: 6px; border: 1px solid #bfdbfe; font-size: 0.95em; } .footer { margin-top: 25px; font-size: 0.85em; text-align: center; color: #9ca3af; border-top: 1px solid #e5e7eb; padding-top: 15px; } </style> </head> <body> <div class="container"> <h2>Your Green Bites Reservation is Confirmed!</h2> <p>Hello ${safeName},</p> <p>This email confirms your reservation details:</p> <div class="details"> <p style="margin-bottom: 10px;"><strong>Name:</strong> ${safeName}</p> <p style="margin-bottom: 10px;"><strong>Date:</strong> ${formattedDate}</p> <p style="margin-bottom: 10px;"><strong>Time:</strong> ${formattedTime}</p> <p style="margin-bottom: 10px;"><strong>Guests:</strong> ${safeGuests}</p> ${safeRequests} </div> <p>We look forward to welcoming you!</p> <div class="notes"> <p style="margin: 0;"><strong>Notes:</strong> Please try to arrive 5-10 minutes before your reservation time. If your plans change, please call us at ${escapeHtml(RESTAURANT_PHONE)} to modify or cancel. Our address is 12345 Main Street, Fairfax, VA.</p> </div> <p style="margin-top: 20px;">Sincerely,<br>The Green Bites Team</p> <div class="footer"> <p>Green Bites | 123 Green Way, Fairfax, VA | ${escapeHtml(RESTAURANT_PHONE)}</p> </div> </div> </body> </html>`;
+    return `<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Reservation Confirmed!</title> <style> body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; line-height: 1.6; color: #374151; margin: 0; padding: 0; background-color: #f3f4f6; } .container { padding: 25px; max-width: 600px; margin: 20px auto; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; } h2 { color: #059669; margin-top: 0; } p { margin-bottom: 15px; } strong { color: #111827; font-weight: 600; } .details { background-color: #f9fafb; padding: 15px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #e5e7eb; } .details strong { display: inline-block; min-width: 80px; } .notes { background-color: #eff6ff; color: #1e40af; padding: 15px; border-radius: 6px; border: 1px solid #bfdbfe; font-size: 0.95em; } .footer { margin-top: 25px; font-size: 0.85em; text-align: center; color: #9ca3af; border-top: 1px solid #e5e7eb; padding-top: 15px; } </style> </head> <body> <div class="container"> <h2>Your Green Bites Reservation is Confirmed!</h2> <p>Hello ${safeName},</p> <p>This email confirms your reservation details:</p> <div class="details"> <p style="margin-bottom: 10px;"><strong>Name:</strong> ${safeName}</p> <p style="margin-bottom: 10px;"><strong>Date:</strong> ${formattedDate}</p> <p style="margin-bottom: 10px;"><strong>Time:</strong> ${formattedTime}</p> <p style="margin-bottom: 10px;"><strong>Guests:</strong> ${safeGuests}</p> ${safeRequests} </div> <p>We look forward to welcoming you!</p> <div class="notes"> <p style="margin: 0;"><strong>Notes:</strong> Please try to arrive 5-10 minutes before your reservation time. If your plans change, please call us at ${escapeHtml(RESTAURANT_PHONE)} to modify or cancel. Our address is 12345 Main Street, Fairfax, VA.</p> </div> <p style="margin-top: 20px;">Sincerely,<br>The Green Bites Team</p> <div class="footer"> <p>Green Bites | 12345 Main Street, Fairfax, VA | ${escapeHtml(RESTAURANT_PHONE)}</p> </div> </div> </body> </html>`;
 }
 
 async function sendConfirmationEmail(reservation) {
