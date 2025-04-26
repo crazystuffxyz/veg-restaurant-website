@@ -53,12 +53,12 @@ let reviews = [ // Approved Reviews
     { id: 'review-guy', name: 'Guy Scary', stars: 5, text: 'If you need a funkalicious trip to flavortown, this is your spot. The real deal.', createdAt: moment('2025-04-07').toISOString(), status: 'approved' },
     { id: 'review-ramsay', name: 'Garden Ramsay', stars: 4, text: "My restaurants are better but this one comes a close second. I'd rather be here today than file my taxes.", createdAt: moment('2025-04-16').toISOString(), status: 'approved' },
     { id: 'review-alex', name: 'Alex Garamasalachili', stars: 5, text: 'If you are looking for healthy and flavorful options, you have got to come here. It is only a matter of time before Green Bites gets a visit from someone from The Tire Company', createdAt: moment('2025-04-18').toISOString(), status: 'approved' },
-    { id: 'review-chen', name: 'Wei Chen', stars: 5, text: "A delightful experience. The avocado toast and mixed greens were simply divine. Exceptional service.", createdAt: moment('2025-03-28').toISOString(), status: 'approved' },
-    { id: 'review-garcia', name: 'Maria Garcia', stars: 5, text: "An absolute gem. The farm-to-table approach really shines, especially in the roasted beet salad.", createdAt: moment('2025-03-29').toISOString(), status: 'approved' },
-    { id: 'review-ali', name: 'Fatima Ali', stars: 5, text: "Fresh ingredients and amazing presentation. The vegan chili had a wonderful mix of spices.", createdAt: moment('2025-03-30').toISOString(), status: 'approved' },
-    { id: 'review-smith', name: 'John Smith', stars: 5, text: "I love the creativity. The kale Caesar salad and the organic tofu scramble are my top picks.", createdAt: moment('2025-03-31').toISOString(), status: 'approved' },
-    { id: 'review-patel', name: 'Priya Patel', stars: 5, text: "The veggie burger was a revelation. Packed with flavor and served with a side of crispy sweet potato fries!", createdAt: moment('2025-04-01').toISOString(), status: 'approved' },
-    { id: 'review-kim', name: 'David Kim', stars: 5, text: "Great food. We got Spinach which was not very bitter and tasted extremely fresh. Quinoa Salad and Falafel were absolutely delish!", createdAt: moment('2025-04-02').toISOString(), status: 'approved' },
+    { id: 'review-chen', name: 'Wei Chen', stars: 5, text: "A delightful experience. The Gourmet Avocado Toast and Simple Mixed Greens were simply divine. Exceptional service.", createdAt: moment('2025-03-28').toISOString(), status: 'approved' },
+    { id: 'review-garcia', name: 'Maria Garcia', stars: 5, text: "An absolute gem. The farm-to-table approach really shines, especially in the Spinach Beet Salad.", createdAt: moment('2025-03-29').toISOString(), status: 'approved' },
+    { id: 'review-ali', name: 'Fatima Ali', stars: 5, text: "Fresh ingredients and amazing presentation. The Ghost Pepper Chili had a wonderful, bold mix of spices.", createdAt: moment('2025-03-30').toISOString(), status: 'approved' },
+    { id: 'review-smith', name: 'John Smith', stars: 5, text: "I love the creativity. The Mapo Tofu had an incredible depth of flavor, and the Artisan Veggie Pizza was loaded with fresh toppings.", createdAt: moment('2025-03-31').toISOString(), status: 'approved' },
+    { id: 'review-patel', name: 'Priya Patel', stars: 5, text: "The Green Bites Signature Burger was a revelation. Packed with flavor and served with a side of crispy sweet potato fries!", createdAt: moment('2025-04-01').toISOString(), status: 'approved' },
+    { id: 'review-kim', name: 'David Kim', stars: 5, text: "Great food. We got the Creamed Spinach & Artichoke Dip which was wonderfully creamy and tasted extremely fresh. The Mediterranean Quinoa Salad and Crispy Falafel Platter were absolutely delish!", createdAt: moment('2025-04-02').toISOString(), status: 'approved' },
 ];
 
 
@@ -148,7 +148,6 @@ transporter.verify((error, success) => {
 
 // --- Availability Endpoint ---
 app.get('/availability', (req, res) => {
-    // ... (keep existing endpoint code)
     const { date, partySize } = req.query;
 
     if (!date || !moment(date, 'YYYY-MM-DD', true).isValid()) {
@@ -169,39 +168,44 @@ app.get('/availability', (req, res) => {
           });
     }
 
+    // Validate party size *before* heavy calculation
     const requestedPartySize = parseInt(partySize, 10);
     if (isNaN(requestedPartySize) || requestedPartySize < 1) {
-         return res.status(400).json({ error: 'Invalid partySize parameter.' });
+         return res.status(400).json({ error: 'Valid partySize parameter (integer >= 1) is required.' });
     }
     if (requestedPartySize > 8) {
         return res.status(200).json({
              date: date, requestedPartySize: requestedPartySize, capacityLimit: CAPACITY_LIMIT, slots: [],
-             message: `Party size too large for online booking. Please call.`
+             message: `For parties > 8, please call ${RESTAURANT_PHONE}.`
          });
     }
 
-    const availability = AVAILABLE_TIMES.map(timeSlot => {
+    // --- Step 1: Calculate initial availability for each slot ---
+    const initialAvailability = AVAILABLE_TIMES.map(timeSlot => {
         const slotDateTime = moment.tz(`${date} ${timeSlot}`, "YYYY-MM-DD HH:mm", RESTAURANT_TIMEZONE);
         let status = 'unknown';
         let availableSeats = 0;
 
-        // Only check availability if the slot is in the future (or very close to it)
-        const earliestBookingTime = moment.tz(RESTAURANT_TIMEZONE).add(MIN_ADVANCE_BOOKING_MINUTES - 5, 'minutes'); // Allow a small buffer
+        // Check if the slot start time is in the past (allowing for minimum booking notice)
+        const earliestBookingTime = moment.tz(RESTAURANT_TIMEZONE).add(MIN_ADVANCE_BOOKING_MINUTES - 5, 'minutes'); // Small buffer
         let isPast = slotDateTime.isBefore(earliestBookingTime);
 
         if(isPast) {
             status = 'past';
             availableSeats = 0;
         } else {
+            // Calculate occupancy based on reservations overlapping this specific slot's start time + duration
             const occupancy = calculateOccupancy(slotDateTime);
             availableSeats = Math.max(0, CAPACITY_LIMIT - occupancy);
 
-            if (availableSeats >= requestedPartySize) {
-                status = 'available';
-            } else if (availableSeats <= 0) {
-                status = 'full';
-            } else { // 0 < availableSeats < requestedPartySize
-                status = 'limited';
+            // Determine status based on available seats vs. *CAPACITY*, not just party size initially
+            if (availableSeats <= 0) {
+                status = 'full'; // Completely full
+                availableSeats = 0;
+            } else if (availableSeats < requestedPartySize) {
+                status = 'limited'; // Not full, but not enough for the requested party
+            } else {
+                status = 'available'; // Enough seats for the requested party
             }
         }
 
@@ -210,18 +214,54 @@ app.get('/availability', (req, res) => {
             displayTime: moment(timeSlot, "HH:mm").format("h:mm A"),
             status: status,
             availableSeats: availableSeats,
-            slotIsoString: slotDateTime.toISOString(true) // Keep ISO string even if past for consistency? Or omit? Let's keep it.
+            slotIsoString: slotDateTime.toISOString(true),
+            // Keep the moment object for the next step, will be removed before sending response
+            _slotDateTimeMoment: slotDateTime
         };
     });
 
+    // --- Step 2: Apply the "block-out" rule for 1 hour after a 'full' slot ---
+    let blockOutUntil = null; // Tracks the time until which subsequent slots should be limited
+    const finalAvailability = initialAvailability.map(slotResult => {
+        // Create a copy to modify, preserving the original calculation
+        const finalSlot = { ...slotResult };
+        const currentSlotTime = finalSlot._slotDateTimeMoment; // Use the stored moment object
+
+        // Check if the current slot falls within an active block-out period
+        if (blockOutUntil && currentSlotTime.isBefore(blockOutUntil)) {
+            // Apply block-out: If the slot wasn't already 'past' or 'full', mark it as 'limited'
+            // We mark it limited even if it initially had seats, because the preceding full slot blocks it.
+            if (finalSlot.status !== 'past' && finalSlot.status !== 'full') {
+                console.log(`Applying block-out to ${finalSlot.time} due to earlier full slot. Blocked until: ${blockOutUntil.format()}`);
+                finalSlot.status = 'limited';
+                finalSlot.availableSeats = 0; // Show 0 seats available when blocked
+            }
+        }
+
+        // If this slot *itself* was calculated as 'full' initially, set/extend the block-out period
+        // We check slotResult.status (the initial calculation) here, not finalSlot.status
+        if (slotResult.status === 'full') {
+            const newBlockOutEndTime = currentSlotTime.clone().add(1, 'hour');
+            // If there's no block-out yet, or this new block-out extends further, update it
+            if (!blockOutUntil || newBlockOutEndTime.isAfter(blockOutUntil)) {
+                console.log(`Slot ${finalSlot.time} is full. Setting/Extending block-out until: ${newBlockOutEndTime.format()}`);
+                blockOutUntil = newBlockOutEndTime;
+            }
+        }
+
+        // Remove the temporary moment object before sending the response
+        delete finalSlot._slotDateTimeMoment;
+        return finalSlot;
+    });
+
+    // --- Send the final response ---
     res.status(200).json({
         date: date,
         requestedPartySize: requestedPartySize,
         capacityLimit: CAPACITY_LIMIT,
-        slots: availability
+        slots: finalAvailability // Send the availability list after applying the block-out rule
     });
 });
-
 // --- Reservation Endpoints ---
 app.post('/reserve', async (req, res) => {
     // ... (keep existing endpoint code)
@@ -504,7 +544,7 @@ function confirmationEmailTemplate(reservation) {
     const safeGuests = escapeHtml(reservation.numberOfPeople.toString());
     const safeRequests = reservation.specialRequests ? `<p style="margin-bottom: 10px;"><strong>Requests:</strong> ${escapeHtml(reservation.specialRequests)}</p>` : '';
 
-    return `<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Reservation Confirmed!</title> <style> body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; line-height: 1.6; color: #374151; margin: 0; padding: 0; background-color: #f3f4f6; } .container { padding: 25px; max-width: 600px; margin: 20px auto; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; } h2 { color: #059669; margin-top: 0; } p { margin-bottom: 15px; } strong { color: #111827; font-weight: 600; } .details { background-color: #f9fafb; padding: 15px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #e5e7eb; } .details strong { display: inline-block; min-width: 80px; } .notes { background-color: #eff6ff; color: #1e40af; padding: 15px; border-radius: 6px; border: 1px solid #bfdbfe; font-size: 0.95em; } .footer { margin-top: 25px; font-size: 0.85em; text-align: center; color: #9ca3af; border-top: 1px solid #e5e7eb; padding-top: 15px; } </style> </head> <body> <div class="container"> <h2>Your Green Bites Reservation is Confirmed!</h2> <p>Hello ${safeName},</p> <p>This email confirms your reservation details:</p> <div class="details"> <p style="margin-bottom: 10px;"><strong>Name:</strong> ${safeName}</p> <p style="margin-bottom: 10px;"><strong>Date:</strong> ${formattedDate}</p> <p style="margin-bottom: 10px;"><strong>Time:</strong> ${formattedTime}</p> <p style="margin-bottom: 10px;"><strong>Guests:</strong> ${safeGuests}</p> ${safeRequests} </div> <p>We look forward to welcoming you!</p> <div class="notes"> <p style="margin: 0;"><strong>Notes:</strong> Please try to arrive 5-10 minutes before your reservation time. If your plans change, please call us at ${escapeHtml(RESTAURANT_PHONE)} to modify or cancel. Our address is 123 Green Way, Fairfax, VA.</p> </div> <p style="margin-top: 20px;">Sincerely,<br>The Green Bites Team</p> <div class="footer"> <p>Green Bites | 123 Green Way, Fairfax, VA | ${escapeHtml(RESTAURANT_PHONE)}</p> </div> </div> </body> </html>`;
+    return `<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Reservation Confirmed!</title> <style> body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; line-height: 1.6; color: #374151; margin: 0; padding: 0; background-color: #f3f4f6; } .container { padding: 25px; max-width: 600px; margin: 20px auto; background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; } h2 { color: #059669; margin-top: 0; } p { margin-bottom: 15px; } strong { color: #111827; font-weight: 600; } .details { background-color: #f9fafb; padding: 15px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #e5e7eb; } .details strong { display: inline-block; min-width: 80px; } .notes { background-color: #eff6ff; color: #1e40af; padding: 15px; border-radius: 6px; border: 1px solid #bfdbfe; font-size: 0.95em; } .footer { margin-top: 25px; font-size: 0.85em; text-align: center; color: #9ca3af; border-top: 1px solid #e5e7eb; padding-top: 15px; } </style> </head> <body> <div class="container"> <h2>Your Green Bites Reservation is Confirmed!</h2> <p>Hello ${safeName},</p> <p>This email confirms your reservation details:</p> <div class="details"> <p style="margin-bottom: 10px;"><strong>Name:</strong> ${safeName}</p> <p style="margin-bottom: 10px;"><strong>Date:</strong> ${formattedDate}</p> <p style="margin-bottom: 10px;"><strong>Time:</strong> ${formattedTime}</p> <p style="margin-bottom: 10px;"><strong>Guests:</strong> ${safeGuests}</p> ${safeRequests} </div> <p>We look forward to welcoming you!</p> <div class="notes"> <p style="margin: 0;"><strong>Notes:</strong> Please try to arrive 5-10 minutes before your reservation time. If your plans change, please call us at ${escapeHtml(RESTAURANT_PHONE)} to modify or cancel. Our address is 12345 Main Street, Fairfax, VA.</p> </div> <p style="margin-top: 20px;">Sincerely,<br>The Green Bites Team</p> <div class="footer"> <p>Green Bites | 123 Green Way, Fairfax, VA | ${escapeHtml(RESTAURANT_PHONE)}</p> </div> </div> </body> </html>`;
 }
 
 async function sendConfirmationEmail(reservation) {
