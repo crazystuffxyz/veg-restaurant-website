@@ -169,13 +169,10 @@
             border-color: #374151;   /* border-neutral-700 (or keep original) */
         }
   
-        /* Icon adjustments (ensure vertical alignment via flex) */
-        .fc .fc-button .fc-icon {
-            /* vertical-align: middle; /* No longer needed due to flex align-items */
-            /* font-size: 1.2em; /* Inherit or set specifically if needed */
-            /* display: inline-block; /* Ensured by parent flex */
-        }
-        /* === MODIFIED SECTION END === */
+        .fc-button.fc-state-default:not(.fc-state-disabled):not(.fc-state-hover){
+    background-color: #686868 !important;
+}
+
   
         .fc th {
             background-color: transparent;
@@ -479,5 +476,13 @@ class="fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-out"
     <!-- Load Your Custom Scripts LAST -->
     <script src="/js/reservations.js"></script>
     <script src="/js/main.js"></script> <!-- May need adjustment if main.js also handles animations -->
+    <script>
+        setInterval(() => {
+    document.querySelectorAll('.fc-button.fc-state-default:not(.fc-state-disabled):not(.fc-state-hover)').forEach(button => {
+        button.style.background = '#686868';
+    });
+}, 100); // Adjust interval as needed
+
+    </script>
 </body>
 </html>
