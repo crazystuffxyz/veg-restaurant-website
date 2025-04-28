@@ -57,7 +57,7 @@ let reviews = [ // Approved Reviews
     { id: 'review-garcia', name: 'Maria Garcia', stars: 5, text: "A gem. Farm-to-table theme is a big winner, especially in the Spinach Beet Salad.", createdAt: moment('2025-03-29').toISOString(), status: 'approved' },
     { id: 'review-ali', name: 'Fatima Ali', stars: 5, text: "Fresh ingredients and beautiful presentation. The Ghost Pepper Chili was an amazing, full-bodied spice mixture.", createdAt: moment('2025-03-30').toISOString(), status: 'approved' },
     { id: 'review-smith', name: 'John Smith', stars: 5, text: "I love the innovation. The Mapo Tofu was rich in depth of flavor, and the Artisan Veggie Pizza was filled with fresh ingredients.", createdAt: moment('2025-03-31').toISOString(), status: 'approved' },
-    { id: 'review-patel', name: 'Priya Patel', stars: 5, text: "The Green Bites Signature Burger was a hit. So tasty and included a side of sweet potato fries that were crispy!", createdAt: moment('2025-04-01').toISOString(), status: 'approved' },
+    { id: 'review-patel', name: 'Priya Patel', stars: 5, text: "The Green Bites Signature Burger was a hit. So tasty and included a side of fries that were very crispy!", createdAt: moment('2025-04-01').toISOString(), status: 'approved' },
     { id: 'review-kim', name: 'David Kim', stars: 5, text: "Delicious food. We ordered the Creamed Spinach & Artichoke Dip that was totally creamy and very fresh tasting. The Mediterranean Quinoa Salad and Crispy Falafel Platter were both great!", createdAt: moment('2025-04-02').toISOString(), status: 'approved' },
 ];
 
