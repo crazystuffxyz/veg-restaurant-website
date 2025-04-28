@@ -289,39 +289,67 @@ app.post('/reserve', async (req, res) => {
 });
 
 app.get('/verify', (req, res) => {
-    // ... (keep existing endpoint code)
     const { resId, token } = req.query;
     if (!resId || !token) return res.status(400).send(verificationResponsePage("Verification Failed", "Link incomplete.", "error"));
 
     const reservationIndex = reservations.findIndex(r => r.id === resId);
-    if (reservationIndex === -1) return res.status(404).send(verificationResponsePage("Verification Failed", "Reservation not found.", "error"));
+    if (reservationIndex === -1) return res.status(404).send(verificationResponsePage("Verification Failed", "Reservation not found. It might have expired or been removed.", "error"));
 
+    // Use a temporary variable to hold the reservation object for easier access
     const reservation = reservations[reservationIndex];
     const reservationTimezone = reservation.timezone || RESTAURANT_TIMEZONE;
     const displayDate = moment.tz(`${reservation.date} ${reservation.time}`, "YYYY-MM-DD HH:mm", reservationTimezone).format("dddd, MMMM Do, YYYY");
     const displayTime = moment.tz(`${reservation.date} ${reservation.time}`, "YYYY-MM-DD HH:mm", reservationTimezone).format("h:mm A z");
 
+    // --- Check current status and validity ---
     if (reservation.status === 'confirmed') return res.status(200).send(verificationResponsePage("Already Confirmed", `Reservation for ${escapeHtml(reservation.numberOfPeople.toString())} on ${displayDate} at ${displayTime} is confirmed!`, "success"));
     if (reservation.status !== 'pending_verification') return res.status(410).send(verificationResponsePage("Link No Longer Valid", `Status: '${escapeHtml(reservation.status)}'.`, "error"));
+
+    // --- Check Expiry ---
     if (moment().isAfter(moment(reservation.verificationExpires))) {
         console.warn(`Verification failed: Token expired for ID ${resId}.`);
-        reservation.status = 'expired_unverified';
-        reservation.verificationToken = null;
-        reservations[reservationIndex] = reservation; // Make sure to update the array
+        // Update status before potentially removing (though usually this is handled by cleanup)
+        reservations[reservationIndex].status = 'expired_unverified';
+        reservations[reservationIndex].verificationToken = null;
+        // Let's keep it in memory as expired_unverified for now, cleanup job will handle long term
         return res.status(410).send(verificationResponsePage("Verification Expired", `Sorry, this link expired (valid for ${VERIFICATION_EXPIRY_MINUTES} minutes). Please make a new reservation.`, "error"));
     }
+
+    // --- Check Token ---
     if (reservation.verificationToken !== token) return res.status(400).send(verificationResponsePage("Verification Failed", "Invalid token.", "error"));
 
+    // --- *** NEW: Capacity Check Before Confirmation *** ---
+    const requestedDateTime = moment.tz(`${reservation.date} ${reservation.time}`, "YYYY-MM-DD HH:mm", reservationTimezone);
+    const numPeople = parseInt(reservation.numberOfPeople, 10); // Get party size from the reservation being confirmed
+    const currentOccupancy = calculateOccupancy(requestedDateTime); // Calculate occupancy *without* this reservation yet
 
-    console.log(`Verification SUCCESS for ID: ${resId}`);
+    if (currentOccupancy + numPeople > CAPACITY_LIMIT) {
+        console.warn(`Verification BLOCKED for ID ${resId}: Slot ${reservation.date} ${reservation.time} became fully booked. Occupancy: ${currentOccupancy}, Requesting: ${numPeople}, Limit: ${CAPACITY_LIMIT}`);
+
+        // Remove the reservation from memory as it cannot be fulfilled
+        reservations.splice(reservationIndex, 1); // Removes the item at reservationIndex
+
+        // Inform the user that the slot is now full
+        return res.status(409).send(verificationResponsePage( // Using 409 Conflict might be appropriate
+            "Booking Failed",
+            "Sorry, but this time slot became fully booked while your confirmation was pending. Please try booking a different time.",
+            "error"
+        ));
+    }
+    // --- *** END: Capacity Check *** ---
+
+
+    // --- If capacity check passes, proceed with confirmation ---
+    console.log(`Verification SUCCESS for ID: ${resId}. Capacity OK (Current: ${currentOccupancy}, Adding: ${numPeople}, Limit: ${CAPACITY_LIMIT})`);
     reservations[reservationIndex].status = 'confirmed'; // Update status directly in the array
-    reservations[reservationIndex].verificationToken = null;
-    reservations[reservationIndex].verificationExpires = null;
-    reservations[reservationIndex].verifiedAt = moment().toISOString();
-    // No need to reassign reservation = reservations[reservationIndex]; here
+    reservations[reservationIndex].verificationToken = null; // Clear token
+    reservations[reservationIndex].verificationExpires = null; // Clear expiry
+    reservations[reservationIndex].verifiedAt = moment().toISOString(); // Record verification time
 
+    // Send the confirmation email (use the updated reservation from the array)
     sendConfirmationEmail(reservations[reservationIndex]).catch(err => console.error(`Error sending confirmation email for ${resId}:`, err));
 
+    // Send success response page
     res.status(200).send(verificationResponsePage("Reservation Confirmed!",
         `Thank you, ${escapeHtml(reservations[reservationIndex].name)}! Your reservation for ${escapeHtml(reservations[reservationIndex].numberOfPeople.toString())} on <strong>${displayDate}</strong> at <strong>${displayTime}</strong> is confirmed. ${reservations[reservationIndex].specialRequests ? '<br/><br/>Request: "' + escapeHtml(reservations[reservationIndex].specialRequests) + '"': ''}<br/><br/>See you soon!`,
         "success"));
