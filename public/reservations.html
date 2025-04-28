@@ -478,10 +478,10 @@ class="fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-out"
     <script src="/js/main.js"></script> <!-- May need adjustment if main.js also handles animations -->
     <script>
         setInterval(() => {
-    document.querySelectorAll('.fc-button.fc-state-default:not(.fc-state-disabled):not(.fc-state-hover)').forEach(button => {
+    document.querySelectorAll('.fc-button.fc-state-default:not(.fc-state-hover)').forEach(button => {
         button.style.background = '#686868';
     });
-}, 100); // Adjust interval as needed
+}, 0); // Adjust interval as needed
 
     </script>
 </body>
